@@ -6,7 +6,6 @@ import { College, CollegeBranch } from "../types";
 import { fetchPaginatedColleges, getCollegeBranches } from "../services/api";
 import { Navbar } from "../components/Navbar";
 import { MobileNav } from "../components/MobileNav";
-import { Pagination } from "../components/Pagination";
 import { CollegeBranchModal } from "../components/CollegeBranchModal";
 import { CollegeCard } from "../components/CollegeCard";
 import { AnimatedDotCard } from "../components/common/AnimatedDotCard";
@@ -92,6 +91,7 @@ export const HomePage: React.FC = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
     setCurrentPage(newPage);
     if (directoryRef.current) {
       directoryRef.current.scrollIntoView({ behavior: "smooth" });
@@ -219,7 +219,7 @@ export const HomePage: React.FC = () => {
 
       {/* Main Directory Grid Content */}
       <main ref={directoryRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full scroll-mt-20">
-        {/* Top Directory Controls Bar with Relocated Minimalist "Jump to Page" Control */}
+        {/* Top Directory Controls Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
@@ -286,9 +286,9 @@ export const HomePage: React.FC = () => {
             <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">Try broadening your search term or selecting "All" disciplines.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
             {colleges.map((college, index) => (
-              <div key={college.id} className="relative group">
+              <div key={college.id} className="relative group h-full">
                 <CollegeCard college={college} index={index} />
                 {college.branches && college.branches.length > 1 && (
                   <button
@@ -304,15 +304,28 @@ export const HomePage: React.FC = () => {
           </div>
         )}
 
-        {/* Bottom Pagination Bar */}
+        {/* Dedicated Restored Bottom Pagination Bar Card */}
         {!loading && totalPages > 1 && (
-          <div className="mt-8">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              totalItems={totalColleges}
-              onPageChange={handlePageChange}
-            />
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm">
+            <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+              Showing Page <strong className="text-slate-900 dark:text-white font-bold">{currentPage}</strong> of <strong className="text-slate-900 dark:text-white font-bold">{totalPages}</strong> ({totalColleges.toLocaleString()} Institutions)
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed"
+              >
+                ← Previous
+              </button>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white transition-all shadow-sm cursor-pointer disabled:cursor-not-allowed"
+              >
+                Next →
+              </button>
+            </div>
           </div>
         )}
       </main>

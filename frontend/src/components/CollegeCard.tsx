@@ -18,10 +18,10 @@ export const CollegeCard: React.FC<CollegeCardProps> = ({ college, index = 0 }) 
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.03 }}
-      className="bg-white dark:bg-[#111827] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+      className="h-full flex flex-col bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group"
     >
       {/* Dynamic Campus Image Banner */}
-      <div className="relative h-44 overflow-hidden bg-slate-900">
+      <div className="relative h-44 overflow-hidden bg-slate-900 shrink-0">
         <img
           src={img.banner}
           alt={college.name}
@@ -52,27 +52,30 @@ export const CollegeCard: React.FC<CollegeCardProps> = ({ college, index = 0 }) 
         </div>
       </div>
 
-      {/* Body Content */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      {/* Body Content - flex-1 flex flex-col justify-between to enforce equal heights */}
+      <div className="flex-1 flex flex-col justify-between p-5">
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-snug">
-            {college.name}
-          </h3>
+          {/* Equalized Height Title Box */}
+          <div className="min-h-[3.25rem] flex items-center mb-2">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-snug">
+              {college.name}
+            </h3>
+          </div>
 
-          <div className="mt-2.5 flex flex-wrap gap-1.5 text-xs">
-            <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold px-2 py-0.5 rounded-md text-[11px]">
+          <div className="flex flex-wrap gap-1.5 text-xs">
+            <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold px-2 py-0.5 rounded-md text-[11px] border border-slate-200 dark:border-slate-700/80">
               {college.college_type || "University"}
             </span>
             {college.ownership && (
-              <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[11px]">
+              <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[11px] border border-slate-200 dark:border-slate-700/80">
                 {college.ownership}
               </span>
             )}
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+        {/* Sticky Action Footer */}
+        <div className="mt-auto pt-4 flex items-center gap-2 border-t border-slate-100 dark:border-slate-800/60">
           <Link
             to={`/college/${college.id}`}
             className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-3 rounded-xl text-center text-xs transition-all shadow-xs flex items-center justify-center gap-1.5"

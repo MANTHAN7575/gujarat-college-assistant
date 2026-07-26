@@ -116,9 +116,9 @@ export const ComparePage: React.FC = () => {
           <AnimatedDotCard topBorderAccent={true} className="p-6 sm:p-8">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-semibold px-3 py-1.5 rounded-xl mb-4 transition-all shadow-xs"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 transition-all shadow-sm group mb-4"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-4 h-4 text-slate-500 dark:text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
               <span>Back to Directory Index</span>
             </Link>
 
@@ -138,7 +138,7 @@ export const ComparePage: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <button
                   onClick={() => window.print()}
-                  className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5"
+                  className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Download Report</span>
@@ -146,7 +146,7 @@ export const ComparePage: React.FC = () => {
                 {selectedIds.length < 3 && (
                   <button
                     onClick={() => setModalOpen(true)}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Add College ({selectedIds.length}/3)</span>
@@ -172,7 +172,7 @@ export const ComparePage: React.FC = () => {
             <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">Select up to 3 colleges from the directory to build a side-by-side comparison table.</p>
             <button
               onClick={() => setModalOpen(true)}
-              className="mt-5 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-indigo-700"
+              className="mt-5 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-indigo-700 cursor-pointer"
             >
               Select Colleges
             </button>
@@ -201,7 +201,7 @@ export const ComparePage: React.FC = () => {
                       <th key={colId} className="p-4 sm:p-5 text-slate-900 dark:text-white w-1/4 relative">
                         <button
                           onClick={() => handleRemoveCollege(colId)}
-                          className="absolute top-3 right-3 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-rose-600 text-slate-500 hover:text-white p-1 rounded-full flex items-center justify-center transition-all border border-slate-200 dark:border-slate-700"
+                          className="absolute top-3 right-3 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-rose-600 text-slate-500 hover:text-white p-1 rounded-full flex items-center justify-center transition-all border border-slate-200 dark:border-slate-700 cursor-pointer"
                           title="Remove"
                         >
                           <X className="w-3.5 h-3.5" />
