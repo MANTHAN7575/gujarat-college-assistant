@@ -2,10 +2,11 @@ import uuid
 import re
 import logging
 from typing import Optional, List
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.rag import extract_rag_entities
 from app.crud import crud_college, crud_chat
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.gemini_service import generate_ai_response
@@ -17,16 +18,10 @@ router = APIRouter()
 
 
 def detect_college(user_query: str, db: Session) -> Optional[str]:
+    rag_entities = extract_rag_entities(user_query)
     query_lower = user_query.strip().lower()
     
-    # Check if user query explicitly asks for an ACPC code (e.g. "code 2026" or "acpc code 2026")
-    is_explicit_code = (
-        "code 2026" in query_lower or
-        "acpc code 2026" in query_lower or
-        "code: 2026" in query_lower or
-        ("acpc 2026" in query_lower and "code" in query_lower)
-    )
-
+    is_explicit_code = rag_entities["is_explicit_code"]
     tokens = re.findall(r'[a-zA-Z0-9\-]+', query_lower)
 
     # 1. Direct token check against acronyms, code, acpc_code
@@ -177,3 +172,20 @@ def chat_endpoint(
         college=detected_college,
         session_id=session_id
     )
+
+
+@router.delete("/history/{log_id}")
+def delete_chat_history_log(
+    log_id: str,
+    db: Session = Depends(get_db)
+):
+    """
+    Deletes chat history records by session_id UUID string or log ID.
+    Always returns 200 OK with success status.
+    """
+    crud_chat.delete_chat_log(db=db, log_id=log_id)
+    return {
+        "status": "success",
+        "message": f"Chat history session '{log_id}' deleted successfully.",
+        "session_id": log_id
+    }

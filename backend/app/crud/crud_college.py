@@ -102,16 +102,18 @@ def hydrate_college_relations(college: College) -> College:
     if not college:
         return college
 
-    # 1. Hydrate Courses if empty (Omit explicit primary key IDs)
+    # 1. Hydrate Courses if empty (Assign safe generated integer IDs)
     if not college.courses or len(college.courses) == 0:
         stream = (college.primary_stream or "Engineering").lower()
         base_fee = 85000.0
         rank_base = (college.nirf_rank or (college.id * 15)) * 12 + 1200
+        c_base = 50000 + college.id * 10
 
         generated_courses = []
         if "engineering" in stream or "polytechnic" in stream:
             generated_courses = [
                 Course(
+                    id=c_base + 1,
                     college_id=college.id,
                     course_name="B.Tech Computer Engineering",
                     degree_type="B.Tech",
@@ -127,6 +129,7 @@ def hydrate_college_relations(college: College) -> College:
                     cutoff_rank_ews=int(rank_base * 1.25)
                 ),
                 Course(
+                    id=c_base + 2,
                     college_id=college.id,
                     course_name="B.Tech Information Technology",
                     degree_type="B.Tech",
@@ -142,6 +145,7 @@ def hydrate_college_relations(college: College) -> College:
                     cutoff_rank_ews=int(rank_base * 1.35)
                 ),
                 Course(
+                    id=c_base + 3,
                     college_id=college.id,
                     course_name="B.Tech Artificial Intelligence & Data Science",
                     degree_type="B.Tech",
@@ -157,6 +161,7 @@ def hydrate_college_relations(college: College) -> College:
                     cutoff_rank_ews=int(rank_base * 1.1)
                 ),
                 Course(
+                    id=c_base + 4,
                     college_id=college.id,
                     course_name="M.Tech Computer Science & Engineering",
                     degree_type="M.Tech",
@@ -175,6 +180,7 @@ def hydrate_college_relations(college: College) -> College:
         elif "medical" in stream:
             generated_courses = [
                 Course(
+                    id=c_base + 1,
                     college_id=college.id,
                     course_name="MBBS (Bachelor of Medicine & Surgery)",
                     degree_type="MBBS",
@@ -190,6 +196,7 @@ def hydrate_college_relations(college: College) -> College:
                     cutoff_rank_ews=int(rank_base * 0.4)
                 ),
                 Course(
+                    id=c_base + 2,
                     college_id=college.id,
                     course_name="B.Sc Nursing / B.Pharm",
                     degree_type="B.Sc",
@@ -208,6 +215,7 @@ def hydrate_college_relations(college: College) -> College:
         elif "management" in stream or "commerce" in stream:
             generated_courses = [
                 Course(
+                    id=c_base + 1,
                     college_id=college.id,
                     course_name="MBA (Master of Business Administration)",
                     degree_type="MBA",
@@ -223,6 +231,7 @@ def hydrate_college_relations(college: College) -> College:
                     cutoff_rank_ews=int(rank_base * 1.0)
                 ),
                 Course(
+                    id=c_base + 2,
                     college_id=college.id,
                     course_name="BBA (Bachelor of Business Administration)",
                     degree_type="BBA",
@@ -241,6 +250,7 @@ def hydrate_college_relations(college: College) -> College:
         else:
             generated_courses = [
                 Course(
+                    id=c_base + 1,
                     college_id=college.id,
                     course_name=f"Degree Program in {college.primary_stream or 'General Science & Arts'}",
                     degree_type="Bachelor",
@@ -258,11 +268,12 @@ def hydrate_college_relations(college: College) -> College:
             ]
         college.courses = generated_courses
 
-    # 2. Hydrate Placements if missing (Omit explicit primary key IDs)
+    # 2. Hydrate Placements if missing
     if not college.placements:
         avg_lpa = round(4.5 + (college.id % 7) * 0.8, 1)
         high_lpa = round(avg_lpa * 2.8, 1)
         college.placements = Placement(
+            id=50000 + college.id,
             college_id=college.id,
             average_package=avg_lpa,
             highest_package=high_lpa,
@@ -271,9 +282,10 @@ def hydrate_college_relations(college: College) -> College:
             placement_details="Active Training & Placement Cell with 85%+ campus placement rate across top Indian MNCs and regional Gujarat industries."
         )
 
-    # 3. Hydrate Facilities if missing (Omit explicit primary key IDs)
+    # 3. Hydrate Facilities if missing
     if not college.facilities:
         college.facilities = Facility(
+            id=50000 + college.id,
             college_id=college.id,
             hostel=True,
             library=True,
@@ -286,9 +298,10 @@ def hydrate_college_relations(college: College) -> College:
             facility_details="High-speed campus Wi-Fi, central digital library with 45,000+ volumes, air-conditioned boys and girls hostels, multi-sports complex, cafeteria, and transport across major city routes."
         )
 
-    # 4. Hydrate Admissions if missing (Omit explicit primary key IDs)
+    # 4. Hydrate Admissions if missing
     if not college.admissions:
         college.admissions = Admission(
+            id=50000 + college.id,
             college_id=college.id,
             admission_process="Centralized ACPC Gujarat online counseling & merit-based seat allocation.",
             entrance_exams="GUJCET / JEE Main / NEET / CMAT / ACPC Merit",

@@ -33,20 +33,34 @@ def get_chat_history_by_session(db: Session, session_id: Optional[str] = None, l
     return query.order_by(ChatLog.created_at.desc()).limit(limit).all()
 
 
-def delete_chat_log(db: Session, log_id: int) -> bool:
-    log = db.query(ChatLog).filter(ChatLog.id == log_id).first()
-    if log:
-        db.delete(log)
+def delete_chat_session(db: Session, session_id: str) -> bool:
+    try:
+        deleted = db.query(ChatLog).filter(ChatLog.session_id == session_id).delete(synchronize_session=False)
         db.commit()
         return True
-    return False
+    except Exception as e:
+        db.rollback()
+        return False
+
+
+def delete_chat_log(db: Session, log_id: str) -> bool:
+    try:
+        # Check by session_id string first
+        deleted = db.query(ChatLog).filter(ChatLog.session_id == str(log_id)).delete(synchronize_session=False)
+        if deleted > 0:
+            db.commit()
+            return True
+
+        # Check by integer ID if numeric
+        if str(log_id).isdigit():
+            db.query(ChatLog).filter(ChatLog.id == int(log_id)).delete(synchronize_session=False)
+            db.commit()
+
+        return True
+    except Exception as e:
+        db.rollback()
+        return False
 
 
 def delete_chat_logs_by_session(db: Session, session_id: str) -> bool:
-    logs = db.query(ChatLog).filter(ChatLog.session_id == session_id).all()
-    if logs:
-        for log in logs:
-            db.delete(log)
-        db.commit()
-        return True
-    return False
+    return delete_chat_session(db, session_id)

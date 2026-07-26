@@ -1,95 +1,68 @@
-import math
-from typing import List, Optional, Union, Dict, Any
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session, joinedload
+from typing import Optional, List
+from fastapi import APIRouter, Depends, Query, HTTPException, status
+from sqlalchemy.orm import Session
+from sqlalchemy import or_, func
 
 from app.core.database import get_db
 from app.crud import crud_college
 from app.models.college import College
-from app.schemas.college import CollegeSummary, CollegeDetailResponse, PaginatedCollegeResponse, AcpcCutoffYearSchema
+from app.schemas.college import (
+    CollegeSummary,
+    CollegeDetailResponse,
+    CollegePaginatedResponse,
+    AcpcCutoffYearSchema
+)
 from app.schemas.compare import CompareRequest, CompareResponse
 
 router = APIRouter()
 
 
-@router.get("/", response_model=Union[PaginatedCollegeResponse, List[CollegeSummary]])
+@router.get("/", response_model=CollegePaginatedResponse)
 def read_colleges(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
-    stream: Optional[str] = Query(None, description="Filter by stream (e.g., Engineering, Medical, Law)"),
+    search: Optional[str] = Query(None, description="Search query across college names, cities, codes"),
+    stream: Optional[str] = Query(None, description="Filter by primary stream (e.g. Engineering, Medical, Commerce)"),
+    city: Optional[str] = Query(None, description="Filter by city"),
+    is_polytechnic: Optional[bool] = Query(None, description="Filter diploma / polytechnic institutions"),
     db: Session = Depends(get_db)
 ):
+    skip = (page - 1) * per_page
     query = db.query(College)
-    if stream:
-        query = query.filter(College.primary_stream.ilike(f"%{stream}%"))
-    
+
+    if search and search.strip():
+        clean_search = search.strip()
+        matched = crud_college.search_colleges(db, keyword=clean_search, limit=500)
+        matched_ids = [c.id for c in matched]
+        query = query.filter(College.id.in_(matched_ids))
+
+    if stream and stream.strip() and stream.lower() != "all":
+        query = query.filter(func.lower(College.primary_stream).like(f"%{stream.strip().lower()}%"))
+
+    if city and city.strip() and city.lower() != "all":
+        query = query.filter(func.lower(College.city) == city.strip().lower())
+
+    if is_polytechnic is not None:
+        query = query.filter(College.is_polytechnic == is_polytechnic)
+
     total = query.count()
-    skip = (page - 1) * per_page
-    pages = math.ceil(total / per_page) if per_page > 0 and total > 0 else 1
-    items = query.order_by(College.name).offset(skip).limit(per_page).all()
-    
-    return PaginatedCollegeResponse(
-        items=items,
-        total=total,
-        page=page,
-        per_page=per_page,
-        pages=pages
-    )
+    pages = (total + per_page - 1) // per_page if total > 0 else 1
 
-
-@router.get("/search", response_model=Union[PaginatedCollegeResponse, List[CollegeSummary]])
-def search_colleges(
-    keyword: str = Query("", description="Keyword or acronym (e.g. LDRP, PDEU, BJMC, Law)"),
-    page: int = Query(1, ge=1, description="Page number"),
-    per_page: int = Query(20, ge=1, le=100, description="Items per page"),
-    db: Session = Depends(get_db)
-):
-    if not keyword.strip():
-        all_colleges = crud_college.get_all_colleges(db, limit=1000)
-    else:
-        all_colleges = crud_college.search_colleges(db, keyword=keyword, limit=1000)
-
-    total = len(all_colleges)
-    skip = (page - 1) * per_page
-    pages = math.ceil(total / per_page) if per_page > 0 and total > 0 else 1
-    items = all_colleges[skip:skip + per_page]
-
-    return PaginatedCollegeResponse(
-        items=items,
-        total=total,
-        page=page,
-        per_page=per_page,
-        pages=pages
-    )
-
-
-@router.get("/featured", response_model=List[CollegeSummary])
-def get_featured_colleges(
-    limit: int = Query(6, description="Number of top NIRF colleges to fetch"),
-    db: Session = Depends(get_db)
-):
-    return db.query(College).filter(College.nirf_rank.isnot(None)).order_by(College.nirf_rank.asc()).limit(limit).all()
-
-
-@router.get("/stream/{stream_name}", response_model=Union[PaginatedCollegeResponse, List[CollegeSummary]])
-def get_colleges_by_stream(
-    stream_name: str,
-    page: int = Query(1, ge=1, description="Page number"),
-    per_page: int = Query(20, ge=1, le=100, description="Items per page"),
-    db: Session = Depends(get_db)
-):
-    query = db.query(College).filter(College.primary_stream.ilike(f"%{stream_name}%"))
-    total = query.count()
-    skip = (page - 1) * per_page
-    pages = math.ceil(total / per_page) if per_page > 0 and total > 0 else 1
     items = query.order_by(College.name).offset(skip).limit(per_page).all()
 
-    return PaginatedCollegeResponse(
-        items=items,
+    # Hydrate branches for each college item
+    summary_items = []
+    for item in items:
+        summary = CollegeSummary.model_validate(item)
+        summary.branches = crud_college.get_related_branches(db, college_id=item.id)
+        summary_items.append(summary)
+
+    return CollegePaginatedResponse(
+        items=summary_items,
         total=total,
         page=page,
         per_page=per_page,
-        pages=pages
+        total_pages=pages
     )
 
 
@@ -102,28 +75,9 @@ def compare_colleges(
     for c_id in request.college_ids:
         college = crud_college.get_college_by_id(db, college_id=c_id)
         if college:
-            detail = CollegeDetailResponse(
-                college=college,
-                description=college.description,
-                website=college.website,
-                email=college.email,
-                phone=college.phone,
-                address=college.address,
-                established_year=college.established_year,
-                affiliation=college.affiliation,
-                university_affiliation=college.university_affiliation,
-                is_polytechnic=college.is_polytechnic,
-                naac_grade=college.naac_grade,
-                latitude=college.latitude,
-                longitude=college.longitude,
-                courses=college.courses or [],
-                placements=college.placements,
-                facilities=college.facilities,
-                events=college.events,
-                admissions=college.admissions,
-                branches=crud_college.get_related_branches(db, college_id=college.id),
-                multi_year_cutoffs=crud_college.get_multi_year_cutoffs(college)
-            )
+            detail = CollegeDetailResponse.model_validate(college)
+            detail.multi_year_cutoffs = crud_college.get_multi_year_cutoffs(college)
+            detail.branches = crud_college.get_related_branches(db, college_id=college.id)
             details_list.append(detail)
 
     if not details_list:
@@ -169,25 +123,7 @@ def read_college_details(
     if not college:
         raise HTTPException(status_code=404, detail="College not found")
 
-    return CollegeDetailResponse(
-        college=college,
-        description=college.description,
-        website=college.website,
-        email=college.email,
-        phone=college.phone,
-        address=college.address,
-        established_year=college.established_year,
-        affiliation=college.affiliation,
-        university_affiliation=college.university_affiliation,
-        is_polytechnic=college.is_polytechnic,
-        naac_grade=college.naac_grade,
-        latitude=college.latitude,
-        longitude=college.longitude,
-        courses=college.courses or [],
-        placements=college.placements,
-        facilities=college.facilities,
-        events=college.events,
-        admissions=college.admissions,
-        branches=crud_college.get_related_branches(db, college_id=college.id),
-        multi_year_cutoffs=crud_college.get_multi_year_cutoffs(college)
-    )
+    detail = CollegeDetailResponse.model_validate(college)
+    detail.multi_year_cutoffs = crud_college.get_multi_year_cutoffs(college)
+    detail.branches = crud_college.get_related_branches(db, college_id=college.id)
+    return detail

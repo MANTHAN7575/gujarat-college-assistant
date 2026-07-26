@@ -3,7 +3,8 @@ from pydantic import BaseModel, ConfigDict
 
 
 class CourseSchema(BaseModel):
-    id: int
+    id: Optional[int] = None
+    college_id: Optional[int] = None
     course_name: str
     degree_type: Optional[str] = None
     stream_category: Optional[str] = None
@@ -36,7 +37,7 @@ class AcpcCutoffYearSchema(BaseModel):
 
 
 class PlacementSchema(BaseModel):
-    id: int
+    id: Optional[int] = None
     average_package: Optional[float] = None
     highest_package: Optional[float] = None
     placement_percentage: Optional[float] = None
@@ -47,33 +48,22 @@ class PlacementSchema(BaseModel):
 
 
 class FacilitySchema(BaseModel):
-    id: int
-    hostel: bool = False
-    library: bool = False
-    wifi: bool = False
-    sports: bool = False
-    transport: bool = False
-    cafeteria: bool = False
-    medical: bool = False
-    gym: bool = False
+    id: Optional[int] = None
+    hostel: Optional[bool] = False
+    library: Optional[bool] = False
+    wifi: Optional[bool] = False
+    sports: Optional[bool] = False
+    gym: Optional[bool] = False
+    cafeteria: Optional[bool] = False
+    transport: Optional[bool] = False
+    medical: Optional[bool] = False
     facility_details: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class EventSchema(BaseModel):
-    id: int
-    tech_fest: Optional[str] = None
-    cultural_fest: Optional[str] = None
-    hackathons: Optional[str] = None
-    workshops: Optional[str] = None
-    event_details: Optional[str] = None
-
-    model_config = ConfigDict(from_attributes=True)
-
-
 class AdmissionSchema(BaseModel):
-    id: int
+    id: Optional[int] = None
     admission_process: Optional[str] = None
     entrance_exams: Optional[str] = None
     cutoff_details: Optional[str] = None
@@ -89,53 +79,61 @@ class AdmissionSchema(BaseModel):
 
 class CollegeSummary(BaseModel):
     id: int
+    name: str
     code: Optional[str] = None
     acpc_code: Optional[str] = None
-    acronyms: Optional[List[str]] = []
-    name: str
     city: Optional[str] = None
     district: Optional[str] = None
-    college_type: Optional[str] = None
     primary_stream: Optional[str] = None
+    college_type: Optional[str] = None
     ownership: Optional[str] = None
     university_affiliation: Optional[str] = None
-    is_polytechnic: Optional[bool] = False
-    naac_grade: Optional[str] = None
+    acronyms: Optional[List[str]] = None
     nirf_rank: Optional[int] = None
-    image_url: Optional[str] = None
+    naac_grade: Optional[str] = None
+    is_polytechnic: bool = False
+    annual_fees: Optional[float] = None
+    highest_lpa: Optional[float] = None
+    campus_photo_url: Optional[str] = None
     branches: Optional[List[Dict[str, Any]]] = None
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class PaginatedCollegeResponse(BaseModel):
+class CollegePaginatedResponse(BaseModel):
     items: List[CollegeSummary]
     total: int
     page: int
     per_page: int
-    pages: int
+    total_pages: int
 
-    model_config = ConfigDict(from_attributes=True)
+
+# Export PaginatedCollegeResponse alias for backward compatibility
+PaginatedCollegeResponse = CollegePaginatedResponse
 
 
 class CollegeDetailResponse(BaseModel):
-    college: CollegeSummary
+    id: int
+    name: str
+    code: Optional[str] = None
+    acpc_code: Optional[str] = None
+    city: Optional[str] = None
+    district: Optional[str] = None
+    primary_stream: Optional[str] = None
+    college_type: Optional[str] = None
+    ownership: Optional[str] = None
+    university_affiliation: Optional[str] = None
+    acronyms: Optional[List[str]] = None
+    nirf_rank: Optional[int] = None
+    naac_grade: Optional[str] = None
+    established_year: Optional[int] = None
+    is_polytechnic: bool = False
     description: Optional[str] = None
     website: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    address: Optional[str] = None
-    established_year: Optional[int] = None
-    affiliation: Optional[str] = None
-    university_affiliation: Optional[str] = None
-    is_polytechnic: Optional[bool] = False
-    naac_grade: Optional[str] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    campus_photo_url: Optional[str] = None
     courses: List[CourseSchema] = []
     placements: Optional[PlacementSchema] = None
     facilities: Optional[FacilitySchema] = None
-    events: Optional[EventSchema] = None
     admissions: Optional[AdmissionSchema] = None
     branches: Optional[List[Dict[str, Any]]] = None
     multi_year_cutoffs: Optional[List[AcpcCutoffYearSchema]] = None
