@@ -60,7 +60,7 @@ export const CollegeDetailPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
         <Navbar />
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="flex flex-col items-center gap-3">
@@ -74,7 +74,7 @@ export const CollegeDetailPage: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
         <Navbar />
         <div className="max-w-4xl mx-auto p-12 text-center my-auto">
           <Info className="w-12 h-12 text-amber-500 mx-auto" />
@@ -85,7 +85,7 @@ export const CollegeDetailPage: React.FC = () => {
             className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-sm"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Directory Index</span>
+            <span>Return to Directory Index</span>
           </Link>
         </div>
       </div>
@@ -106,14 +106,25 @@ export const CollegeDetailPage: React.FC = () => {
   const currentYearObj = multi_year_cutoffs?.find((y: any) => y.academic_year === selectedYear);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
       {/* Outer Ambient Glow */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[750px] h-[350px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Navbar />
 
       {/* Hero Header Section */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        {/* Compact Back Button Positioned Outside & Above Hero Banner */}
+        <div className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
+          >
+            <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
+            <span>Back to Directory Index</span>
+          </Link>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -146,13 +157,6 @@ export const CollegeDetailPage: React.FC = () => {
               {/* Main Information Details */}
               <div className="flex-1 space-y-3">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <Link
-                    to="/"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 transition-all shadow-sm group"
-                  >
-                    <ArrowLeft className="w-4 h-4 text-slate-500 dark:text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
-                    <span>Back to Directory Index</span>
-                  </Link>
                   {college?.college_type && (
                     <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                       {college.college_type}
@@ -227,7 +231,7 @@ export const CollegeDetailPage: React.FC = () => {
 
       {/* Navigation Tabs */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl p-1.5 backdrop-blur-xl flex items-center justify-between gap-1 overflow-x-auto scrollbar-none shadow-sm">
+        <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl p-1.5 backdrop-blur-xl flex items-center justify-between gap-1 overflow-x-auto scrollbar-none shadow-xs">
           <button
             onClick={() => setActiveTab("overview")}
             className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${

@@ -100,28 +100,31 @@ export const ComparePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
       {/* Outer Ambient Glow */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[320px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Navbar />
 
       {/* Header Container */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        {/* Compact Back Button Positioned Outside & Above Hero Banner */}
+        <div className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
+          >
+            <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
+            <span>Back to Directory Index</span>
+          </Link>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <AnimatedDotCard topBorderAccent={true} className="p-6 sm:p-8">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 transition-all shadow-sm group mb-4"
-            >
-              <ArrowLeft className="w-4 h-4 text-slate-500 dark:text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Directory Index</span>
-            </Link>
-
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-md">
@@ -138,7 +141,7 @@ export const ComparePage: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <button
                   onClick={() => window.print()}
-                  className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                  className="bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Download Report</span>
@@ -182,7 +185,7 @@ export const ComparePage: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="overflow-x-auto bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-xl p-2 sm:p-4"
+            className="overflow-x-auto bg-white dark:bg-[#111827] rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs dark:shadow-2xl backdrop-blur-xl p-2 sm:p-4"
           >
             <table className="w-full text-left border-collapse min-w-[700px]">
               <thead>
