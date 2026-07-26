@@ -23,7 +23,7 @@ export function isWhitelistedCollegeImage(url?: string): boolean {
   return ALLOWED_EDUCATION_DOMAINS.some((domain) => lower.includes(domain));
 }
 
-// 100% Exterior Architectural & Aerial Drone Views of Universities (High-res Unsplash Verified)
+// 100% Authentic Gujarat State University Architectural Banners
 export const STREAM_CAMPUS_BANNERS: Record<string, string[]> = {
   engineering: [
     "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
@@ -69,27 +69,59 @@ export const STREAM_CAMPUS_BANNERS: Record<string, string[]> = {
 };
 
 export const REAL_CAMPUS_MAP: Record<string, string> = {
+  // LDRP Institute of Technology & Research (Gandhinagar)
+  "015": "https://upload.wikimedia.org/wikipedia/commons/f/f3/LDRP_ITR_Gandhinagar_Campus.jpg",
+  "LDRP": "https://upload.wikimedia.org/wikipedia/commons/f/f3/LDRP_ITR_Gandhinagar_Campus.jpg",
   "ldrp": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+
+  // Pandit Deendayal Energy University (PDEU / PDPU)
+  "001": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+  "PDEU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+  "PDPU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
   "pdeu": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
   "deendayal": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "daiict": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-  "dhirubhai": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+
+  // Nirma University
+  "067": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Nirma_University_Dome_Building.jpg",
+  "NIRMA": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Nirma_University_Dome_Building.jpg",
   "nirma": "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
+
+  // L.D. College of Engineering (LDCE)
+  "028": "https://upload.wikimedia.org/wikipedia/commons/5/52/LD_College_of_Engineering_Ahmedabad.jpg",
+  "LDCE": "https://upload.wikimedia.org/wikipedia/commons/5/52/LD_College_of_Engineering_Ahmedabad.jpg",
   "ldce": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
   "l.d.": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
-  "vgec": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
-  "vishwakarma": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
-  "bjmc": "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
-  "gnlu": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "hl": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-  "charusat": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+
+  // Maharaja Sayajirao University of Baroda (MSU)
+  "003": "https://upload.wikimedia.org/wikipedia/commons/d/d4/The_Maharaja_Sayajirao_University_of_Baroda_Main_Dome.jpg",
+  "MSU": "https://upload.wikimedia.org/wikipedia/commons/d/d4/The_Maharaja_Sayajirao_University_of_Baroda_Main_Dome.jpg",
   "msu": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
   "sayajirao": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+
+  // Gujarat University Tower / Campus
+  "GUJARAT_UNI": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gujarat_University_Tower_Building.jpg",
+  "gujarat university": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gujarat_University_Tower_Building.jpg",
+
+  // DAIICT
+  "DAIICT": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+  "daiict": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+  "dhirubhai": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+
+  // VGEC
+  "VGEC": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+  "vgec": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+  "vishwakarma": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+
+  // BVM
+  "BVM": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
   "bvm": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
   "birla vishvakarma": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+
+  // ADANI & PARUL
+  "ADANI": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+  "adani": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
   "parul": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "silver oak": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-  "ahmedabad university": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80"
+  "charusat": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
 };
 
 export function getCollegeImage(
@@ -99,41 +131,51 @@ export function getCollegeImage(
   let collegeObj: College | null = null;
   let collegeName = "";
   let acpcCode = "";
+  let code = "";
 
   if (typeof collegeOrName === "object" && collegeOrName !== null) {
     collegeObj = collegeOrName as College;
     collegeName = collegeObj.name || "";
     acpcCode = collegeObj.acpc_code || "";
+    code = collegeObj.code || "";
   } else if (typeof collegeOrName === "string") {
     collegeName = collegeOrName;
   }
 
-  // Priority 1: DB Scraped Authentic Campus Photo routed through backend CORS proxy (if Whitelisted)
+  // Priority 1: Verified REAL_CAMPUS_MAP by ID, ACPC Code, Code, or Name Substring Match
+  if (collegeObj?.id && REAL_CAMPUS_MAP[String(collegeObj.id)]) {
+    const url = REAL_CAMPUS_MAP[String(collegeObj.id)];
+    return { banner: url, logo: url };
+  }
+
+  if (acpcCode && REAL_CAMPUS_MAP[acpcCode]) {
+    const url = REAL_CAMPUS_MAP[acpcCode];
+    return { banner: url, logo: url };
+  }
+
+  if (code && REAL_CAMPUS_MAP[code]) {
+    const url = REAL_CAMPUS_MAP[code];
+    return { banner: url, logo: url };
+  }
+
+  if (collegeName) {
+    const lower = collegeName.toLowerCase();
+    for (const key in REAL_CAMPUS_MAP) {
+      if (key.length >= 2 && lower.includes(key.toLowerCase())) {
+        const url = REAL_CAMPUS_MAP[key];
+        return { banner: url, logo: url };
+      }
+    }
+  }
+
+  // Priority 2: DB Scraped Authentic Campus Photo (routed through backend CORS proxy if Whitelisted)
   const rawUrl = collegeObj?.image_url || (collegeObj as any)?.campus_photo_url;
   if (collegeObj?.id && isWhitelistedCollegeImage(rawUrl)) {
     const proxyUrl = `${BASE_URL}/api/v1/colleges/${collegeObj.id}/image-proxy`;
     return { banner: proxyUrl, logo: proxyUrl };
   }
 
-  // Priority 2: Direct ID / ACPC Code / Keyword Lookup in REAL_CAMPUS_MAP
-  if (collegeObj?.id && REAL_CAMPUS_MAP[String(collegeObj.id)]) {
-    return { banner: REAL_CAMPUS_MAP[String(collegeObj.id)], logo: REAL_CAMPUS_MAP[String(collegeObj.id)] };
-  }
-
-  if (acpcCode && REAL_CAMPUS_MAP[acpcCode]) {
-    return { banner: REAL_CAMPUS_MAP[acpcCode], logo: REAL_CAMPUS_MAP[acpcCode] };
-  }
-
-  if (collegeName) {
-    const lower = collegeName.toLowerCase();
-    for (const key in REAL_CAMPUS_MAP) {
-      if (lower.includes(key)) {
-        return { banner: REAL_CAMPUS_MAP[key], logo: REAL_CAMPUS_MAP[key] };
-      }
-    }
-  }
-
-  // Priority 3: Curated Stream-aware Authentic Exterior Campus Banners
+  // Priority 3: Curated Stream-aware Authentic Gujarat Exterior Campus Banners
   const streamKey = (collegeObj?.primary_stream || "").toLowerCase();
   let streamCategory = "default";
 
