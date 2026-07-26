@@ -56,9 +56,10 @@ export const ComparePage: React.FC = () => {
     setLoading(true);
     try {
       const res = await compareColleges(ids);
-      setComparedData(res.colleges);
+      setComparedData(res?.colleges || []);
     } catch (err) {
       console.error(err);
+      setComparedData([]);
     } finally {
       setLoading(false);
     }
@@ -145,7 +146,7 @@ export const ComparePage: React.FC = () => {
             <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
             <p className="mt-3 font-medium text-xs sm:text-sm text-slate-500">Loading side-by-side metrics...</p>
           </div>
-        ) : comparedData.length === 0 ? (
+        ) : !comparedData || comparedData.length === 0 ? (
           <div className="py-16 text-center bg-white/90 dark:bg-slate-900/80 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8 shadow-xl backdrop-blur-xl">
             <span className="text-5xl">⚖️</span>
             <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mt-3">No Colleges Selected</h3>
@@ -171,11 +172,16 @@ export const ComparePage: React.FC = () => {
                     Metric / Parameter
                   </th>
                   {comparedData.map((item, idx) => {
-                    const img = getCollegeImage(item.college, idx);
+                    const col = (item as any)?.college || item;
+                    const colId = col?.id || idx + 1;
+                    const colName = col?.name || "Unknown Institution";
+                    const colCity = col?.city || "Gujarat";
+                    const img = getCollegeImage(col, colId);
+
                     return (
-                      <th key={item.college.id} className="p-4 sm:p-5 text-slate-900 dark:text-white w-1/4 relative">
+                      <th key={colId} className="p-4 sm:p-5 text-slate-900 dark:text-white w-1/4 relative">
                         <button
-                          onClick={() => handleRemoveCollege(item.college.id)}
+                          onClick={() => handleRemoveCollege(colId)}
                           className="absolute top-3 right-3 text-xs bg-slate-200 dark:bg-slate-800 hover:bg-red-500 hover:text-white w-5 h-5 rounded-full flex items-center justify-center transition-all"
                           title="Remove"
                         >
@@ -184,13 +190,13 @@ export const ComparePage: React.FC = () => {
                         <div className="w-full h-20 rounded-xl overflow-hidden mb-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 shadow-xs">
                           <img
                             src={img.banner}
-                            alt={item.college.name}
+                            alt={colName}
                             onError={handleImageError}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <h3 className="font-bold text-sm sm:text-base leading-tight text-slate-900 dark:text-white">{item.college.name}</h3>
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block mt-0.5">📍 {item.college.city || "Gujarat"}</span>
+                        <h3 className="font-bold text-sm sm:text-base leading-tight text-slate-900 dark:text-white">{colName}</h3>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block mt-0.5">📍 {colCity}</span>
                       </th>
                     );
                   })}
@@ -201,38 +207,46 @@ export const ComparePage: React.FC = () => {
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Stream / Discipline
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2.5 py-0.5 rounded-md text-xs font-semibold">
-                        {item.college.primary_stream || "General"}
-                      </span>
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
+                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2.5 py-0.5 rounded-md text-xs font-semibold">
+                          {col?.primary_stream || "General"}
+                        </span>
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     NIRF Ranking
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
-                      {item.college.nirf_rank ? (
-                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-2.5 py-0.5 rounded-full text-xs font-semibold border border-slate-200 dark:border-slate-700">
-                          🏆 NIRF #{item.college.nirf_rank}
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">N/A</span>
-                      )}
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
+                        {col?.nirf_rank ? (
+                          <span className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-2.5 py-0.5 rounded-full text-xs font-semibold border border-slate-200 dark:border-slate-700">
+                            🏆 NIRF #{col.nirf_rank}
+                          </span>
+                        ) : (
+                          <span className="text-slate-400">N/A</span>
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Tuition Fees (Annual)
                   </td>
-                  {comparedData.map((item) => {
-                    const minFee = item.courses.length > 0 ? Math.min(...item.courses.map((c) => c.annual_fees || 0)) : 0;
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const courses = item?.courses || col?.courses || [];
+                    const minFee = courses.length > 0 ? Math.min(...courses.map((c: any) => c.annual_fees || 0)) : 0;
                     return (
-                      <td key={item.college.id} className="p-4 sm:p-5 font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                         {formatCurrency(minFee, "/ yr")}
                       </td>
                     );
@@ -242,56 +256,76 @@ export const ComparePage: React.FC = () => {
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Highest Placement Package
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
-                      {formatLPA(item.placements?.highest_package)}
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const placements = item?.placements || col?.placements;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
+                        {formatLPA(placements?.highest_package)}
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Average Placement Package
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
-                      {formatLPA(item.placements?.average_package)}
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const placements = item?.placements || col?.placements;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
+                        {formatLPA(placements?.average_package)}
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Hostel Amenities
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 font-medium text-slate-800 dark:text-slate-200">
-                      {item.facilities?.hostel ? "✅ On-Campus Hostels" : "❌ No Hostel"}
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const facilities = item?.facilities || col?.facilities;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-medium text-slate-800 dark:text-slate-200">
+                        {facilities?.hostel ? "✅ On-Campus Hostels" : "❌ No Hostel"}
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Entrance Exams
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5 text-xs font-semibold text-slate-800 dark:text-slate-200">
-                      {item.admissions?.entrance_exams || "GUJCET / Merit"}
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const admissions = item?.admissions || col?.admissions;
+                    return (
+                      <td key={col?.id || idx} className="p-4 sm:p-5 text-xs font-semibold text-slate-800 dark:text-slate-200">
+                        {admissions?.entrance_exams || "GUJCET / Merit"}
+                      </td>
+                    );
+                  })}
                 </tr>
                 <tr className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Action
                   </td>
-                  {comparedData.map((item) => (
-                    <td key={item.college.id} className="p-4 sm:p-5">
-                      <Link
-                        to={`/college/${item.college.id}`}
-                        className="block w-full text-center bg-slate-900 dark:bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-500 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow-xs transition-all"
-                      >
-                        View Full Profile
-                      </Link>
-                    </td>
-                  ))}
+                  {comparedData.map((item, idx) => {
+                    const col = (item as any)?.college || item;
+                    const colId = col?.id || idx + 1;
+                    return (
+                      <td key={colId} className="p-4 sm:p-5">
+                        <Link
+                          to={`/college/${colId}`}
+                          className="block w-full text-center bg-slate-900 dark:bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-500 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow-xs transition-all"
+                        >
+                          View Full Profile
+                        </Link>
+                      </td>
+                    );
+                  })}
                 </tr>
               </tbody>
             </table>

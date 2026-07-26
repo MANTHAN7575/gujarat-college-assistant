@@ -48,7 +48,7 @@ export const CollegeDetailPage: React.FC = () => {
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="flex flex-col items-center gap-3">
             <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-600 dark:text-slate-400 font-medium text-xs sm:text-sm">Fetching institutional profile records...</p>
+            <p className="text-slate-600 dark:text-slate-400 font-medium text-xs sm:text-sm">Loading College Profile...</p>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export const CollegeDetailPage: React.FC = () => {
         <Navbar />
         <div className="max-w-4xl mx-auto p-12 text-center my-auto">
           <span className="text-5xl">⚠️</span>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200 mt-3">Institutional Profile Not Found</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200 mt-3">College information not found.</h2>
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">{error || "Invalid ID requested."}</p>
           <Link
             to="/"
@@ -74,13 +74,18 @@ export const CollegeDetailPage: React.FC = () => {
     );
   }
 
-  const { college, courses, placements, facilities, admissions, multi_year_cutoffs } = data;
-  const img = getCollegeImage(college, college.id);
+  const college = (data as any)?.college || data;
+  const courses = data?.courses || college?.courses || [];
+  const placements = data?.placements || college?.placements;
+  const facilities = data?.facilities || college?.facilities;
+  const admissions = data?.admissions || college?.admissions;
+  const multi_year_cutoffs = data?.multi_year_cutoffs || college?.multi_year_cutoffs;
+  const img = getCollegeImage(college, college?.id || 1);
 
   const years = [2026, 2025, 2024, 2023];
   const categories = ["All", "Open", "SEBC", "EWS", "SC", "ST"];
 
-  const currentYearObj = multi_year_cutoffs?.find((y) => y.academic_year === selectedYear);
+  const currentYearObj = multi_year_cutoffs?.find((y: any) => y.academic_year === selectedYear);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50/40 to-indigo-50/50 dark:from-slate-950 dark:via-[#0b1326] dark:to-slate-950 text-slate-900 dark:text-[#dae2fd] flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
@@ -102,16 +107,16 @@ export const CollegeDetailPage: React.FC = () => {
               <div className="w-full md:w-80 h-48 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shrink-0 relative shadow-md">
                 <img
                   src={img.banner}
-                  alt={college.name}
+                  alt={college?.name || "Institution"}
                   onError={handleImageError}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white font-semibold">
                   <span className="bg-blue-600/90 backdrop-blur-md px-2.5 py-0.5 rounded-full">
-                    {college.primary_stream || "General"}
+                    {college?.primary_stream || "General"}
                   </span>
-                  {college.acpc_code && (
+                  {college?.acpc_code && (
                     <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-full border border-slate-700">
                       ACPC #{college.acpc_code}
                     </span>
@@ -128,22 +133,22 @@ export const CollegeDetailPage: React.FC = () => {
                   >
                     ← Back to Index
                   </Link>
-                  {college.college_type && (
+                  {college?.college_type && (
                     <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                       {college.college_type}
                     </span>
                   )}
-                  {college.nirf_rank && (
+                  {college?.nirf_rank && (
                     <span className="bg-amber-500/90 text-white text-xs font-bold px-2.5 py-1 rounded-xl shadow-xs">
                       🏆 NIRF Rank #{college.nirf_rank}
                     </span>
                   )}
-                  {college.naac_grade && (
+                  {college?.naac_grade && (
                     <span className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold px-2.5 py-1 rounded-xl">
                       NAAC Grade {college.naac_grade}
                     </span>
                   )}
-                  {college.established_year && (
+                  {college?.established_year && (
                     <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-semibold px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                       Estd. {college.established_year}
                     </span>
@@ -151,14 +156,14 @@ export const CollegeDetailPage: React.FC = () => {
                 </div>
 
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                  {college.name}
+                  {college?.name || "Institution Name"}
                 </h1>
 
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1.5">
-                  📍 {college.address || `${college.city || "Gujarat"}, Gujarat, India`}
+                  📍 {college?.address || `${college?.city || "Gujarat"}, Gujarat, India`}
                 </p>
 
-                {college.university_affiliation && (
+                {college?.university_affiliation && (
                   <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold">
                     🎓 Affiliated with {college.university_affiliation}
                   </p>
@@ -166,9 +171,9 @@ export const CollegeDetailPage: React.FC = () => {
 
                 {/* Quick Action Contact Links */}
                 <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
-                  {data.website && (
+                  {(data?.website || college?.website) && (
                     <a
-                      href={data.website.startsWith("http") ? data.website : `https://${data.website}`}
+                      href={(data?.website || college?.website).startsWith("http") ? (data?.website || college?.website) : `https://${data?.website || college?.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1"
@@ -176,13 +181,13 @@ export const CollegeDetailPage: React.FC = () => {
                       🌐 Official Website ↗
                     </a>
                   )}
-                  {data.phone && (
+                  {(data?.phone || college?.phone) && (
                     <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
-                      📞 {data.phone}
+                      📞 {data?.phone || college?.phone}
                     </span>
                   )}
                   <Link
-                    to={`/compare?id1=${college.id}`}
+                    to={`/compare?id1=${college?.id || 1}`}
                     className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1"
                   >
                     ⚖️ Compare College
@@ -199,259 +204,291 @@ export const CollegeDetailPage: React.FC = () => {
         <div className="bg-white/95 dark:bg-slate-900/95 shadow-lg border border-slate-200/90 dark:border-slate-800 rounded-2xl p-1.5 backdrop-blur-xl flex items-center justify-between gap-1 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shrink-0 ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center ${
               activeTab === "overview"
-                ? "bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20"
-                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            📊 Institutional Overview
+            🏛️ Institutional Overview
           </button>
           <button
             onClick={() => setActiveTab("courses")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shrink-0 ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center ${
               activeTab === "courses"
-                ? "bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20"
-                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
             📚 Courses & Fees ({courses.length})
           </button>
           <button
             onClick={() => setActiveTab("cutoffs")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shrink-0 ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center ${
               activeTab === "cutoffs"
-                ? "bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20"
-                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            🎯 Multi-Year ACPC Cutoffs
+            📊 ACPC Merit Cutoffs
           </button>
           <button
             onClick={() => setActiveTab("placements")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shrink-0 ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center ${
               activeTab === "placements"
-                ? "bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20"
-                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            💼 Placements LPA
+            💼 Placements & LPA
           </button>
           <button
             onClick={() => setActiveTab("amenities")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shrink-0 ${
+            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center ${
               activeTab === "amenities"
-                ? "bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20"
-                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            🏛️ Hostels & Amenities
+            🏡 Campus & Hostels
           </button>
         </div>
       </nav>
 
-      {/* Main Tab Content Display */}
+      {/* Tab Panels */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
         <AnimatePresence mode="wait">
+          {/* TAB 1: OVERVIEW */}
           {activeTab === "overview" && (
             <motion.div
               key="overview"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
               className="space-y-6"
             >
-              {/* Highlight Metric Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl rounded-2xl p-5 backdrop-blur-xl">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Average Placement Package</span>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 mt-1">
-                    {formatLPA(placements?.average_package)}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Verified across graduating batch</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-2 space-y-6">
+                  <AnimatedDotCard className="p-6">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3">About the Institution</h3>
+                    <p className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-normal">
+                      {college?.description || `${college?.name || "This institution"} is a premier higher education center located in ${college?.city || "Gujarat"}. It offers accredited undergraduate and postgraduate programs under ${college?.university_affiliation || "GTU / State Board"}.`}
+                    </p>
+                  </AnimatedDotCard>
+
+                  {/* Highlights Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div className="bg-white/90 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center shadow-xs">
+                      <span className="text-2xl">💰</span>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Starting Fee</p>
+                      <p className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white mt-0.5">
+                        {courses.length > 0 ? formatCurrency(courses[0].annual_fees || 85000, "/yr") : "₹85,000 /yr"}
+                      </p>
+                    </div>
+                    <div className="bg-white/90 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center shadow-xs">
+                      <span className="text-2xl">🚀</span>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Highest LPA</p>
+                      <p className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white mt-0.5">
+                        {formatLPA(placements?.highest_package)}
+                      </p>
+                    </div>
+                    <div className="bg-white/90 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center shadow-xs">
+                      <span className="text-2xl">📈</span>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Avg Placement</p>
+                      <p className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white mt-0.5">
+                        {formatLPA(placements?.average_package)}
+                      </p>
+                    </div>
+                    <div className="bg-white/90 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center shadow-xs">
+                      <span className="text-2xl">🏢</span>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Hostels</p>
+                      <p className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white mt-0.5">
+                        {facilities?.hostel ? "Available" : "No Hostel"}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl rounded-2xl p-5 backdrop-blur-xl">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Highest Placement Package</span>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">
-                    {formatLPA(placements?.highest_package)}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Top recruited offer</p>
-                </div>
-                <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl rounded-2xl p-5 backdrop-blur-xl">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Campus Placement Rate</span>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 mt-1">
-                    {placements?.placement_percentage ? `${placements.placement_percentage}%` : "86.5%"}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Graduates secured placement</p>
+
+                {/* Right Quick Info Card */}
+                <div className="space-y-6">
+                  <AnimatedDotCard className="p-6">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-4">Admissions & Contact</h3>
+                    <ul className="space-y-3 text-xs sm:text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-slate-500 w-24 shrink-0">Process:</span>
+                        <span className="text-slate-800 dark:text-slate-200 font-medium">{admissions?.admission_process || "ACPC Online Merit Allocation"}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-slate-500 w-24 shrink-0">Exams:</span>
+                        <span className="text-slate-800 dark:text-slate-200 font-semibold">{admissions?.entrance_exams || "GUJCET / JEE Main / NEET"}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-slate-500 w-24 shrink-0">Affiliation:</span>
+                        <span className="text-slate-800 dark:text-slate-200 font-medium">{college?.university_affiliation || "GTU"}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-slate-500 w-24 shrink-0">Ownership:</span>
+                        <span className="text-slate-800 dark:text-slate-200 font-medium">{college?.ownership || "Government / Grant-in-Aid"}</span>
+                      </li>
+                    </ul>
+                  </AnimatedDotCard>
                 </div>
               </div>
-
-              {/* About Institution Card */}
-              <AnimatedDotCard className="p-6">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">About {college.name}</h3>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {data.description || `${college.name} is a premier accredited higher education institution located in ${college.city || "Gujarat"}. Established in ${college.established_year || "2000"}, the institution offers high-quality degree and diploma programs across engineering, medical, management, law, and science streams with state-of-the-art laboratory infrastructure and strong ACPC merit rankings.`}
-                </p>
-              </AnimatedDotCard>
             </motion.div>
           )}
 
+          {/* TAB 2: COURSES & FEES */}
           {activeTab === "courses" && (
             <motion.div
               key="courses"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
-              className="bg-white/95 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl backdrop-blur-xl rounded-2xl p-4 sm:p-6 overflow-x-auto"
+              className="space-y-4"
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Accredited Academic Degree Programs</h3>
-                <span className="bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 dark:border-blue-800">
-                  {courses.length} Programs Offering
-                </span>
-              </div>
-              <table className="w-full text-left border-collapse min-w-[650px]">
-                <thead>
-                  <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 text-xs font-bold text-slate-500 dark:text-slate-400">
-                    <th className="p-3">Course / Program Name</th>
-                    <th className="p-3">Degree</th>
-                    <th className="p-3">Stream</th>
-                    <th className="p-3">Duration</th>
-                    <th className="p-3">Intake Seats</th>
-                    <th className="p-3 text-right">Annual Tuition Fees</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
-                  {courses.map((c) => (
-                    <tr key={c.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                      <td className="p-3 font-bold text-slate-900 dark:text-white">{c.course_name}</td>
-                      <td className="p-3 font-semibold text-slate-700 dark:text-slate-300">
-                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-0.5 rounded-md text-xs font-semibold">
-                          {c.degree_type || "Degree"}
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Accredited Academic Courses ({courses.length})</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {courses.map((course: any, idx: number) => (
+                  <div
+                    key={course?.id || idx}
+                    className="bg-white/90 dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-xs flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="bg-blue-50 dark:bg-blue-950/80 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-md">
+                          {course?.degree_type || "Degree"}
                         </span>
-                      </td>
-                      <td className="p-3 text-slate-600 dark:text-slate-400">{c.stream_category || college.primary_stream || "General"}</td>
-                      <td className="p-3 text-slate-600 dark:text-slate-400">{c.duration || "4 Years"}</td>
-                      <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">{c.total_seats ? `${c.total_seats} Seats` : "60 Seats"}</td>
-                      <td className="p-3 text-right font-extrabold text-blue-600 dark:text-blue-400 text-sm">
-                        {formatCurrency(c.annual_fees, "/ yr")}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                        <span className="text-xs text-slate-500 font-medium">⏱️ {course?.duration || "4 Years"}</span>
+                      </div>
+                      <h3 className="font-bold text-base text-slate-900 dark:text-white">{course?.course_name}</h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-normal">{course?.eligibility || "Class 12 in relevant stream with 45% minimum."}</p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Annual Tuition Fee</span>
+                        <span className="font-extrabold text-slate-900 dark:text-white text-base">
+                          {formatCurrency(course?.annual_fees || 85000, "/ yr")}
+                        </span>
+                      </div>
+                      <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold px-2.5 py-1 rounded-xl">
+                        🪑 {course?.total_seats || 60} Seats
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           )}
 
+          {/* TAB 3: ACPC MERIT CUTOFFS */}
           {activeTab === "cutoffs" && (
             <motion.div
               key="cutoffs"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
-              className="bg-white/95 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl backdrop-blur-xl rounded-2xl p-4 sm:p-6"
+              className="space-y-6"
             >
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">ACPC Merit Rank Cutoffs</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">Multi-year academic merit trends & category cutoffs</p>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">ACPC Merit Rank Cutoffs</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Filter category-wise Opening & Closing merit ranks by Academic Year.</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                  {/* Academic Year Selector Pills */}
-                  <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/90 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
-                    {years.map((yr) => (
-                      <button
-                        key={yr}
-                        onClick={() => setSelectedYear(yr)}
-                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                          selectedYear === yr
-                            ? "bg-blue-600 text-white shadow-xs"
-                            : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
-                        }`}
-                      >
-                        {yr === 2026 ? "2026 (Current)" : yr}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Category Selector Pills */}
-                  {selectedYear !== 2026 && (
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      {categories.map((cat) => (
-                        <button
-                          key={cat}
-                          onClick={() => setSelectedCategory(cat)}
-                          className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all ${
-                            selectedCategory === cat
-                              ? "bg-blue-600 text-white font-bold shadow-xs"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
-                          }`}
-                        >
-                          {cat}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                {/* Academic Year Selection Pills */}
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {years.map((y) => (
+                    <button
+                      key={y}
+                      onClick={() => setSelectedYear(y)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        selectedYear === y
+                          ? "bg-blue-600 text-white shadow-xs"
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                      }`}
+                    >
+                      {y} {y === 2026 ? "(Current)" : ""}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Pending / Unreleased Year State Banner (for 2026) */}
-              {selectedYear === 2026 || currentYearObj?.is_pending ? (
-                <div className="py-10 px-6 text-center bg-blue-50/60 dark:bg-blue-950/40 rounded-2xl border border-blue-200/80 dark:border-blue-800/80 backdrop-blur-md">
-                  <span className="text-4xl">ℹ️</span>
-                  <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
-                    ACPC 2026 Cutoffs Pending Release
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-lg mx-auto leading-relaxed">
-                    Official Round 1 & Round 2 merit ranks for 2026 admissions have not been declared yet by ACPC.
-                  </p>
-                  <div className="mt-5 flex items-center justify-center gap-3 flex-wrap">
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">Category:</span>
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+                      selectedCategory === cat
+                        ? "bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold"
+                        : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* Year 2026 Pending State Info Banner */}
+              {selectedYear === 2026 && currentYearObj?.is_pending ? (
+                <div className="bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <span className="text-3xl">ℹ️</span>
+                    <div>
+                      <h4 className="font-bold text-sm sm:text-base text-amber-900 dark:text-amber-200">2026 ACPC Cutoff Ranks Pending Release</h4>
+                      <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-300 mt-1 max-w-2xl font-medium">
+                        {currentYearObj?.status_message || "Official Round 1 & Round 2 merit ranks for 2026 admissions have not been declared yet by ACPC."}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0 w-full md:w-auto">
                     <button
                       onClick={() => setSelectedYear(2025)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-xs shadow-xs transition-all"
+                      className="bg-amber-700 hover:bg-amber-800 text-white font-bold px-3.5 py-2 rounded-xl text-xs shadow-xs transition-all flex-1 md:flex-none text-center"
                     >
                       View 2025 Cutoffs
                     </button>
                     <Link
-                      to={`/chat`}
-                      className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold px-4 py-2 rounded-xl text-xs shadow-xs transition-all"
+                      to="/chat"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs shadow-xs transition-all flex-1 md:flex-none text-center"
                     >
-                      Predict Expected 2026 Cutoffs in AI Chat →
+                      AI Rank Predictor →
                     </Link>
                   </div>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse min-w-[600px]">
+                /* Cutoffs Data Table */
+                <div className="overflow-x-auto bg-white/90 dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-md">
+                  <table className="w-full text-left border-collapse min-w-[650px]">
                     <thead>
-                      <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                        <th className="p-3">Course / Program</th>
-                        <th className="p-3">Category</th>
-                        <th className="p-3">Round</th>
-                        <th className="p-3">Opening Rank</th>
-                        <th className="p-3">Closing Rank</th>
-                        <th className="p-3 text-right">Academic Year</th>
+                      <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/50 text-xs uppercase tracking-wider text-slate-500 font-bold">
+                        <th className="p-4">Course Name</th>
+                        <th className="p-4">Category</th>
+                        <th className="p-4">Round</th>
+                        <th className="p-4">Opening Merit Rank</th>
+                        <th className="p-4">Closing Merit Rank</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
                       {currentYearObj?.cutoffs
-                        ?.filter((item) => selectedCategory === "All" || item.category.toUpperCase() === selectedCategory.toUpperCase())
-                        ?.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                            <td className="p-3 font-bold text-slate-900 dark:text-white">{item.course_name}</td>
-                            <td className="p-3 font-semibold text-blue-600 dark:text-blue-400">{item.category}</td>
-                            <td className="p-3 text-slate-600 dark:text-slate-400">{item.round_number}</td>
-                            <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">{item.opening_rank?.toLocaleString()}</td>
-                            <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">{item.closing_rank?.toLocaleString()}</td>
-                            <td className="p-3 text-right">
-                              <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">
-                                {selectedYear} Verified
+                        ?.filter((c: any) => selectedCategory === "All" || c.category === selectedCategory)
+                        .map((item: any, idx: number) => (
+                          <tr key={idx} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                            <td className="p-4 font-bold text-slate-900 dark:text-white">{item.course_name}</td>
+                            <td className="p-4">
+                              <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-2 py-0.5 rounded-md text-xs">
+                                {item.category}
                               </span>
                             </td>
+                            <td className="p-4 font-medium text-slate-600 dark:text-slate-400">{item.round_number}</td>
+                            <td className="p-4 font-extrabold text-blue-600 dark:text-blue-400">{item.opening_rank?.toLocaleString()}</td>
+                            <td className="p-4 font-extrabold text-indigo-600 dark:text-indigo-400">{item.closing_rank?.toLocaleString()}</td>
                           </tr>
                         ))}
                     </tbody>
@@ -461,98 +498,75 @@ export const CollegeDetailPage: React.FC = () => {
             </motion.div>
           )}
 
+          {/* TAB 4: PLACEMENTS */}
           {activeTab === "placements" && (
             <motion.div
               key="placements"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
               className="space-y-6"
             >
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="bg-white/95 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl rounded-2xl p-5 backdrop-blur-xl">
-                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Highest & Average Package Offered</h4>
-                  <div className="space-y-3 mt-3">
-                    <div className="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl">
-                      <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold">Highest Package (Domestic/International):</span>
-                      <span className="font-extrabold text-emerald-600 dark:text-emerald-400 text-base">{formatLPA(placements?.highest_package)}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl">
-                      <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold">Average Package (Graduating Batch):</span>
-                      <span className="font-extrabold text-blue-600 dark:text-blue-400 text-base">{formatLPA(placements?.average_package)}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/95 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl rounded-2xl p-5 backdrop-blur-xl">
-                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Placement Highlights</h4>
-                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed mt-2">
-                    {placements?.placement_details || "Active Training & Placement Cell coordinating on-campus recruitment drives with top IT MNCs, core engineering firms, healthcare groups, and financial corporate bodies across Gujarat."}
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <AnimatedDotCard className="p-6 text-center">
+                  <span className="text-3xl">🏆</span>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">Highest Campus LPA</h4>
+                  <p className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">{formatLPA(placements?.highest_package)}</p>
+                </AnimatedDotCard>
+                <AnimatedDotCard className="p-6 text-center">
+                  <span className="text-3xl">📊</span>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">Average Package</h4>
+                  <p className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">{formatLPA(placements?.average_package)}</p>
+                </AnimatedDotCard>
+                <AnimatedDotCard className="p-6 text-center">
+                  <span className="text-3xl">🎯</span>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">Placement Success Rate</h4>
+                  <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">{placements?.placement_percentage || 85}%</p>
+                </AnimatedDotCard>
               </div>
 
-              {/* Top Recruiters Pill Badges */}
               <AnimatedDotCard className="p-6">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3">Top Corporate Recruiters</h4>
-                <div className="flex flex-wrap gap-2">
-                  {(placements?.top_recruiters || "TCS, Infosys, Wipro, Adani Enterprises, Reliance Industries, L&T Technology, Zydus Lifesciences, Torrent Power, HDFC Bank")
-                    .split(",")
-                    .map((recruiter, idx) => (
-                      <span
-                        key={idx}
-                        className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-2xs"
-                      >
-                        💼 {recruiter.trim()}
-                      </span>
-                    ))}
-                </div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3">Top Corporate Recruiters</h3>
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
+                  {placements?.top_recruiters || "TCS, Infosys, Wipro, Adani Enterprises, Reliance Industries, L&T Technology Services, Zydus Lifesciences, Torrent Power, HDFC Bank"}
+                </p>
               </AnimatedDotCard>
             </motion.div>
           )}
 
+          {/* TAB 5: AMENITIES & HOSTELS */}
           {activeTab === "amenities" && (
             <motion.div
               key="amenities"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
               className="space-y-6"
             >
-              {/* Facilities Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[
-                  { name: "Wi-Fi Campus", active: facilities?.wifi ?? true, icon: "📶" },
-                  { name: "Central Library", active: facilities?.library ?? true, icon: "📚" },
-                  { name: "Boys & Girls Hostel", active: facilities?.hostel ?? true, icon: "🏢" },
-                  { name: "Sports Complex", active: facilities?.sports ?? true, icon: "⚽" },
-                  { name: "Cafeteria", active: facilities?.cafeteria ?? true, icon: "☕" },
-                  { name: "Transport Service", active: facilities?.transport ?? true, icon: "🚌" },
-                  { name: "Medical Center", active: facilities?.medical ?? true, icon: "🏥" },
-                  { name: "Gymnasium", active: facilities?.gym ?? true, icon: "🏋️" },
-                ].map((fac, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white/95 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 p-4 rounded-2xl flex items-center gap-3 shadow-sm backdrop-blur-xl"
-                  >
-                    <span className="text-2xl">{fac.icon}</span>
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-900 dark:text-white">{fac.name}</h4>
-                      <span className={`text-[10px] font-semibold ${fac.active ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"}`}>
-                        {fac.active ? "✓ Available" : "N/A"}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Dedicated Hostel Box */}
               <AnimatedDotCard className="p-6">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Hostel Infrastructure & Accommodation</h4>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {facilities?.facility_details || "Air-conditioned and non-AC hostel options with 24/7 security, high-speed Wi-Fi, hygienic mess dining facilities, and dedicated resident wardens for boys and girls."}
+                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">Campus Facilities & Hostels</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm font-semibold">
+                  <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                    <span>🏢 Hostels:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">{facilities?.hostel ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                    <span>📚 Library:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">{facilities?.library ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                    <span>📶 Wi-Fi:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">{facilities?.wifi ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                    <span>🏀 Sports:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">{facilities?.sports ? "Yes" : "No"}</span>
+                  </div>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-4 leading-relaxed font-normal">
+                  {facilities?.facility_details || "High-speed campus Wi-Fi, central digital library, AC hostels, multi-sports complex, cafeteria, and transport across major city routes."}
                 </p>
               </AnimatedDotCard>
             </motion.div>
@@ -564,5 +578,4 @@ export const CollegeDetailPage: React.FC = () => {
     </div>
   );
 };
-
 export default CollegeDetailPage;

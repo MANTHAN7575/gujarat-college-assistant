@@ -136,6 +136,6 @@ class CollegeDetailResponse(BaseModel):
     facilities: Optional[FacilitySchema] = None
     admissions: Optional[AdmissionSchema] = None
     branches: Optional[List[Dict[str, Any]]] = None
-    multi_year_cutoffs: Optional[List[AcpcCutoffYearSchema]] = None
+    multi_year_cutoffs: Optional[List[Dict[str, Any]]] = None
 
     model_config = ConfigDict(from_attributes=True)
