@@ -7,7 +7,6 @@ import {
   Printer,
   Plus,
   X,
-  Building2,
   GraduationCap,
   Award,
   CreditCard,
@@ -101,13 +100,13 @@ export const ComparePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
       {/* Outer Ambient Glow */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[320px] bg-gradient-to-tr from-teal-500/10 via-indigo-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[650px] h-[320px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Navbar />
 
-      {/* Elevated Header Container */}
+      {/* Header Container */}
       <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -117,7 +116,7 @@ export const ComparePage: React.FC = () => {
           <AnimatedDotCard topBorderAccent={true} className="p-6 sm:p-8">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold px-3 py-1.5 rounded-xl mb-4 transition-all shadow-xs"
+              className="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-semibold px-3 py-1.5 rounded-xl mb-4 transition-all shadow-xs"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Directory Index</span>
@@ -125,13 +124,13 @@ export const ComparePage: React.FC = () => {
 
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span className="bg-slate-800 border border-slate-700 text-teal-400 text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-md">
+                <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-md">
                   Academic Decision Matrix
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight text-slate-900 dark:text-white leading-tight">
                   Compare Gujarat Institutions
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl font-normal">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl font-normal">
                   Side-by-side analysis of tuition fees, highest LPA placement packages, and ACPC cutoffs.
                 </p>
               </div>
@@ -139,15 +138,15 @@ export const ComparePage: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <button
                   onClick={() => window.print()}
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-700 transition-all shadow-xs flex items-center gap-1.5"
+                  className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5"
                 >
-                  <Printer className="w-4 h-4 text-teal-400" />
+                  <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Download Report</span>
                 </button>
                 {selectedIds.length < 3 && (
                   <button
                     onClick={() => setModalOpen(true)}
-                    className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Add College ({selectedIds.length}/3)</span>
@@ -163,17 +162,17 @@ export const ComparePage: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
         {loading ? (
           <div className="py-16 text-center">
-            <div className="w-10 h-10 border-3 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="mt-3 font-medium text-xs sm:text-sm text-slate-400">Loading side-by-side metrics...</p>
+            <div className="w-10 h-10 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="mt-3 font-medium text-xs sm:text-sm text-slate-600 dark:text-slate-400">Loading side-by-side metrics...</p>
           </div>
         ) : !comparedData || comparedData.length === 0 ? (
-          <div className="py-16 text-center bg-slate-900 rounded-3xl border border-slate-800 p-8 shadow-xl backdrop-blur-xl">
-            <Columns3 className="w-12 h-12 text-slate-600 mx-auto" />
-            <h3 className="text-lg font-bold text-slate-200 mt-3">No Colleges Selected</h3>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">Select up to 3 colleges from the directory to build a side-by-side comparison table.</p>
+          <div className="py-16 text-center bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl backdrop-blur-xl">
+            <Columns3 className="w-12 h-12 text-slate-400 mx-auto" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200 mt-3">No Colleges Selected</h3>
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">Select up to 3 colleges from the directory to build a side-by-side comparison table.</p>
             <button
               onClick={() => setModalOpen(true)}
-              className="mt-5 bg-teal-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-teal-700"
+              className="mt-5 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-indigo-700"
             >
               Select Colleges
             </button>
@@ -183,12 +182,12 @@ export const ComparePage: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="overflow-x-auto bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl backdrop-blur-xl p-2 sm:p-4"
+            className="overflow-x-auto bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-xl p-2 sm:p-4"
           >
             <table className="w-full text-left border-collapse min-w-[700px]">
               <thead>
-                <tr className="border-b border-slate-800 bg-slate-950/50">
-                  <th className="p-4 sm:p-5 font-bold text-xs uppercase tracking-wider text-slate-400 w-1/4">
+                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                  <th className="p-4 sm:p-5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 w-1/4">
                     Metric / Parameter
                   </th>
                   {comparedData.map((item, idx) => {
@@ -199,15 +198,15 @@ export const ComparePage: React.FC = () => {
                     const img = getCollegeImage(col, colId);
 
                     return (
-                      <th key={colId} className="p-4 sm:p-5 text-white w-1/4 relative">
+                      <th key={colId} className="p-4 sm:p-5 text-slate-900 dark:text-white w-1/4 relative">
                         <button
                           onClick={() => handleRemoveCollege(colId)}
-                          className="absolute top-3 right-3 text-xs bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white p-1 rounded-full flex items-center justify-center transition-all"
+                          className="absolute top-3 right-3 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-rose-600 text-slate-500 hover:text-white p-1 rounded-full flex items-center justify-center transition-all border border-slate-200 dark:border-slate-700"
                           title="Remove"
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
-                        <div className="w-full h-20 rounded-xl overflow-hidden mb-2.5 bg-slate-800 shadow-xs">
+                        <div className="w-full h-20 rounded-xl overflow-hidden mb-2.5 bg-slate-900 shadow-xs">
                           <img
                             src={img.banner}
                             alt={colName}
@@ -215,53 +214,53 @@ export const ComparePage: React.FC = () => {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <h3 className="font-bold text-sm sm:text-base leading-tight text-white">{colName}</h3>
-                        <span className="text-xs text-slate-400 font-medium block mt-0.5">📍 {colCity}</span>
+                        <h3 className="font-bold text-sm sm:text-base leading-tight text-slate-900 dark:text-white">{colName}</h3>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block mt-0.5">📍 {colCity}</span>
                       </th>
                     );
                   })}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-xs sm:text-sm">
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-teal-400" />
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Stream / Discipline</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-100">
-                        <span className="bg-slate-800 text-slate-200 px-2.5 py-0.5 rounded-md text-xs font-semibold border border-slate-700">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
+                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2.5 py-0.5 rounded-md text-xs font-semibold border border-slate-200 dark:border-slate-700">
                           {col?.primary_stream || "General"}
                         </span>
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <Award className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Award className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>NIRF Ranking</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-100">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-900 dark:text-slate-100">
                         {col?.nirf_rank ? (
-                          <span className="bg-slate-800 text-slate-100 px-2.5 py-0.5 rounded-full text-xs font-semibold border border-slate-700">
+                          <span className="bg-amber-500/90 text-white px-2.5 py-0.5 rounded-full text-xs font-semibold">
                             NIRF #{col.nirf_rank}
                           </span>
                         ) : (
-                          <span className="text-slate-500">N/A</span>
+                          <span className="text-slate-400">N/A</span>
                         )}
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Tuition Fees (Annual)</span>
                   </td>
                   {comparedData.map((item, idx) => {
@@ -269,58 +268,58 @@ export const ComparePage: React.FC = () => {
                     const courses = item?.courses || col?.courses || [];
                     const minFee = courses.length > 0 ? Math.min(...courses.map((c: any) => c.annual_fees || 0)) : 0;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-bold text-white text-sm sm:text-base">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">
                         {formatCurrency(minFee, "/ yr")}
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Highest Placement Package</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     const placements = item?.placements || col?.placements;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-bold text-white text-sm sm:text-base">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">
                         {formatLPA(placements?.highest_package)}
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Average Placement Package</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     const placements = item?.placements || col?.placements;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-100">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-semibold text-slate-800 dark:text-slate-200">
                         {formatLPA(placements?.average_package)}
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <Home className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Home className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Hostel Amenities</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     const facilities = item?.facilities || col?.facilities;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 font-medium text-slate-200">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 font-medium text-slate-800 dark:text-slate-200">
                         {facilities?.hostel ? (
-                          <span className="flex items-center gap-1.5 text-teal-400 font-semibold">
+                          <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-semibold">
                             <CheckCircle2 className="w-4 h-4" /> On-Campus Hostels
                           </span>
                         ) : (
-                          <span className="flex items-center gap-1.5 text-rose-400 font-medium">
+                          <span className="flex items-center gap-1.5 text-rose-500 font-medium">
                             <XCircle className="w-4 h-4" /> No Hostel
                           </span>
                         )}
@@ -328,23 +327,23 @@ export const ComparePage: React.FC = () => {
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-teal-400" />
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Entrance Exams</span>
                   </td>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;
                     const admissions = item?.admissions || col?.admissions;
                     return (
-                      <td key={col?.id || idx} className="p-4 sm:p-5 text-xs font-semibold text-slate-200">
+                      <td key={col?.id || idx} className="p-4 sm:p-5 text-xs font-semibold text-slate-800 dark:text-slate-200">
                         {admissions?.entrance_exams || "GUJCET / Merit"}
                       </td>
                     );
                   })}
                 </tr>
-                <tr className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-400">
+                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Action
                   </td>
                   {comparedData.map((item, idx) => {
@@ -354,7 +353,7 @@ export const ComparePage: React.FC = () => {
                       <td key={colId} className="p-4 sm:p-5">
                         <Link
                           to={`/college/${colId}`}
-                          className="flex items-center justify-center gap-1.5 w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow-xs transition-all"
+                          className="flex items-center justify-center gap-1.5 w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-3 rounded-xl text-xs shadow-xs transition-all"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>View Profile</span>
@@ -369,7 +368,7 @@ export const ComparePage: React.FC = () => {
         )}
       </main>
 
-      {/* College Selector Modal with Embedded Live Search */}
+      {/* College Selector Modal */}
       <AddCollegeModal
         isOpen={modalOpen}
         selectedIds={selectedIds}

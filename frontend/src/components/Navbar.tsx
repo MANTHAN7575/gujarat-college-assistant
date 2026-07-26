@@ -14,12 +14,12 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-slate-900 text-white border-b border-slate-800 shadow-md transition-colors">
+    <header className="sticky top-0 z-50 w-full bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
-        {/* Left: Custom SVG Emblem & Institutional Brand Title */}
+        {/* Left: Custom SVG Emblem & Gujarat College Assistant Brand */}
         <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-400 shadow-inner group-hover:border-teal-500/50 transition-all duration-200">
-            {/* Bespoke Geometric State Crest & Open Book Shield Vector Emblem */}
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center shadow-xs group-hover:border-indigo-500 transition-all duration-200">
+            {/* Bespoke Royal Indigo State Shield Vector Emblem */}
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -27,23 +27,23 @@ export const Navbar: React.FC = () => {
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-5 h-5 text-teal-400 group-hover:scale-105 transition-transform"
+              className="w-5 h-5 text-indigo-600 dark:text-indigo-400 group-hover:scale-105 transition-transform"
             >
               {/* Shield Outline */}
-              <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" fill="#0F172A" />
-              {/* Architectural Pillars / Book Wings */}
-              <path d="M12 7v8" stroke="#0D9488" strokeWidth="2" />
-              <path d="M8 9h8" stroke="#0D9488" strokeWidth="1.5" />
-              <path d="M7 13h10" stroke="#0D9488" strokeWidth="1.5" />
-              <circle cx="12" cy="5" r="1" fill="#0D9488" />
+              <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" fill="#4F46E5" fillOpacity="0.15" />
+              {/* Pillars / Open Book */}
+              <path d="M12 7v8" stroke="#4F46E5" strokeWidth="2" />
+              <path d="M8 9h8" stroke="#2563EB" strokeWidth="1.5" />
+              <path d="M7 13h10" stroke="#2563EB" strokeWidth="1.5" />
+              <circle cx="12" cy="5" r="1" fill="#4F46E5" />
             </svg>
           </div>
           <div className="flex flex-col justify-center">
-            <span className="text-base font-bold text-white tracking-tight leading-none">
-              Gujarat ACPC Directory
+            <span className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
+              Gujarat College Assistant
             </span>
-            <span className="text-[10px] uppercase font-bold text-teal-400 tracking-wider mt-1">
-              State Higher Education Portal
+            <span className="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400 tracking-wider mt-1">
+              ACPC & Institutional Intelligence
             </span>
           </div>
         </Link>
@@ -60,8 +60,8 @@ export const Navbar: React.FC = () => {
                   to={link.path}
                   className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                     isActive
-                      ? "bg-teal-600 text-white shadow-xs"
-                      : "bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white"
+                      ? "bg-indigo-600 text-white shadow-xs"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
                   }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />
@@ -71,17 +71,17 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          <div className="h-5 w-px bg-slate-800 mx-0.5 hidden sm:block"></div>
+          <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 mx-0.5 hidden sm:block"></div>
 
           {/* Theme Switcher Button */}
           <button
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center hover:bg-slate-700 transition-all shrink-0 shadow-xs"
+            className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all shrink-0 shadow-xs"
             aria-label="Toggle Theme"
             title={`Switch to ${theme === "light" ? "Dark" : "Light"} Mode`}
           >
             {theme === "light" ? (
-              <Moon className="w-4 h-4" />
+              <Moon className="w-4 h-4 text-slate-700" />
             ) : (
               <Sun className="w-4 h-4 text-amber-400" />
             )}
