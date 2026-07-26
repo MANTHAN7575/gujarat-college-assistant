@@ -80,7 +80,7 @@ def search_wikipedia_campus_image(college_name: str) -> str:
 
 
 def scrape_real_campus_image(college: College) -> str:
-    """Multi-source resolver for real exterior campus images."""
+    """Multi-source resolver for real exterior campus images targeting CollegeDekho, Shiksha, Collegedunia, Wikipedia."""
     name = college.name or ""
     city = college.city or "Gujarat"
 
@@ -89,19 +89,20 @@ def scrape_real_campus_image(college: College) -> str:
     if wiki_img:
         return wiki_img
 
-    # 2. Bing Image Search with strict exterior building / aerial keywords
-    query = f"{name} {city} Gujarat main building facade aerial drone view campus photo"
+    # 2. Bing Image Search targeting education portals for campus building photos
+    query = f"{name} Gujarat campus building photo site:shiksha.com OR site:collegedunia.com OR site:collegedekho.com OR site:wikipedia.org"
     bing_img = search_bing_campus_image(query)
     if bing_img:
         return bing_img
 
     # 3. Alternative exterior query
-    query2 = f"{name} Gujarat university main building exterior photo"
+    query2 = f"{name} {city} Gujarat university main building facade aerial drone view campus photo"
     bing_img2 = search_bing_campus_image(query2)
     if bing_img2:
         return bing_img2
 
     return ""
+
 
 
 def run_pipeline(limit: int = 100, force: bool = False):

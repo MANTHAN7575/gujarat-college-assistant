@@ -10,6 +10,7 @@ const ALLOWED_EDUCATION_DOMAINS = [
   "unsplash.com",
   "shiksha.com",
   "collegedunia.com",
+  "collegedekho.com",
   "ac.in",
   "edu.in",
   "careers360.com"
@@ -23,49 +24,24 @@ export function isWhitelistedCollegeImage(url?: string): boolean {
   return ALLOWED_EDUCATION_DOMAINS.some((domain) => lower.includes(domain));
 }
 
-// 100% Authentic Gujarat State University Architectural Banners
+// 100% Authentic Indian University Campus Exterior Facades & Aerial Views
+export const EXTERIOR_CAMPUS_FALLBACKS = [
+  "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop", // Modern University Facade
+  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format&fit=crop", // Grand Campus Building
+  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop", // Academic Building Front
+  "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gujarat_University_Tower_Building.jpg"   // Gujarat University Tower
+];
+
 export const STREAM_CAMPUS_BANNERS: Record<string, string[]> = {
-  engineering: [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80"
-  ],
-  medical: [
-    "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80"
-  ],
-  management: [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80"
-  ],
-  commerce: [
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
-  ],
-  pharmacy: [
-    "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80"
-  ],
-  science: [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
-  ],
-  polytechnic: [
-    "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
-  ],
-  law: [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
-  ],
-  default: [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80"
-  ]
+  engineering: EXTERIOR_CAMPUS_FALLBACKS,
+  medical: EXTERIOR_CAMPUS_FALLBACKS,
+  management: EXTERIOR_CAMPUS_FALLBACKS,
+  commerce: EXTERIOR_CAMPUS_FALLBACKS,
+  pharmacy: EXTERIOR_CAMPUS_FALLBACKS,
+  science: EXTERIOR_CAMPUS_FALLBACKS,
+  polytechnic: EXTERIOR_CAMPUS_FALLBACKS,
+  law: EXTERIOR_CAMPUS_FALLBACKS,
+  default: EXTERIOR_CAMPUS_FALLBACKS
 };
 
 export const REAL_CAMPUS_MAP: Record<string, string> = {
@@ -78,8 +54,8 @@ export const REAL_CAMPUS_MAP: Record<string, string> = {
   "001": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
   "PDEU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
   "PDPU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
-  "pdeu": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "deendayal": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "pdeu": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80",
+  "deendayal": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80",
 
   // Nirma University
   "067": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Nirma_University_Dome_Building.jpg",
@@ -113,20 +89,20 @@ export const REAL_CAMPUS_MAP: Record<string, string> = {
   "vishwakarma": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
 
   // BVM
-  "BVM": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "bvm": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "birla vishvakarma": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "BVM": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80",
+  "bvm": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80",
+  "birla vishvakarma": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80",
 
   // ADANI & PARUL
   "ADANI": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
   "adani": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-  "parul": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "charusat": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
+  "parul": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+  "charusat": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80"
 };
 
 export function getCollegeImageUrl(college?: { id?: number; image_url?: string; acpc_code?: string; name?: string; code?: string; primary_stream?: string } | any): string {
   if (!college) {
-    return STREAM_CAMPUS_BANNERS.default[0];
+    return EXTERIOR_CAMPUS_FALLBACKS[0];
   }
 
   // Enforce 100% proxy coverage for any college record with an ID
@@ -145,19 +121,8 @@ export function getCollegeImageUrl(college?: { id?: number; image_url?: string; 
     return mappedUrl;
   }
 
-  const streamKey = (college?.primary_stream || "").toLowerCase();
-  let streamCategory = "default";
-  if (streamKey.includes("engineer")) streamCategory = "engineering";
-  else if (streamKey.includes("medic")) streamCategory = "medical";
-  else if (streamKey.includes("manag")) streamCategory = "management";
-  else if (streamKey.includes("commer")) streamCategory = "commerce";
-  else if (streamKey.includes("pharm")) streamCategory = "pharmacy";
-  else if (streamKey.includes("scienc")) streamCategory = "science";
-  else if (streamKey.includes("poly") || streamKey.includes("diploma")) streamCategory = "polytechnic";
-  else if (streamKey.includes("law")) streamCategory = "law";
-
-  const banners = STREAM_CAMPUS_BANNERS[streamCategory] || STREAM_CAMPUS_BANNERS.default;
-  return banners[0];
+  const colId = college?.id || 0;
+  return EXTERIOR_CAMPUS_FALLBACKS[colId % EXTERIOR_CAMPUS_FALLBACKS.length];
 }
 
 export function getCollegeImage(
@@ -168,16 +133,16 @@ export function getCollegeImage(
     const url = getCollegeImageUrl(collegeOrName);
     return { banner: url, logo: url };
   } else if (typeof collegeOrName === "string") {
-    const url = REAL_CAMPUS_MAP[collegeOrName] || STREAM_CAMPUS_BANNERS.default[index % STREAM_CAMPUS_BANNERS.default.length];
+    const url = REAL_CAMPUS_MAP[collegeOrName] || EXTERIOR_CAMPUS_FALLBACKS[index % EXTERIOR_CAMPUS_FALLBACKS.length];
     return { banner: url, logo: url };
   }
-  const defaultUrl = STREAM_CAMPUS_BANNERS.default[index % STREAM_CAMPUS_BANNERS.default.length];
+  const defaultUrl = EXTERIOR_CAMPUS_FALLBACKS[index % EXTERIOR_CAMPUS_FALLBACKS.length];
   return { banner: defaultUrl, logo: defaultUrl };
 }
 
 export function handleImageError(e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl?: string) {
   const target = e.currentTarget;
-  const fallback = fallbackUrl || STREAM_CAMPUS_BANNERS.default[0];
+  const fallback = fallbackUrl || EXTERIOR_CAMPUS_FALLBACKS[0];
   if (target.src !== fallback) {
     target.src = fallback;
   }

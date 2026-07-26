@@ -18,8 +18,9 @@ from app.schemas.compare import CompareRequest, CompareResponse
 
 router = APIRouter()
 
-FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1200&auto=format&fit=crop"
-SECONDARY_FALLBACK = "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop"
+FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop"
+SECONDARY_FALLBACK = "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format&fit=crop"
+
 
 VERIFIED_EXTERIOR_MAP = {
     "LDRP": "https://upload.wikimedia.org/wikipedia/commons/f/f3/LDRP_ITR_Gandhinagar_Campus.jpg",
