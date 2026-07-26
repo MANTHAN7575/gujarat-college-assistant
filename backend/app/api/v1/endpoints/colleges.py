@@ -1,5 +1,7 @@
 from typing import Optional, List
+import requests
 from fastapi import APIRouter, Depends, Query, HTTPException, status
+from fastapi.responses import RedirectResponse, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, func
 
@@ -199,5 +201,14 @@ def proxy_college_image(
     college = crud_college.get_college_by_id(db, college_id=college_id)
     if not college or not college.image_url:
         raise HTTPException(status_code=404, detail="College image not found")
-    return {"image_url": college.image_url, "name": college.name}
 
+    try:
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        resp = requests.get(college.image_url, headers=headers, timeout=5)
+        if resp.status_code == 200:
+            media_type = resp.headers.get("content-type", "image/jpeg")
+            return Response(content=resp.content, media_type=media_type)
+    except Exception:
+        pass
+
+    return RedirectResponse(url=college.image_url)
