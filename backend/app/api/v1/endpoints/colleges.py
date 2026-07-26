@@ -119,12 +119,22 @@ def get_colleges_by_stream_endpoint(
 
 
 @router.post("/compare/", response_model=CompareResponse)
+@router.post("/compare", response_model=CompareResponse)
+@router.get("/compare/", response_model=CompareResponse)
+@router.get("/compare", response_model=CompareResponse)
 def compare_colleges(
-    request: CompareRequest,
+    request: Optional[CompareRequest] = None,
+    college_ids: Optional[List[int]] = Query(None),
     db: Session = Depends(get_db)
 ):
+    ids = []
+    if request and request.college_ids:
+        ids = request.college_ids
+    elif college_ids:
+        ids = college_ids
+
     details_list = []
-    for c_id in request.college_ids:
+    for c_id in ids:
         college = crud_college.get_college_by_id(db, college_id=c_id)
         if college:
             detail = CollegeDetailResponse.model_validate(college)

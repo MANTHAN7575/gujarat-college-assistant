@@ -47,16 +47,27 @@ export const STREAM_CAMPUS_BANNERS: Record<string, string[]> = {
 };
 
 export const REAL_CAMPUS_MAP: Record<string, string> = {
+  "ldrp": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
   "pdeu": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-  "daiict": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Daiict-campus.jpg/1024px-Daiict-campus.jpg",
-  "nirma": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-  "ldce": "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
-  "vgec": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+  "deendayal": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "daiict": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+  "dhirubhai": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+  "nirma": "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
+  "ldce": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+  "l.d.": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+  "vgec": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+  "vishwakarma": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
   "bjmc": "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
   "gnlu": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
   "hl": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-  "charusat": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Charotar_University_of_Science_and_Technology.jpg/960px-Charotar_University_of_Science_and_Technology.jpg",
-  "msu": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg/1280px-D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg"
+  "charusat": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+  "msu": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+  "sayajirao": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+  "bvm": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "birla vishvakarma": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "parul": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+  "silver oak": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+  "ahmedabad university": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80"
 };
 
 export function getCollegeImage(
@@ -65,17 +76,23 @@ export function getCollegeImage(
 ): { banner: string; logo: string } {
   let collegeObj: College | null = null;
   let collegeName = "";
+  let acpcCode = "";
 
   if (typeof collegeOrName === "object" && collegeOrName !== null) {
     collegeObj = collegeOrName as College;
     collegeName = collegeObj.name || "";
+    acpcCode = collegeObj.acpc_code || "";
   } else if (typeof collegeOrName === "string") {
     collegeName = collegeOrName;
   }
 
-  // 1. Direct name/ID map lookup
+  // 1. Direct ID / ACPC Code / Keyword Lookup
   if (collegeObj?.id && REAL_CAMPUS_MAP[String(collegeObj.id)]) {
     return { banner: REAL_CAMPUS_MAP[String(collegeObj.id)], logo: REAL_CAMPUS_MAP[String(collegeObj.id)] };
+  }
+
+  if (acpcCode && REAL_CAMPUS_MAP[acpcCode]) {
+    return { banner: REAL_CAMPUS_MAP[acpcCode], logo: REAL_CAMPUS_MAP[acpcCode] };
   }
 
   if (collegeName) {

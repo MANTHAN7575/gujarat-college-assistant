@@ -111,10 +111,15 @@ export async function getCollegeBranches(collegeId: number): Promise<CollegeBran
 }
 
 export async function compareColleges(collegeIds: number[]): Promise<CompareResponse> {
-  const params = new URLSearchParams();
-  collegeIds.forEach((id) => params.append("college_ids", String(id)));
-
-  const response = await fetch(`${BASE_URL}/api/v1/colleges/compare?${params.toString()}`);
+  const response = await fetch(`${BASE_URL}/api/v1/colleges/compare/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      college_ids: collegeIds,
+    }),
+  });
   if (!response.ok) {
     throw new Error(`API error ${response.status}: ${response.statusText}`);
   }
