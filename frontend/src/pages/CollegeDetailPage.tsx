@@ -468,26 +468,34 @@ export const CollegeDetailPage: React.FC = () => {
 
               {/* Refined Pending Cutoff Alert Banner */}
               {selectedYear === 2026 && currentYearObj?.is_pending ? (
-                <div className="bg-amber-500/10 dark:bg-amber-500/15 border border-amber-300/80 dark:border-amber-500/30 rounded-2xl p-5 text-amber-900 dark:text-amber-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-white dark:bg-[#111827] border border-indigo-100 dark:border-slate-800 rounded-2xl shadow-xs transition-all">
                   <div className="flex items-start gap-3">
-                    <Info className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
+                    <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5">
+                      <Info className="w-5 h-5" />
+                    </div>
                     <div>
-                      <h4 className="font-bold text-sm sm:text-base text-amber-900 dark:text-amber-200">2026 ACPC Cutoff Ranks Pending Release</h4>
-                      <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-300 mt-1 max-w-2xl font-medium">
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        2026 ACPC Cutoff Ranks Pending Release
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                          Upcoming
+                        </span>
+                      </h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 font-medium">
                         {currentYearObj?.status_message || "Official Round 1 & Round 2 merit ranks for 2026 admissions have not been declared yet by ACPC."}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0 w-full md:w-auto">
+
+                  <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 mt-2 sm:mt-0">
                     <button
                       onClick={() => setSelectedYear(2025)}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-xs transition-all flex-1 md:flex-none text-center cursor-pointer"
+                      className="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-xs cursor-pointer"
                     >
                       View 2025 Cutoffs
                     </button>
                     <Link
                       to="/chat"
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-xs transition-all flex-1 md:flex-none text-center cursor-pointer"
+                      className="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all text-center cursor-pointer"
                     >
                       AI Rank Predictor →
                     </Link>
