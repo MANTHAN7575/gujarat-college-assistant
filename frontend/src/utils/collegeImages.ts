@@ -129,27 +129,22 @@ export function getCollegeImageUrl(college?: { id?: number; image_url?: string; 
     return STREAM_CAMPUS_BANNERS.default[0];
   }
 
-  // 1. Route scraped image_url or DB URL through FastAPI backend proxy
-  if (college?.id && (college.image_url || college.campus_photo_url)) {
-    const raw = college.image_url || college.campus_photo_url;
-    if (raw && typeof raw === "string" && raw.startsWith("http")) {
-      return `${BASE_URL}/api/v1/colleges/${college.id}/image-proxy`;
-    }
+  // Enforce 100% proxy coverage for any college record with an ID
+  if (college?.id) {
+    return `${BASE_URL}/api/v1/colleges/${college.id}/image-proxy`;
   }
 
-  // 2. Check verified real campus map
+  // Mapped URL or stream fallback for string names / static calls without ID
   const acpc = college?.acpc_code || "";
   const name = college?.name || "";
   const code = college?.code || "";
-  const idStr = String(college?.id || "");
 
-  const mappedUrl = REAL_CAMPUS_MAP[acpc] || REAL_CAMPUS_MAP[code] || REAL_CAMPUS_MAP[idStr] || (name ? Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase())) && REAL_CAMPUS_MAP[Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase()))!] : undefined);
+  const mappedUrl = REAL_CAMPUS_MAP[acpc] || REAL_CAMPUS_MAP[code] || (name ? Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase())) && REAL_CAMPUS_MAP[Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase()))!] : undefined);
 
   if (mappedUrl) {
     return mappedUrl;
   }
 
-  // 3. Fallback to Stream Architectural Banner
   const streamKey = (college?.primary_stream || "").toLowerCase();
   let streamCategory = "default";
   if (streamKey.includes("engineer")) streamCategory = "engineering";
@@ -162,8 +157,7 @@ export function getCollegeImageUrl(college?: { id?: number; image_url?: string; 
   else if (streamKey.includes("law")) streamCategory = "law";
 
   const banners = STREAM_CAMPUS_BANNERS[streamCategory] || STREAM_CAMPUS_BANNERS.default;
-  const colId = college?.id || 0;
-  return banners[colId % banners.length];
+  return banners[0];
 }
 
 export function getCollegeImage(

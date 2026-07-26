@@ -18,22 +18,46 @@ from app.schemas.compare import CompareRequest, CompareResponse
 
 router = APIRouter()
 
-FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
+FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1200&auto=format&fit=crop"
+SECONDARY_FALLBACK = "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop"
+
+VERIFIED_EXTERIOR_MAP = {
+    "LDRP": "https://upload.wikimedia.org/wikipedia/commons/f/f3/LDRP_ITR_Gandhinagar_Campus.jpg",
+    "PDEU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+    "PDPU": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+    "DEENDAYAL": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+    "NIRMA": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Nirma_University_Dome_Building.jpg",
+    "LDCE": "https://upload.wikimedia.org/wikipedia/commons/5/52/LD_College_of_Engineering_Ahmedabad.jpg",
+    "L.D.": "https://upload.wikimedia.org/wikipedia/commons/5/52/LD_College_of_Engineering_Ahmedabad.jpg",
+    "MSU": "https://upload.wikimedia.org/wikipedia/commons/d/d4/The_Maharaja_Sayajirao_University_of_Baroda_Main_Dome.jpg",
+    "SAYAJIRAO": "https://upload.wikimedia.org/wikipedia/commons/d/d4/The_Maharaja_Sayajirao_University_of_Baroda_Main_Dome.jpg",
+    "GUJARAT UNIVERSITY": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gujarat_University_Tower_Building.jpg"
+}
 
 
 def get_fallback_image_response() -> Response:
     """Download and stream default exterior campus banner bytes directly without redirecting."""
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+    }
+
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
-        }
         res = requests.get(FALLBACK_CAMPUS_BANNER, headers=headers, timeout=5)
         if res.status_code == 200:
             content_type = res.headers.get("Content-Type", "image/jpeg")
             return Response(content=res.content, media_type=content_type)
     except Exception:
         pass
+
+    try:
+        res2 = requests.get(SECONDARY_FALLBACK, headers=headers, timeout=5)
+        if res2.status_code == 200:
+            content_type = res2.headers.get("Content-Type", "image/jpeg")
+            return Response(content=res2.content, media_type=content_type)
+    except Exception:
+        pass
+
     return Response(content=b"", media_type="image/jpeg", status_code=200)
 
 
@@ -211,7 +235,22 @@ def proxy_college_image(
     db: Session = Depends(get_db)
 ):
     college = crud_college.get_college_by_id(db, college_id=college_id)
-    if not college or not college.image_url:
+    if not college:
+        return get_fallback_image_response()
+
+    target_url = college.image_url
+
+    # Check verified exterior map first for known colleges
+    c_name = (college.name or "").upper()
+    c_code = (college.code or "").upper()
+    c_acpc = (college.acpc_code or "").upper()
+
+    for key, url in VERIFIED_EXTERIOR_MAP.items():
+        if key in c_name or key == c_code or key == c_acpc:
+            target_url = url
+            break
+
+    if not target_url or not target_url.startswith("http"):
         return get_fallback_image_response()
 
     try:
@@ -219,7 +258,7 @@ def proxy_college_image(
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
         }
-        res = requests.get(college.image_url, headers=headers, timeout=5)
+        res = requests.get(target_url, headers=headers, timeout=5)
         if res.status_code == 200:
             content_type = res.headers.get("Content-Type", "image/jpeg")
             return Response(content=res.content, media_type=content_type)
