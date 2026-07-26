@@ -1,0 +1,157 @@
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { CollegeBranch } from "../types";
+
+interface CollegeBranchModalProps {
+  isOpen: boolean;
+  collegeName: string;
+  branches: CollegeBranch[];
+  loading: boolean;
+  onClose: () => void;
+}
+
+export const CollegeBranchModal: React.FC<CollegeBranchModalProps> = ({
+  isOpen,
+  collegeName,
+  branches,
+  loading,
+  onClose,
+}) => {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          {/* Backdrop Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-md"
+          />
+
+          {/* Modal Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="relative z-10 bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-2xl backdrop-blur-2xl rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden text-slate-900 dark:text-white"
+          >
+            {/* Modal Header */}
+            <div className="flex items-start justify-between border-b border-slate-200/80 dark:border-slate-800 pb-4 mb-4">
+              <div>
+                <span className="bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  Network Campus Explorer
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug">
+                  Sister Campuses & Affiliated Branches
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium line-clamp-1">
+                  Network constituent institutes for <span className="font-semibold text-blue-600 dark:text-blue-400">{collegeName}</span>
+                </p>
+              </div>
+              <button
+                onClick={onClose}
+                className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white p-2 rounded-xl text-sm font-bold transition-all shrink-0"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Body (Scrollable List) */}
+            <div className="flex-1 overflow-y-auto pr-1 space-y-3">
+              {loading ? (
+                <div className="space-y-3 py-6">
+                  {[1, 2, 3].map((idx) => (
+                    <div
+                      key={idx}
+                      className="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4 animate-pulse h-24"
+                    />
+                  ))}
+                </div>
+              ) : branches.length === 0 ? (
+                <div className="text-center py-12 bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-6">
+                  <span className="text-4xl">🏛️</span>
+                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-2">
+                    Single Primary Campus Location
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    This institution operates exclusively from its main accredited campus.
+                  </p>
+                </div>
+              ) : (
+                branches.map((branch, idx) => (
+                  <motion.div
+                    key={branch.id || idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.04 }}
+                    className="bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 sm:p-5 transition-all hover:border-blue-500/60 hover:shadow-md group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1.5 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {branch.is_main_campus && (
+                          <span className="bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                            🌟 Main Campus
+                          </span>
+                        )}
+                        <span className="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                          📍 {branch.city}
+                        </span>
+                        <span className="bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                          🎓 {branch.stream}
+                        </span>
+                        {branch.acpc_code && (
+                          <span className="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                            ACPC #{branch.acpc_code}
+                          </span>
+                        )}
+                      </div>
+
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
+                        {branch.name}
+                      </h4>
+
+                      {branch.annual_fees && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          Annual Fees: <span className="font-bold text-slate-800 dark:text-slate-200">₹{branch.annual_fees.toLocaleString()} / year</span>
+                        </p>
+                      )}
+                    </div>
+
+                    {branch.id ? (
+                      <Link
+                        to={`/college/${branch.id}`}
+                        onClick={onClose}
+                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-xs text-center shrink-0"
+                      >
+                        View Branch Profile →
+                      </Link>
+                    ) : (
+                      <span className="text-xs text-slate-400 font-medium">Affiliated Branch</span>
+                    )}
+                  </motion.div>
+                ))
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-slate-800 flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <span>Verified ACPC & Gujarat University Network</span>
+              <button
+                onClick={onClose}
+                className="bg-slate-900 dark:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-slate-800"
+              >
+                Close Explorer
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default CollegeBranchModal;

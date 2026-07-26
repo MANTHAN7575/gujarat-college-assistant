@@ -1,0 +1,1351 @@
+[
+  {
+    "id": 1,
+    "code": "PDEU",
+    "acpc_code": "001",
+    "acronyms": ["pdeu", "pdpu"],
+    "name": "Pandit Deendayal Energy University (PDEU)",
+    "city": "Gandhinagar",
+    "district": "Gandhinagar",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "PDEU University",
+    "is_polytechnic": false,
+    "naac_grade": "A++",
+    "established_year": 2007,
+    "website": "https://www.pdpu.ac.in",
+    "email": "info@pdpu.ac.in",
+    "phone": "+91-79-23275060",
+    "address": "Knowledge Corridor, Raisan Village, Gandhinagar, Gujarat",
+    "description": "Leading private university in Gujarat known for engineering, management, energy studies and liberal studies.",
+    "nirf_rank": 89,
+    "image_url": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 240000,
+        "total_seats": 240,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Petroleum Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 240000,
+        "total_seats": 120,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 750000,
+      "highest_package": 3800000,
+      "placement_percentage": 88,
+      "top_recruiters": "ONGC, Reliance, Adani, TCS, Infosys, Cognizant",
+      "placement_details": "Exceptional career opportunities with top tier energy and IT recruiters."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "State-of-the-art Knowledge Corridor residential campus with high-performance computing labs."
+    },
+    "events": {
+      "tech_fest": "Flare",
+      "cultural_fest": "Energy Cup",
+      "hackathons": "National AI Hackathons",
+      "workshops": "Robotics & Renewable Energy Summits",
+      "event_details": "Organizes Gujarat's premier inter-college techno-cultural fests."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC and JEE Main entrance scores.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Closing ACPC ranks range between 1500 to 4500 for CSE.",
+      "admission_contact": "+91-79-23275060"
+    }
+  },
+
+  {
+    "id": 2,
+    "code": "DA-IICT",
+    "acpc_code": "002",
+    "acronyms": ["daiict", "da-iict"],
+    "name": "Dhirubhai Ambani Institute of Information and Communication Technology (DA-IICT)",
+    "city": "Gandhinagar",
+    "district": "Gandhinagar",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "Deemed University",
+    "university_affiliation": "Deemed University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 2001,
+    "website": "https://www.daiict.ac.in",
+    "email": "info@daiict.ac.in",
+    "phone": "+91-79-68261700",
+    "address": "Near Indroda Circle, Gandhinagar, Gujarat",
+    "description": "Premier national institute focused on Information and Communication Technology education and advanced research.",
+    "nirf_rank": 101,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Daiict-campus.jpg/1024px-Daiict-campus.jpg",
+    "courses": [
+      {
+        "course_name": "Information and Communication Technology (ICT)",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 300000,
+        "total_seats": 300,
+        "eligibility": "12th PCM + JEE Main"
+      },
+      {
+        "course_name": "Mathematics and Computing",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 300000,
+        "total_seats": 120,
+        "eligibility": "12th PCM + JEE Main"
+      }
+    ],
+    "placements": {
+      "average_package": 1700000,
+      "highest_package": 5200000,
+      "placement_percentage": 94,
+      "top_recruiters": "Google, Microsoft, Amazon, Sprinklr, Atlassian, Goldman Sachs",
+      "placement_details": "Top-tier nationwide tech placements with industry leading CTC statistics."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Iconic red-brick eco-friendly campus with fiber-optic connectivity and modern hostels."
+    },
+    "events": {
+      "tech_fest": "Synapse",
+      "cultural_fest": "Cafecoffee Fest",
+      "hackathons": "i.Fest National Hackathon",
+      "workshops": "Advanced Machine Learning & Distributed Systems Workshops",
+      "event_details": "Synapse draws top tech talent from institutions across India."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC Gujarat quota and All India JEE Main rank merit.",
+      "entrance_exams": "JEE Main",
+      "cutoff_details": "High cutoff percentile required for ICT and Honours program.",
+      "admission_contact": "+91-79-68261700"
+    }
+  },
+
+  {
+    "id": 3,
+    "code": "NIRMA",
+    "acpc_code": "003",
+    "acronyms": ["nirma", "nirmauni"],
+    "name": "Nirma University",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Nirma University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 2003,
+    "website": "https://www.nirmauni.ac.in",
+    "email": "info@nirmauni.ac.in",
+    "phone": "+91-2717-241911",
+    "address": "Sarkhej-Gandhinagar Highway, Ahmedabad, Gujarat",
+    "description": "Prestigious multidisciplinary private university renowned for engineering, management, law, and pharmacy.",
+    "nirf_rank": 55,
+    "image_url": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Science and Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 250000,
+        "total_seats": 360,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "BA LLB (Hons)",
+        "degree_type": "Integrated Law",
+        "duration": "5 Years",
+        "annual_fees": 290000,
+        "total_seats": 180,
+        "eligibility": "12th Any Stream + CLAT"
+      }
+    ],
+    "placements": {
+      "average_package": 850000,
+      "highest_package": 4600000,
+      "placement_percentage": 90,
+      "top_recruiters": "Amazon, Deloitte, Oracle, Samsung, Morgan Stanley",
+      "placement_details": "Consistent 90%+ placement record across technology and management streams."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Sprawling SG Highway campus with iconic central dome and modern auditoriums."
+    },
+    "events": {
+      "tech_fest": "Nirmaan",
+      "cultural_fest": "Vaudeville",
+      "hackathons": "Nirma AI Sprint",
+      "workshops": "Cybersecurity & Legal Tech Seminars",
+      "event_details": "Comprehensive inter-university cultural and engineering conventions."
+    },
+    "admissions": {
+      "admission_process": "Admissions conducted via ACPC seats and All-India JEE Main quota.",
+      "entrance_exams": "GUJCET, JEE Main, CLAT",
+      "cutoff_details": "Top 1000 ACPC rank needed for Computer Science.",
+      "admission_contact": "+91-2717-241911"
+    }
+  },
+
+  {
+    "id": 4,
+    "code": "LDCE",
+    "acpc_code": "004",
+    "acronyms": ["ldce", "ld"],
+    "name": "L.D. College of Engineering (LDCE)",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Government",
+    "primary_stream": "Engineering",
+    "ownership": "Government",
+    "affiliation": "GTU",
+    "university_affiliation": "Gujarat Technological University (GTU)",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 1948,
+    "website": "https://ldce.ac.in",
+    "email": "principal@ldce.ac.in",
+    "phone": "+91-79-26302887",
+    "address": "Opposite Gujarat University, Navrangpura, Ahmedabad, Gujarat",
+    "description": "Gujarat's oldest and premier government engineering institution offering nominal tuition fees.",
+    "nirf_rank": 120,
+    "image_url": "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.E",
+        "duration": "4 Years",
+        "annual_fees": 1500,
+        "total_seats": 180,
+        "eligibility": "12th PCM + ACPC Rank"
+      },
+      {
+        "course_name": "Information Technology",
+        "degree_type": "B.E",
+        "duration": "4 Years",
+        "annual_fees": 1500,
+        "total_seats": 120,
+        "eligibility": "12th PCM + ACPC Rank"
+      }
+    ],
+    "placements": {
+      "average_package": 620000,
+      "highest_package": 2100000,
+      "placement_percentage": 82,
+      "top_recruiters": "TCS, L&T, Reliance Industries, Adani Ports, Torrent Power",
+      "placement_details": "Vast alumni network providing high placement velocity in core and IT sectors."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": false,
+      "facility_details": "Heritage Navrangpura campus with active student workshops and central library."
+    },
+    "events": {
+      "tech_fest": "Lakshya",
+      "cultural_fest": "Kalaa",
+      "hackathons": "GTU TechFest",
+      "workshops": "Automotive Engineering & IoT Workshops",
+      "event_details": "Lakshya is one of the largest government tech fests in western India."
+    },
+    "admissions": {
+      "admission_process": "100% Centralized ACPC merit-based counseling.",
+      "entrance_exams": "GUJCET",
+      "cutoff_details": "Closing ranks under 500 for Open category Computer Engineering.",
+      "admission_contact": "+91-79-26302887"
+    }
+  },
+
+  {
+    "id": 5,
+    "code": "VGEC",
+    "acpc_code": "005",
+    "acronyms": ["vgec"],
+    "name": "Vishwakarma Government Engineering College",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Government",
+    "primary_stream": "Engineering",
+    "ownership": "Government",
+    "affiliation": "GTU",
+    "university_affiliation": "Gujarat Technological University (GTU)",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 1994,
+    "website": "https://www.vgecg.ac.in",
+    "email": "principal@vgecg.ac.in",
+    "phone": "+91-79-29099903",
+    "address": "Chandkheda, Opposite Sangath Mall, Ahmedabad, Gujarat",
+    "description": "Leading state government engineering college offering high quality technical education under GTU.",
+    "nirf_rank": 140,
+    "image_url": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.E",
+        "duration": "4 Years",
+        "annual_fees": 1500,
+        "total_seats": 180,
+        "eligibility": "12th PCM + ACPC Rank"
+      },
+      {
+        "course_name": "Electronics & Communication",
+        "degree_type": "B.E",
+        "duration": "4 Years",
+        "annual_fees": 1500,
+        "total_seats": 120,
+        "eligibility": "12th PCM + ACPC Rank"
+      }
+    ],
+    "placements": {
+      "average_package": 580000,
+      "highest_package": 1600000,
+      "placement_percentage": 78,
+      "top_recruiters": "TCS, Wipro, eInfochips, Accenture, Crest Data Systems",
+      "placement_details": "Strong campus recruitment for IT, Electronics, and Chemical engineering."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": false,
+      "facility_details": "Chandkheda campus situated near GTU headquarters with modern sports complex."
+    },
+    "events": {
+      "tech_fest": "Prakalp",
+      "cultural_fest": "VGEC Fest",
+      "hackathons": "Smart India Hackathon Regionals",
+      "workshops": "VLSI Design & Embedded Systems Workshops",
+      "event_details": "Hosts annual regional technology showcases."
+    },
+    "admissions": {
+      "admission_process": "Centralized ACPC Gujarat State counseling.",
+      "entrance_exams": "GUJCET",
+      "cutoff_details": "Computer Science closes around rank 1200.",
+      "admission_contact": "+91-79-29099903"
+    }
+  },
+
+  {
+    "id": 6,
+    "code": "BJMC",
+    "acpc_code": "006",
+    "acronyms": ["bjmc", "bjmedical"],
+    "name": "B.J. Medical College (BJMC)",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Government",
+    "primary_stream": "Medical",
+    "ownership": "Government",
+    "affiliation": "Gujarat University",
+    "university_affiliation": "Gujarat University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 1871,
+    "website": "https://www.bjmcabd.edu.in",
+    "email": "dean-bjmc@gujarat.gov.in",
+    "phone": "+91-79-22680074",
+    "address": "Civil Hospital Campus, Asarwa, Ahmedabad, Gujarat",
+    "description": "Gujarat's flagship government medical college associated with Civil Hospital, one of Asia's largest hospitals.",
+    "nirf_rank": 40,
+    "image_url": "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
+        "degree_type": "MBBS",
+        "duration": "5.5 Years",
+        "annual_fees": 25000,
+        "total_seats": 250,
+        "eligibility": "12th PCB + NEET UG Score"
+      },
+      {
+        "course_name": "MD General Medicine",
+        "degree_type": "Postgraduate Medical",
+        "duration": "3 Years",
+        "annual_fees": 30000,
+        "total_seats": 40,
+        "eligibility": "MBBS + NEET PG Score"
+      }
+    ],
+    "placements": {
+      "average_package": 1200000,
+      "highest_package": 2500000,
+      "placement_percentage": 98,
+      "top_recruiters": "Civil Hospital, Apollo Hospitals, Fortis, Max Healthcare, Government Medical Services",
+      "placement_details": "100% compulsory paid clinical internship with instant postgraduate and hospital placement."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "1200+ bed hospital attachment, super-specialty surgical centers, and medical library."
+    },
+    "events": {
+      "tech_fest": "MedEx",
+      "cultural_fest": "Pulse",
+      "hackathons": "Healthcare AI Innovation Forum",
+      "workshops": "Surgical Simulation & Trauma Care Symposia",
+      "event_details": "Organizes state-wide medical research conferences."
+    },
+    "admissions": {
+      "admission_process": "Admissions through Gujarat NEET State Quota counseling (85%) and All India Quota (15%).",
+      "entrance_exams": "NEET UG, NEET PG",
+      "cutoff_details": "Top NEET percentile required (Rank under 600 in Gujarat).",
+      "admission_contact": "+91-79-22680074"
+    }
+  },
+
+  {
+    "id": 7,
+    "code": "GNLU",
+    "acpc_code": "007",
+    "acronyms": ["gnlu"],
+    "name": "Gujarat National Law University (GNLU)",
+    "city": "Gandhinagar",
+    "district": "Gandhinagar",
+    "state": "Gujarat",
+    "college_type": "Government",
+    "primary_stream": "Law",
+    "ownership": "Government",
+    "affiliation": "Statutory NLU",
+    "university_affiliation": "Statutory NLU",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 2003,
+    "website": "https://www.gnlu.ac.in",
+    "email": "contact@gnlu.ac.in",
+    "phone": "+91-79-23276611",
+    "address": "Attalika Avenue, Knowledge Corridor, Koba, Gandhinagar, Gujarat",
+    "description": "Premier National Law University in western India offering integrated legal education.",
+    "nirf_rank": 7,
+    "image_url": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "BA LLB (Hons)",
+        "degree_type": "Integrated Law",
+        "duration": "5 Years",
+        "annual_fees": 220000,
+        "total_seats": 180,
+        "eligibility": "12th Any Stream + CLAT Score"
+      },
+      {
+        "course_name": "B.Com LLB (Hons)",
+        "degree_type": "Integrated Law",
+        "duration": "5 Years",
+        "annual_fees": 220000,
+        "total_seats": 60,
+        "eligibility": "12th Commerce + CLAT Score"
+      }
+    ],
+    "placements": {
+      "average_package": 1500000,
+      "highest_package": 2200000,
+      "placement_percentage": 92,
+      "top_recruiters": "Cyril Amarchand Mangaldas, Shardul Amarchand, Khaitan & Co, Trilegal, AZB & Partners",
+      "placement_details": "Top corporate law firm placements and judicial clerkships."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Moot court halls, extensive legal research database, and Knowledge Corridor campus."
+    },
+    "events": {
+      "tech_fest": "GNLU International Moot Court",
+      "cultural_fest": "Pentagram",
+      "hackathons": "LegalTech Hackathon",
+      "workshops": "Arbitration & IPR International Seminars",
+      "event_details": "GNLU Moot Court is recognized globally."
+    },
+    "admissions": {
+      "admission_process": "Admissions through Common Law Admission Test (CLAT).",
+      "entrance_exams": "CLAT",
+      "cutoff_details": "CLAT All-India Rank under 500 for General category.",
+      "admission_contact": "+91-79-23276611"
+    }
+  },
+
+  {
+    "id": 8,
+    "code": "HL",
+    "acpc_code": "008",
+    "acronyms": ["hl", "hlcommerce"],
+    "name": "H.L. College of Commerce",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Grant-in-aid",
+    "primary_stream": "Commerce",
+    "ownership": "Private Trust / Aided",
+    "affiliation": "Gujarat University",
+    "university_affiliation": "Gujarat University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 1936,
+    "website": "https://www.hlcollege.edu",
+    "email": "principal@hlcollege.edu",
+    "phone": "+91-79-26462820",
+    "address": "SV Desai Marg, Navrangpura, Ahmedabad, Gujarat",
+    "description": "Gujarat's premier commerce institution famed for producing chartered accountants, corporate leaders and entrepreneurs.",
+    "nirf_rank": 65,
+    "image_url": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Bachelor of Commerce (B.Com)",
+        "degree_type": "B.Com",
+        "duration": "3 Years",
+        "annual_fees": 5000,
+        "total_seats": 600,
+        "eligibility": "12th Commerce Merit"
+      },
+      {
+        "course_name": "Master of Commerce (M.Com)",
+        "degree_type": "M.Com",
+        "duration": "2 Years",
+        "annual_fees": 7500,
+        "total_seats": 120,
+        "eligibility": "B.Com Graduation Merit"
+      }
+    ],
+    "placements": {
+      "average_package": 450000,
+      "highest_package": 1000000,
+      "placement_percentage": 75,
+      "top_recruiters": "Deloitte, EY, KPMG, PwC, ICICI Bank, HDFC Bank",
+      "placement_details": "Big Four financial consulting firms recruit directly from HL campus."
+    },
+    "facilities": {
+      "hostel": false,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": false,
+      "gym": true,
+      "facility_details": "Central Navrangpura campus with heritage library and sports grounds."
+    },
+    "events": {
+      "tech_fest": "HL Horizon",
+      "cultural_fest": "HL Commotion",
+      "hackathons": "Finance & Stock Market Simulator",
+      "workshops": "CA Foundation & Tax Planning Seminars",
+      "event_details": "Commotion is one of Gujarat's most vibrant commerce youth festivals."
+    },
+    "admissions": {
+      "admission_process": "Gujarat University centralized online admission portal based on 12th Board marks.",
+      "entrance_exams": "Merit Based",
+      "cutoff_details": "Cutoffs above 88% in 12th Commerce Board exams.",
+      "admission_contact": "+91-79-26462820"
+    }
+  },
+
+  {
+    "id": 9,
+    "code": "STXAV",
+    "acpc_code": "009",
+    "acronyms": ["stxav", "xavier", "xaviers"],
+    "name": "St. Xavier's College",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Autonomous",
+    "primary_stream": "Science",
+    "ownership": "Private Minority / Aided",
+    "affiliation": "Gujarat University",
+    "university_affiliation": "Gujarat University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 1955,
+    "website": "https://sxca.edu.in",
+    "email": "info@sxca.edu.in",
+    "phone": "+91-79-26302430",
+    "address": "Corner of CG Road, Navrangpura, Ahmedabad, Gujarat",
+    "description": "NAAC A+ accredited autonomous college offering undergraduate and postgraduate programs in Arts and Sciences.",
+    "nirf_rank": 58,
+    "image_url": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "B.Sc Computer Science",
+        "degree_type": "B.Sc",
+        "duration": "3 Years",
+        "annual_fees": 12000,
+        "total_seats": 120,
+        "eligibility": "12th Science Merit"
+      },
+      {
+        "course_name": "BA Psychology & English",
+        "degree_type": "BA",
+        "duration": "3 Years",
+        "annual_fees": 8000,
+        "total_seats": 180,
+        "eligibility": "12th Any Stream Merit"
+      }
+    ],
+    "placements": {
+      "average_package": 420000,
+      "highest_package": 950000,
+      "placement_percentage": 70,
+      "top_recruiters": "Wipro, TCS, Cognizant, Zydus, Torrent Pharma",
+      "placement_details": "Consistent campus placements for IT and Biotechnology graduates."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Heritage stone architecture campus with research laboratories and auditorium."
+    },
+    "events": {
+      "tech_fest": "Xavier TechX",
+      "cultural_fest": "Cera",
+      "hackathons": "Science Research Colloquium",
+      "workshops": "Biotechnology & Data Science Seminars",
+      "event_details": "Annual science exhibitions and youth cultural festivals."
+    },
+    "admissions": {
+      "admission_process": "Direct merit-based application through college portal.",
+      "entrance_exams": "Merit Based",
+      "cutoff_details": "High cutoff marks in 12th Board examinations.",
+      "admission_contact": "+91-79-26302430"
+    }
+  },
+
+  {
+    "id": 10,
+    "code": "CHARUSAT",
+    "acpc_code": "010",
+    "acronyms": ["charusat", "charu"],
+    "name": "CHARUSAT University",
+    "city": "Anand",
+    "district": "Anand",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "CHARUSAT University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 2009,
+    "website": "https://www.charusat.ac.in",
+    "email": "info@charusat.ac.in",
+    "phone": "+91-2697-265011",
+    "address": "Changa Campus, Highway Anand, Petlad, Gujarat",
+    "description": "NAAC A+ accredited residential university in central Gujarat known for healthcare and engineering excellence.",
+    "nirf_rank": 151,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Charotar_University_of_Science_and_Technology.jpg/960px-Charotar_University_of_Science_and_Technology.jpg",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 140000,
+        "total_seats": 240,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Bachelor of Pharmacy (B.Pharm)",
+        "degree_type": "B.Pharm",
+        "duration": "4 Years",
+        "annual_fees": 135000,
+        "total_seats": 100,
+        "eligibility": "12th PCB/PCM + GUJCET"
+      }
+    ],
+    "placements": {
+      "average_package": 600000,
+      "highest_package": 2200000,
+      "placement_percentage": 84,
+      "top_recruiters": "TCS, Infosys, Byju's, Capgemini, Zydus Cadila",
+      "placement_details": "Dedicated career development center offering placement preparation."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "120-acre lush green Changa campus with advanced supercomputing and pharmacy labs."
+    },
+    "events": {
+      "tech_fest": "Cognizance",
+      "cultural_fest": "Spoural",
+      "hackathons": "CHARUSAT Innovation Challenge",
+      "workshops": "AI & Healthcare Tech Workshops",
+      "event_details": "Spoural draws over 5000 participants annually."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC and university merit seats.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Rank under 3500 for Computer Science.",
+      "admission_contact": "+91-2697-265011"
+    }
+  },
+
+  {
+    "id": 11,
+    "code": "GANPAT",
+    "acpc_code": "011",
+    "acronyms": ["ganpat", "guni"],
+    "name": "Ganpat University",
+    "city": "Mehsana",
+    "district": "Mehsana",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Ganpat University",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 2005,
+    "website": "https://www.ganpatuniversity.ac.in",
+    "email": "info@ganpatuniversity.ac.in",
+    "phone": "+91-2762-286080",
+    "address": "Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat",
+    "description": "300+ acre eco-friendly university offering industry-partnered programs in Cyber Security and Robotics.",
+    "nirf_rank": 201,
+    "image_url": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 130000,
+        "total_seats": 180,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Cyber Security",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 140000,
+        "total_seats": 60,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 500000,
+      "highest_package": 1800000,
+      "placement_percentage": 78,
+      "top_recruiters": "TCS, Infosys, Wipro, IBM, Cybage",
+      "placement_details": "Strong partnerships with Japanese & German industrial training centers."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Massive residential township campus with on-campus bank and sports arena."
+    },
+    "events": {
+      "tech_fest": "Technoverse",
+      "cultural_fest": "Ganesh Utsav",
+      "hackathons": "Ganpat Hackathon",
+      "workshops": "Cloud Computing & Cybersecurity Workshops",
+      "event_details": "Technoverse exhibits innovative engineering projects."
+    },
+    "admissions": {
+      "admission_process": "ACPC merit list and direct university management quota.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Branch wise cutoff rankings vary.",
+      "admission_contact": "+91-2762-286080"
+    }
+  },
+
+  {
+    "id": 12,
+    "code": "LJ",
+    "acpc_code": "012",
+    "acronyms": ["lj", "lju"],
+    "name": "LJ University",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "LJ University",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 2019,
+    "website": "https://ljku.edu.in",
+    "email": "info@ljku.edu.in",
+    "phone": "+91-79-26742878",
+    "address": "LJ Campus, Between Kataria Motor & SG Highway, Sarkhej, Ahmedabad, Gujarat",
+    "description": "Fast-growing private university in Ahmedabad known for startup incubators and practical industry training.",
+    "nirf_rank": null,
+    "image_url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 115000,
+        "total_seats": 240,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Artificial Intelligence & ML",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 125000,
+        "total_seats": 120,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 450000,
+      "highest_package": 1200000,
+      "placement_percentage": 72,
+      "top_recruiters": "TCS, Infosys, Capgemini, Cognizant, Tech Mahindra",
+      "placement_details": "In-house incubation center supports student startups alongside placements."
+    },
+    "facilities": {
+      "hostel": false,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": false,
+      "facility_details": "Modern urban campus with high-tech computer labs and incubation center."
+    },
+    "events": {
+      "tech_fest": "LJ Innovation Village",
+      "cultural_fest": "LJ Fest",
+      "hackathons": "LJ Startup Hackathon",
+      "workshops": "Full Stack & Web3 Workshops",
+      "event_details": "LJ Innovation Village showcases 500+ student prototypes annually."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC Gujarat State Merit.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Cutoffs range between 4000 to 9000.",
+      "admission_contact": "+91-79-26742878"
+    }
+  },
+
+  {
+    "id": 13,
+    "code": "SILVER",
+    "acpc_code": "013",
+    "acronyms": ["silver", "silveroak", "sou"],
+    "name": "Silver Oak University",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Silver Oak University",
+    "is_polytechnic": false,
+    "naac_grade": "B++",
+    "established_year": 2019,
+    "website": "https://silveroakuni.ac.in",
+    "email": "info@silveroakuni.ac.in",
+    "phone": "+91-79-66046300",
+    "address": "Opp. Bhagwat Vidyapith, Gota Cross Road, Ahmedabad, Gujarat",
+    "description": "Dynamic multi-disciplinary university offering industry-aligned engineering and diploma courses.",
+    "nirf_rank": null,
+    "image_url": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 98000,
+        "total_seats": 240,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Data Science",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 110000,
+        "total_seats": 120,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 420000,
+      "highest_package": 1000000,
+      "placement_percentage": 68,
+      "top_recruiters": "Infosys, TCS, Wipro, Tech Mahindra, Silver Touch",
+      "placement_details": "Dedicated Placement Cell providing soft skills and technical training."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": false,
+      "facility_details": "Centrally located Gota campus with air-conditioned classrooms and cafeteria."
+    },
+    "events": {
+      "tech_fest": "HackOak",
+      "cultural_fest": "Silver Fest",
+      "hackathons": "AI CodeSprint",
+      "workshops": "Cloud Computing & App Development",
+      "event_details": "Hosts youth hackathons and corporate seminars."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC and direct university process.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Accessible cutoff ranks for various diploma and degree courses.",
+      "admission_contact": "+91-79-66046300"
+    }
+  },
+
+  {
+    "id": 14,
+    "code": "MARWADI",
+    "acpc_code": "014",
+    "acronyms": ["marwadi", "mu"],
+    "name": "Marwadi University",
+    "city": "Rajkot",
+    "district": "Rajkot",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Marwadi University",
+    "is_polytechnic": false,
+    "naac_grade": "A+",
+    "established_year": 2016,
+    "website": "https://www.marwadiuniversity.ac.in",
+    "email": "info@marwadiuniversity.ac.in",
+    "phone": "+91-281-7123456",
+    "address": "Rajkot-Morbi Road, Rajkot, Gujarat",
+    "description": "NAAC A+ accredited university in Saurashtra region with international student exchange programs.",
+    "nirf_rank": 151,
+    "image_url": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 135000,
+        "total_seats": 240,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      },
+      {
+        "course_name": "Artificial Intelligence",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 145000,
+        "total_seats": 60,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 550000,
+      "highest_package": 3400000,
+      "placement_percentage": 80,
+      "top_recruiters": "Amazon, TCS, Infosys, Reliance, Cisco",
+      "placement_details": "High placement international recruitment drives for engineering graduates."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "State-of-the-art Rajkot campus with Olympic-size sports complex and digital library."
+    },
+    "events": {
+      "tech_fest": "MU Fest",
+      "cultural_fest": "Marwadi Cultural Night",
+      "hackathons": "National MU Hackathon",
+      "workshops": "AI & Innovation Summits",
+      "event_details": "Cultural events feature international student performances."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC state seats and university merit list.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Cutoff ranks vary branch-wise.",
+      "admission_contact": "+91-281-7123456"
+    }
+  },
+
+  {
+    "id": 15,
+    "code": "ADANI",
+    "acpc_code": "015",
+    "acronyms": ["adani", "au"],
+    "name": "Adani University",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Engineering",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Adani University",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 2009,
+    "website": "https://adaniuni.ac.in",
+    "email": "info@adaniuni.ac.in",
+    "phone": "+91-79-25556677",
+    "address": "Shantigram Township, SG Highway, Ahmedabad, Gujarat",
+    "description": "Industry-backed private university focused on infrastructure engineering, technology, and management.",
+    "nirf_rank": 160,
+    "image_url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Computer Science and Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 180000,
+        "total_seats": 120,
+        "eligibility": "12th PCM + JEE/GUJCET"
+      },
+      {
+        "course_name": "Civil Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 170000,
+        "total_seats": 60,
+        "eligibility": "12th PCM + JEE/GUJCET"
+      }
+    ],
+    "placements": {
+      "average_package": 700000,
+      "highest_package": 2000000,
+      "placement_percentage": 82,
+      "top_recruiters": "Adani Group, TCS, Infosys, Deloitte, L&T Infrastructure",
+      "placement_details": "Direct recruitment opportunities across Adani Group subsidiaries."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Ultra-modern Shantigram campus with smart classrooms and research centers."
+    },
+    "events": {
+      "tech_fest": "Adani Tech Summit",
+      "cultural_fest": "Aura",
+      "hackathons": "InfraTech Hackathon",
+      "workshops": "Clean Energy & Logistics Workshops",
+      "event_details": "Hosts annual technology summits with industry leaders."
+    },
+    "admissions": {
+      "admission_process": "Admissions through entrance merit scores and ACPC counseling.",
+      "entrance_exams": "GUJCET, JEE Main",
+      "cutoff_details": "Closing ranks under 3000 for Computer Science.",
+      "admission_contact": "+91-79-25556677"
+    }
+  },
+
+  {
+    "id": 16,
+    "code": "MSU",
+    "acpc_code": "016",
+    "acronyms": ["msu", "baroda"],
+    "name": "Maharaja Sayajirao University of Baroda (MSU)",
+    "city": "Vadodara",
+    "district": "Vadodara",
+    "state": "Gujarat",
+    "college_type": "State University",
+    "primary_stream": "Arts",
+    "ownership": "Government",
+    "affiliation": "UGC",
+    "university_affiliation": "MSU Baroda",
+    "is_polytechnic": false,
+    "naac_grade": "A",
+    "established_year": 1949,
+    "website": "https://www.msubaroda.ac.in",
+    "email": "info@msubaroda.ac.in",
+    "phone": "+91-265-2795555",
+    "address": "Pratapgunj, Vadodara, Gujarat",
+    "description": "Historic state university in Vadodara renowned for Fine Arts, Technology, Science and Performing Arts.",
+    "nirf_rank": 75,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg/1280px-D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg",
+    "courses": [
+      {
+        "course_name": "Bachelor of Fine Arts (BFA)",
+        "degree_type": "BFA",
+        "duration": "4 Years",
+        "annual_fees": 12000,
+        "total_seats": 120,
+        "eligibility": "12th Board + Aptitude Test"
+      },
+      {
+        "course_name": "B.E Mechanical Engineering",
+        "degree_type": "B.E",
+        "duration": "4 Years",
+        "annual_fees": 8500,
+        "total_seats": 180,
+        "eligibility": "12th PCM + GUJCET"
+      }
+    ],
+    "placements": {
+      "average_package": 520000,
+      "highest_package": 1500000,
+      "placement_percentage": 76,
+      "top_recruiters": "TCS, Reliance, L&T, Asian Paints, Tata Chemicals",
+      "placement_details": "Strong alumni legacy in creative industries, engineering, and public administration."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Heritage Indo-Saracenic dome architecture campus with Smt. Hansa Mehta Library."
+    },
+    "events": {
+      "tech_fest": "Footprints",
+      "cultural_fest": "Paramarsh",
+      "hackathons": "MSU Innovation Contest",
+      "workshops": "Fine Arts & Polymer Technology Workshops",
+      "event_details": "Footprints is one of Gujarat's largest student-driven technical symposiums."
+    },
+    "admissions": {
+      "admission_process": "Admissions through Gujarat University portal and entrance tests.",
+      "entrance_exams": "GUJCET, University Entrance",
+      "cutoff_details": "High academic merit required across all faculties.",
+      "admission_contact": "+91-265-2795555"
+    }
+  },
+
+  {
+    "id": 17,
+    "code": "GUJUNI",
+    "acpc_code": "017",
+    "acronyms": ["gujuni", "gu"],
+    "name": "Gujarat University",
+    "city": "Ahmedabad",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "college_type": "State University",
+    "primary_stream": "Science",
+    "ownership": "Government",
+    "affiliation": "UGC",
+    "university_affiliation": "Gujarat University",
+    "is_polytechnic": false,
+    "naac_grade": "B++",
+    "established_year": 1949,
+    "website": "https://www.gujaratuniversity.ac.in",
+    "email": "registrar@gujaratuniversity.ac.in",
+    "phone": "+91-79-26301341",
+    "address": "Navrangpura, Ahmedabad, Gujarat",
+    "description": "Gujarat's oldest and largest state affiliating university catering to over 300+ colleges across the state.",
+    "nirf_rank": 62,
+    "image_url": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "M.Sc Data Science & AI",
+        "degree_type": "M.Sc",
+        "duration": "2 Years",
+        "annual_fees": 35000,
+        "total_seats": 60,
+        "eligibility": "B.Sc/BCA Graduation Merit"
+      },
+      {
+        "course_name": "Integrated MBA",
+        "degree_type": "Integrated Management",
+        "duration": "5 Years",
+        "annual_fees": 45000,
+        "total_seats": 120,
+        "eligibility": "12th Board Merit"
+      }
+    ],
+    "placements": {
+      "average_package": 480000,
+      "highest_package": 1200000,
+      "placement_percentage": 74,
+      "top_recruiters": "TCS, Wipro, Infosys, Zydus, Torrent Pharma",
+      "placement_details": "Active placement cell providing career guidance and corporate internships."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": false,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "Central Navrangpura university campus with Dr. Vikram Sarabhai Community Science Centre."
+    },
+    "events": {
+      "tech_fest": "GUSEC Innovation Summit",
+      "cultural_fest": "Youth Fest",
+      "hackathons": "Gujarat Startup Hackathon",
+      "workshops": "AI & Space Research Seminars",
+      "event_details": "GUSEC incubator nurtures hundreds of innovative student startups."
+    },
+    "admissions": {
+      "admission_process": "Centralized Gujarat University Online Admission System.",
+      "entrance_exams": "Board Merit / CMAT",
+      "cutoff_details": "High Board percentage required for campus postgraduate departments.",
+      "admission_contact": "+91-79-26301341"
+    }
+  },
+
+  {
+    "id": 18,
+    "code": "PARUL",
+    "acpc_code": "018",
+    "acronyms": ["parul", "pu"],
+    "name": "Parul University",
+    "city": "Vadodara",
+    "district": "Vadodara",
+    "state": "Gujarat",
+    "college_type": "Private",
+    "primary_stream": "Management",
+    "ownership": "Private",
+    "affiliation": "UGC",
+    "university_affiliation": "Parul University",
+    "is_polytechnic": false,
+    "naac_grade": "A++",
+    "established_year": 2015,
+    "website": "https://www.paruluniversity.ac.in",
+    "email": "info@paruluniversity.ac.in",
+    "phone": "+91-2668-260300",
+    "address": "PO Limda, Waghodia, Vadodara, Gujarat",
+    "description": "Multidisciplinary private university with 150+ programs in Engineering, Medicine, Management, and Design.",
+    "nirf_rank": 150,
+    "image_url": "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80",
+    "courses": [
+      {
+        "course_name": "Master of Business Administration (MBA)",
+        "degree_type": "MBA",
+        "duration": "2 Years",
+        "annual_fees": 140000,
+        "total_seats": 300,
+        "eligibility": "Graduation + CMAT/CAT"
+      },
+      {
+        "course_name": "Computer Science and Engineering",
+        "degree_type": "B.Tech",
+        "duration": "4 Years",
+        "annual_fees": 125000,
+        "total_seats": 360,
+        "eligibility": "12th PCM + GUJCET/JEE"
+      }
+    ],
+    "placements": {
+      "average_package": 520000,
+      "highest_package": 3000000,
+      "placement_percentage": 82,
+      "top_recruiters": "Amazon, L&T, TCS, Reliance, D-Mart",
+      "placement_details": "Massive annual campus recruitment drives with 700+ recruiting companies."
+    },
+    "facilities": {
+      "hostel": true,
+      "library": true,
+      "wifi": true,
+      "sports": true,
+      "transport": true,
+      "cafeteria": true,
+      "medical": true,
+      "gym": true,
+      "facility_details": "150-acre township campus with 750-bed teaching hospital and multi-cuisine food courts."
+    },
+    "events": {
+      "tech_fest": "Dhoom Tech",
+      "cultural_fest": "Dhoom Fest",
+      "hackathons": "Parul Hackathon",
+      "workshops": "International Management Conclave",
+      "event_details": "Dhoom Cultural Fest attracts national celebrity artists."
+    },
+    "admissions": {
+      "admission_process": "Admissions through ACPC and university entrance merit.",
+      "entrance_exams": "GUJCET, JEE Main, CMAT",
+      "cutoff_details": "Cutoffs vary by course and stream.",
+      "admission_contact": "+91-2668-260300"
+    }
+  }
+]
