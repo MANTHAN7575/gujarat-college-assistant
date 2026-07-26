@@ -1,7 +1,7 @@
 from typing import Optional, List
 import requests
 from fastapi import APIRouter, Depends, Query, HTTPException, status
-from fastapi.responses import RedirectResponse, Response
+from fastapi.responses import Response
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, func
 
@@ -19,6 +19,22 @@ from app.schemas.compare import CompareRequest, CompareResponse
 router = APIRouter()
 
 FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
+
+
+def get_fallback_image_response() -> Response:
+    """Download and stream default exterior campus banner bytes directly without redirecting."""
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+        }
+        res = requests.get(FALLBACK_CAMPUS_BANNER, headers=headers, timeout=5)
+        if res.status_code == 200:
+            content_type = res.headers.get("Content-Type", "image/jpeg")
+            return Response(content=res.content, media_type=content_type)
+    except Exception:
+        pass
+    return Response(content=b"", media_type="image/jpeg", status_code=200)
 
 
 @router.get("/", response_model=CollegePaginatedResponse)
@@ -195,17 +211,19 @@ def proxy_college_image(
     db: Session = Depends(get_db)
 ):
     college = crud_college.get_college_by_id(db, college_id=college_id)
-    target_url = (college.image_url if college and college.image_url else None) or FALLBACK_CAMPUS_BANNER
+    if not college or not college.image_url:
+        return get_fallback_image_response()
 
     try:
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
         }
-        resp = requests.get(target_url, headers=headers, timeout=5)
-        if resp.status_code == 200:
-            media_type = resp.headers.get("content-type", "image/jpeg")
-            return Response(content=resp.content, media_type=media_type)
-    except Exception:
-        pass
+        res = requests.get(college.image_url, headers=headers, timeout=5)
+        if res.status_code == 200:
+            content_type = res.headers.get("Content-Type", "image/jpeg")
+            return Response(content=res.content, media_type=content_type)
+    except Exception as e:
+        print(f"Failed to proxy image for college {college_id}: {e}")
 
-    return RedirectResponse(url=target_url)
+    return get_fallback_image_response()
