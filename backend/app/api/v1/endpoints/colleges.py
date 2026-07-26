@@ -22,33 +22,36 @@ def read_colleges(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
     search: Optional[str] = Query(None, description="Search query across college names, cities, codes"),
+    keyword: Optional[str] = Query(None, description="Search keyword alias"),
+    query_param: Optional[str] = Query(None, alias="query", description="Search query alias"),
     stream: Optional[str] = Query(None, description="Filter by primary stream (e.g. Engineering, Medical, Commerce)"),
     city: Optional[str] = Query(None, description="Filter by city"),
     is_polytechnic: Optional[bool] = Query(None, description="Filter diploma / polytechnic institutions"),
     db: Session = Depends(get_db)
 ):
     skip = (page - 1) * per_page
-    query = db.query(College)
+    query_builder = db.query(College)
 
-    if search and search.strip():
-        clean_search = search.strip()
+    clean_search = (search or keyword or query_param or "").strip()
+
+    if clean_search:
         matched = crud_college.search_colleges(db, keyword=clean_search, limit=500)
         matched_ids = [c.id for c in matched]
-        query = query.filter(College.id.in_(matched_ids))
+        query_builder = query_builder.filter(College.id.in_(matched_ids))
 
     if stream and stream.strip() and stream.lower() != "all":
-        query = query.filter(func.lower(College.primary_stream).like(f"%{stream.strip().lower()}%"))
+        query_builder = query_builder.filter(func.lower(College.primary_stream).like(f"%{stream.strip().lower()}%"))
 
     if city and city.strip() and city.lower() != "all":
-        query = query.filter(func.lower(College.city) == city.strip().lower())
+        query_builder = query_builder.filter(func.lower(College.city) == city.strip().lower())
 
     if is_polytechnic is not None:
-        query = query.filter(College.is_polytechnic == is_polytechnic)
+        query_builder = query_builder.filter(College.is_polytechnic == is_polytechnic)
 
-    total = query.count()
+    total = query_builder.count()
     pages = (total + per_page - 1) // per_page if total > 0 else 1
 
-    items = query.order_by(College.name).offset(skip).limit(per_page).all()
+    items = query_builder.order_by(College.name).offset(skip).limit(per_page).all()
 
     # Hydrate branches for each college item
     summary_items = []
@@ -63,6 +66,55 @@ def read_colleges(
         page=page,
         per_page=per_page,
         total_pages=pages
+    )
+
+
+@router.get("/search", response_model=CollegePaginatedResponse)
+def search_colleges_endpoint(
+    keyword: Optional[str] = Query(None, description="Search keyword"),
+    query: Optional[str] = Query(None, description="Search query alias"),
+    search: Optional[str] = Query(None, description="Search query alias"),
+    page: int = Query(1, ge=1, description="Page number"),
+    per_page: int = Query(20, ge=1, le=100, description="Items per page"),
+    db: Session = Depends(get_db)
+):
+    """
+    Search Colleges Endpoint. Accepts keyword, query, or search parameter without 422 errors.
+    """
+    search_term = keyword or query or search or ""
+    return read_colleges(
+        page=page,
+        per_page=per_page,
+        search=search_term,
+        keyword=None,
+        query_param=None,
+        stream=None,
+        city=None,
+        is_polytechnic=None,
+        db=db
+    )
+
+
+@router.get("/stream/{stream_name}", response_model=CollegePaginatedResponse)
+def get_colleges_by_stream_endpoint(
+    stream_name: str,
+    page: int = Query(1, ge=1, description="Page number"),
+    per_page: int = Query(20, ge=1, le=100, description="Items per page"),
+    db: Session = Depends(get_db)
+):
+    """
+    Stream Filter Endpoint for Engineering, Medical, Management, etc.
+    """
+    return read_colleges(
+        page=page,
+        per_page=per_page,
+        search=None,
+        keyword=None,
+        query_param=None,
+        stream=stream_name,
+        city=None,
+        is_polytechnic=None,
+        db=db
     )
 
 
