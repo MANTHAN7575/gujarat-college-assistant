@@ -78,7 +78,7 @@ def generate_ai_response(user_query: str, college_data: dict, intent: str = None
     if any(tr in query_lower for tr in general_exam_triggers) and not college_data.get("name"):
         return (
             "### ACPC & NEET / GUJCET 2026 Admission Status\n\n"
-            "ℹ️ **Official 2026 Merit Rank Cutoffs Pending Release**\n\n"
+            "**Official 2026 Merit Rank Cutoffs Pending Release**\n\n"
             "- **Current Status**: Official Round 1 and Round 2 merit rank cutoffs for the **2026 Academic Year** have not been declared yet by ACPC (Admission Committee for Professional Courses Gujarat) or NTA NEET.\n"
             "- **Next Steps**: ACPC admissions and merit rank publications will begin following the official announcement of national & state entrance results.\n"
             "- **Historical Trends**: You can explore verified **2025, 2024, and 2023 cutoff ranks** on any college profile page or compare up to 3 institutions in the decision matrix!"
@@ -87,13 +87,13 @@ def generate_ai_response(user_query: str, college_data: dict, intent: str = None
     formatted_context = format_context_for_prompt(college_data)
 
     prompt = f"""
-You are the official Gujarat Higher Education AI Assistant covering all 2,450+ colleges, polytechnics, and universities across Gujarat.
+You are the official ACPC & Gujarat Admission Guidance Assistant covering all accredited higher education institutions across Gujarat.
 
 INSTRUCTIONS:
 1. Answer the student's question directly using the provided context below.
 2. Cite real database facts (ACPC Code, Annual Fees, University Affiliation, Placement Packages in LPA, Hostels, Cutoffs).
 3. Express placement salary metrics clearly in LPA (e.g. ₹18.0 LPA highest, ₹5.5 LPA average).
-4. Be professional, clear, and helpful. Format your response with clean Markdown bullet points and bold headers.
+4. Maintain a professional, articulate, human academic advisor tone. Format your response with clean Markdown bullet points and clear section headings without stock emojis.
 
 USER QUESTION:
 {user_query}
@@ -143,4 +143,4 @@ GROUNDED DATABASE CONTEXT:
 
         return f"### {c_name}\n\n- **ACPC Code**: `{c_acpc}`\n- **Location**: {c_city}, Gujarat\n- **Affiliation**: {c_aff}\n- **Annual Tuition Fee**: ₹{int(fee):,}\n- **Hostel Facility**: {hostel}\n- **Placement Statistics**: Highest package of **₹{high_pkg:.1f} LPA** and average of **₹{avg_pkg:.1f} LPA**.\n- **Admissions**: Centralized ACPC Counseling & GUJCET Merit Rank Cutoffs."
 
-    return "Gujarat higher education directory contains 2,450+ accredited colleges. Please specify an institution (e.g., LDRP, BVM, BJMC, SAL, AIT) or city (Ahmedabad, Gandhinagar, Rajkot, Anand) for detailed fee, cutoff, and placement statistics."
+    return "The Gujarat higher education directory contains accredited engineering, medical, commerce, and polytechnic colleges. Please specify an institution (e.g., LDRP, BVM, BJMC, SAL, AIT) or city (Ahmedabad, Gandhinagar, Rajkot, Anand) for detailed fee, cutoff, and placement statistics."

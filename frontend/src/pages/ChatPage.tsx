@@ -1,6 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import {
+  History,
+  Plus,
+  ArrowLeft,
+  Bot,
+  Sparkles,
+  HelpCircle,
+  Send,
+  Trash2,
+  AlertTriangle,
+  RotateCcw,
+  Building2,
+  CheckCircle2
+} from "lucide-react";
 import { ChatMessage, ChatSession } from "../types";
 import { sendChatMessage, deleteChatHistory } from "../services/api";
 import { Navbar } from "../components/Navbar";
@@ -23,7 +37,7 @@ export const ChatPage: React.FC = () => {
   const welcomeMessage: ChatMessage = {
     id: "welcome-1",
     sender: "bot",
-    text: "👋 Welcome to the Gujarat AI Academic Assistant! I am grounded in official ACPC rankings, tuition fees, cutoffs, and placement LPA statistics across engineering, medical, commerce, and law universities.\n\nHow can I help you today?",
+    text: "Welcome to the ACPC & Gujarat Admission Guidance Assistant. Ask about merit cutoffs, annual fees, hostelled campuses, or program placements across engineering, medical, commerce, and polytechnic universities.",
     timestamp: new Date(),
   };
 
@@ -208,9 +222,9 @@ export const ChatPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50/40 to-indigo-50/50 dark:from-slate-950 dark:via-[#0b1326] dark:to-slate-950 text-slate-900 dark:text-[#dae2fd] flex flex-col font-sans transition-colors duration-200 h-screen overflow-hidden relative">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans transition-colors duration-200 h-screen overflow-hidden relative">
       {/* Outer Ambient Motion & Glow Layer */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-blue-500/15 via-indigo-500/15 to-purple-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-teal-500/10 via-indigo-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Navbar />
 
@@ -223,24 +237,26 @@ export const ChatPage: React.FC = () => {
         {/* Left Session History Sidebar Card (Wrapped with AnimatedDotCard) */}
         <aside className="w-80 hidden lg:flex flex-col">
           <AnimatedDotCard className="p-4 flex-1">
-            <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-100 dark:border-slate-800">
-              <h3 className="font-extrabold text-xs text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-                <span>🕒</span> Chat History
+            <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-800">
+              <h3 className="font-bold text-xs text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <History className="w-4 h-4 text-teal-400" />
+                <span>Chat History</span>
               </h3>
               <button
                 onClick={handleStartNewChat}
-                className="text-[11px] bg-blue-600 hover:bg-blue-700 text-white font-bold px-2.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1"
+                className="text-[11px] bg-teal-600 hover:bg-teal-700 text-white font-bold px-2.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1"
               >
-                <span>+</span> New Chat
+                <Plus className="w-3.5 h-3.5" />
+                <span>New Chat</span>
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-2 pr-1">
               {sessions.length === 0 ? (
-                <div className="py-14 text-center text-slate-400 dark:text-slate-500">
-                  <span className="text-3xl">💬</span>
-                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mt-2">No chat history yet</p>
-                  <p className="text-[11px] mt-0.5 text-slate-400 dark:text-slate-500">Start a new conversation below.</p>
+                <div className="py-14 text-center text-slate-500">
+                  <Bot className="w-8 h-8 text-slate-600 mx-auto" />
+                  <p className="text-xs font-semibold text-slate-400 mt-2">No chat history yet</p>
+                  <p className="text-[11px] mt-0.5 text-slate-500">Start a new conversation below.</p>
                 </div>
               ) : (
                 sessions.map((session) => {
@@ -251,21 +267,20 @@ export const ChatPage: React.FC = () => {
                       onClick={() => handleSelectSession(session)}
                       className={`w-full text-left py-2.5 px-3 rounded-xl border transition-all cursor-pointer group flex items-start justify-between gap-2 ${
                         isActive
-                          ? "bg-blue-50/90 dark:bg-blue-950/50 border-l-4 border-l-blue-600 dark:border-l-blue-500 border-blue-200/80 dark:border-blue-800/80 shadow-xs"
-                          : "bg-slate-50/90 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200/80 dark:border-slate-700/70"
+                          ? "bg-teal-950/60 border-l-4 border-l-teal-500 border-teal-800 shadow-xs"
+                          : "bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800"
                       }`}
                     >
                       <div className="flex-1 min-w-0">
                         <p className={`text-xs font-bold line-clamp-1 ${
-                          isActive
-                            ? "text-blue-950 dark:text-blue-100"
-                            : "text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400"
+                          isActive ? "text-teal-200" : "text-slate-200 group-hover:text-teal-400"
                         }`}>
                           {session.title}
                         </p>
                         {session.detected_college && (
-                          <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium block mt-0.5 line-clamp-1">
-                            🏫 {session.detected_college}
+                          <span className="text-[10px] text-teal-400 font-medium block mt-0.5 line-clamp-1 flex items-center gap-1">
+                            <Building2 className="w-3 h-3 shrink-0" />
+                            {session.detected_college}
                           </span>
                         )}
                       </div>
@@ -273,9 +288,9 @@ export const ChatPage: React.FC = () => {
                       <button
                         onClick={(e) => handleDeleteSession(session, e)}
                         title="Delete conversation"
-                        className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 p-1 rounded-md transition-all text-xs shrink-0"
+                        className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-400 p-1 rounded-md transition-all text-xs shrink-0"
                       >
-                        🗑️
+                        <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   );
@@ -289,26 +304,27 @@ export const ChatPage: React.FC = () => {
         <main className="flex-1 flex flex-col overflow-hidden">
           <AnimatedDotCard topBorderAccent={true} className="flex-1 flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="relative z-10 bg-slate-100/90 dark:bg-slate-950/90 border-b border-slate-200/80 dark:border-slate-800 p-3.5 px-5 flex items-center justify-between">
+            <div className="relative z-10 bg-slate-900 border-b border-slate-800 p-3.5 px-5 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Link
                   to="/"
-                  className="text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-1.5 rounded-xl transition-all shadow-xs"
+                  className="text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-3 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
                 >
-                  ← Back to Directory Index
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Directory Index</span>
                 </Link>
                 <div>
-                  <h2 className="font-extrabold text-base text-slate-900 dark:text-white leading-tight">Gujarat AI Academic Assistant</h2>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Grounded RAG Pipeline • Hybrid Cosine Retrieval</p>
+                  <h2 className="font-extrabold text-base text-white leading-tight">Gujarat ACPC AI Advisor</h2>
+                  <p className="text-[11px] text-slate-400 font-medium">Grounded RAG Pipeline • Hybrid Vector Retrieval</p>
                 </div>
               </div>
-              <span className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+              <span className="bg-teal-950/60 border border-teal-800 text-teal-300 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span> Active
               </span>
             </div>
 
-            {/* Messages Stream with Sleek Custom 6px Scrollbar */}
-            <div className="relative z-10 flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-50/40 dark:bg-slate-950/40">
+            {/* Messages Stream */}
+            <div className="relative z-10 flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-950/40">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -317,8 +333,8 @@ export const ChatPage: React.FC = () => {
                   <div
                     className={`max-w-[88%] sm:max-w-[80%] rounded-2xl p-4 text-sm leading-relaxed shadow-xs whitespace-pre-wrap ${
                       msg.sender === "user"
-                        ? "bg-blue-600 text-white font-medium shadow-md shadow-blue-500/20 rounded-tr-xs"
-                        : "bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-tl-xs"
+                        ? "bg-teal-600 text-white font-medium shadow-md shadow-teal-600/20 rounded-tr-xs"
+                        : "bg-slate-900 border border-slate-800 text-slate-100 rounded-tl-xs"
                     }`}
                   >
                     {msg.text}
@@ -327,12 +343,12 @@ export const ChatPage: React.FC = () => {
                   {/* Bot Source Badges */}
                   {msg.sender === "bot" && (
                     <div className="flex flex-wrap items-center gap-1.5 mt-1.5 px-1 text-xs">
-                      <span className="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-200 dark:border-slate-700 shadow-2xs">
-                        ✓ Verified by ACPC Database
+                      <span className="bg-slate-900 text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-800 flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-teal-400" /> Verified ACPC Records
                       </span>
                       {msg.college && (
-                        <span className="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-200 dark:border-slate-700 shadow-2xs">
-                          🏫 {msg.college}
+                        <span className="bg-slate-900 text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-800 flex items-center gap-1">
+                          <Building2 className="w-3 h-3 text-teal-400" /> {msg.college}
                         </span>
                       )}
                     </div>
@@ -341,20 +357,20 @@ export const ChatPage: React.FC = () => {
               ))}
 
               {loading && (
-                <div className="flex items-center gap-2.5 bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 rounded-xl w-max text-xs text-slate-600 dark:text-slate-300 shadow-sm animate-pulse">
-                  <span className="animate-spin text-xs">⚙️</span>
-                  <span>Generating grounded RAG vector response...</span>
+                <div className="flex items-center gap-2.5 bg-slate-900 border border-slate-800 px-3.5 py-2.5 rounded-xl w-max text-xs text-slate-300 shadow-sm animate-pulse">
+                  <Sparkles className="w-4 h-4 text-teal-400 animate-spin" />
+                  <span>Generating grounded RAG response...</span>
                 </div>
               )}
 
               {/* Enhanced Interactive Connection Error & Retry Banner */}
               {hasError && (
-                <div className="bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 text-xs sm:text-sm text-amber-900 dark:text-amber-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="bg-amber-950/60 border border-amber-800 rounded-2xl p-4 text-xs sm:text-sm text-amber-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-xl">⚠️</span>
+                    <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
                     <div>
                       <p className="font-bold">System Connection Issue</p>
-                      <p className="text-xs text-amber-800 dark:text-amber-300 font-medium">
+                      <p className="text-xs text-amber-300 font-medium">
                         FastAPI backend server is unresponsive on http://127.0.0.1:8000.
                       </p>
                     </div>
@@ -363,7 +379,8 @@ export const ChatPage: React.FC = () => {
                     onClick={handleRetry}
                     className="bg-amber-700 hover:bg-amber-800 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5 shrink-0"
                   >
-                    <span>🔄</span> Retry Query
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Retry Query</span>
                   </button>
                 </div>
               )}
@@ -372,15 +389,17 @@ export const ChatPage: React.FC = () => {
             </div>
 
             {/* Quick Suggestion Chips */}
-            <div className="relative z-10 px-4 py-2.5 bg-white/95 dark:bg-slate-900/95 border-t border-slate-200/80 dark:border-slate-800 flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0">Prompts:</span>
+            <div className="relative z-10 px-4 py-2.5 bg-slate-900 border-t border-slate-800 flex items-center gap-2 flex-wrap">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                <HelpCircle className="w-3.5 h-3.5 text-teal-400" /> Prompts:
+              </span>
               {quickPrompts.map((prompt, idx) => (
                 <motion.button
                   key={idx}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleSend(prompt)}
-                  className="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold px-3 py-1 rounded-xl transition-all border border-slate-200/80 dark:border-slate-700 shrink-0"
+                  className="text-xs bg-slate-800 hover:bg-teal-950/60 hover:text-teal-400 text-slate-300 font-semibold px-3 py-1 rounded-xl transition-all border border-slate-700 shrink-0"
                 >
                   {prompt}
                 </motion.button>
@@ -388,23 +407,24 @@ export const ChatPage: React.FC = () => {
             </div>
 
             {/* Elevated Bottom Input Dock */}
-            <div className="relative z-10 p-3.5 bg-white/95 dark:bg-slate-900/95 border-t border-slate-200/90 dark:border-slate-800 flex items-center gap-2.5">
-              <div className="flex-1 flex items-center bg-slate-50 dark:bg-slate-800/90 border border-slate-300/80 dark:border-slate-700 shadow-inner rounded-xl focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all px-1">
+            <div className="relative z-10 p-3.5 bg-slate-900 border-t border-slate-800 flex items-center gap-2.5">
+              <div className="flex-1 flex items-center bg-slate-950 border border-slate-800 shadow-inner rounded-xl focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all px-1">
                 <input
                   type="text"
                   placeholder="Ask about NIRF rank, fees under 2 Lakhs, cutoffs, hostels..."
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  className="w-full bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 text-xs sm:text-sm px-3.5 py-2.5 outline-none font-medium"
+                  className="w-full bg-transparent text-slate-100 placeholder-slate-500 text-xs sm:text-sm px-3.5 py-2.5 outline-none font-medium"
                 />
               </div>
               <button
                 onClick={() => handleSend()}
                 disabled={loading || !inputMessage.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition-all shrink-0"
+                className="bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition-all shrink-0 flex items-center gap-1.5"
               >
-                Send
+                <Send className="w-4 h-4" />
+                <span>Send</span>
               </button>
             </div>
           </AnimatedDotCard>
