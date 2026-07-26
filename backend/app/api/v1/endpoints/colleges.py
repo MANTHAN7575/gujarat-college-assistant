@@ -18,6 +18,8 @@ from app.schemas.compare import CompareRequest, CompareResponse
 
 router = APIRouter()
 
+FALLBACK_CAMPUS_BANNER = "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
+
 
 @router.get("/", response_model=CollegePaginatedResponse)
 def read_colleges(
@@ -80,9 +82,6 @@ def search_colleges_endpoint(
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
     db: Session = Depends(get_db)
 ):
-    """
-    Search Colleges Endpoint. Accepts keyword, query, or search parameter without 422 errors.
-    """
     search_term = keyword or query or search or ""
     return read_colleges(
         page=page,
@@ -104,9 +103,6 @@ def get_colleges_by_stream_endpoint(
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
     db: Session = Depends(get_db)
 ):
-    """
-    Stream Filter Endpoint for Engineering, Medical, Management, etc.
-    """
     return read_colleges(
         page=page,
         per_page=per_page,
@@ -199,16 +195,17 @@ def proxy_college_image(
     db: Session = Depends(get_db)
 ):
     college = crud_college.get_college_by_id(db, college_id=college_id)
-    if not college or not college.image_url:
-        raise HTTPException(status_code=404, detail="College image not found")
+    target_url = (college.image_url if college and college.image_url else None) or FALLBACK_CAMPUS_BANNER
 
     try:
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-        resp = requests.get(college.image_url, headers=headers, timeout=5)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        resp = requests.get(target_url, headers=headers, timeout=5)
         if resp.status_code == 200:
             media_type = resp.headers.get("content-type", "image/jpeg")
             return Response(content=resp.content, media_type=media_type)
     except Exception:
         pass
 
-    return RedirectResponse(url=college.image_url)
+    return RedirectResponse(url=target_url)

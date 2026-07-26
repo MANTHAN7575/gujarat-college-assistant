@@ -124,61 +124,34 @@ export const REAL_CAMPUS_MAP: Record<string, string> = {
   "charusat": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
 };
 
-export function getCollegeImage(
-  collegeOrName?: string | College | any,
-  index: number = 0
-): { banner: string; logo: string } {
-  let collegeObj: College | null = null;
-  let collegeName = "";
-  let acpcCode = "";
-  let code = "";
-
-  if (typeof collegeOrName === "object" && collegeOrName !== null) {
-    collegeObj = collegeOrName as College;
-    collegeName = collegeObj.name || "";
-    acpcCode = collegeObj.acpc_code || "";
-    code = collegeObj.code || "";
-  } else if (typeof collegeOrName === "string") {
-    collegeName = collegeOrName;
+export function getCollegeImageUrl(college?: { id?: number; image_url?: string; acpc_code?: string; name?: string; code?: string; primary_stream?: string } | any): string {
+  if (!college) {
+    return STREAM_CAMPUS_BANNERS.default[0];
   }
 
-  // Priority 1: Verified REAL_CAMPUS_MAP by ID, ACPC Code, Code, or Name Substring Match
-  if (collegeObj?.id && REAL_CAMPUS_MAP[String(collegeObj.id)]) {
-    const url = REAL_CAMPUS_MAP[String(collegeObj.id)];
-    return { banner: url, logo: url };
-  }
-
-  if (acpcCode && REAL_CAMPUS_MAP[acpcCode]) {
-    const url = REAL_CAMPUS_MAP[acpcCode];
-    return { banner: url, logo: url };
-  }
-
-  if (code && REAL_CAMPUS_MAP[code]) {
-    const url = REAL_CAMPUS_MAP[code];
-    return { banner: url, logo: url };
-  }
-
-  if (collegeName) {
-    const lower = collegeName.toLowerCase();
-    for (const key in REAL_CAMPUS_MAP) {
-      if (key.length >= 2 && lower.includes(key.toLowerCase())) {
-        const url = REAL_CAMPUS_MAP[key];
-        return { banner: url, logo: url };
-      }
+  // 1. Route scraped image_url or DB URL through FastAPI backend proxy
+  if (college?.id && (college.image_url || college.campus_photo_url)) {
+    const raw = college.image_url || college.campus_photo_url;
+    if (raw && typeof raw === "string" && raw.startsWith("http")) {
+      return `${BASE_URL}/api/v1/colleges/${college.id}/image-proxy`;
     }
   }
 
-  // Priority 2: DB Scraped Authentic Campus Photo (routed through backend CORS proxy if Whitelisted)
-  const rawUrl = collegeObj?.image_url || (collegeObj as any)?.campus_photo_url;
-  if (collegeObj?.id && isWhitelistedCollegeImage(rawUrl)) {
-    const proxyUrl = `${BASE_URL}/api/v1/colleges/${collegeObj.id}/image-proxy`;
-    return { banner: proxyUrl, logo: proxyUrl };
+  // 2. Check verified real campus map
+  const acpc = college?.acpc_code || "";
+  const name = college?.name || "";
+  const code = college?.code || "";
+  const idStr = String(college?.id || "");
+
+  const mappedUrl = REAL_CAMPUS_MAP[acpc] || REAL_CAMPUS_MAP[code] || REAL_CAMPUS_MAP[idStr] || (name ? Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase())) && REAL_CAMPUS_MAP[Object.keys(REAL_CAMPUS_MAP).find(k => k.length >= 2 && name.toLowerCase().includes(k.toLowerCase()))!] : undefined);
+
+  if (mappedUrl) {
+    return mappedUrl;
   }
 
-  // Priority 3: Curated Stream-aware Authentic Gujarat Exterior Campus Banners
-  const streamKey = (collegeObj?.primary_stream || "").toLowerCase();
+  // 3. Fallback to Stream Architectural Banner
+  const streamKey = (college?.primary_stream || "").toLowerCase();
   let streamCategory = "default";
-
   if (streamKey.includes("engineer")) streamCategory = "engineering";
   else if (streamKey.includes("medic")) streamCategory = "medical";
   else if (streamKey.includes("manag")) streamCategory = "management";
@@ -189,13 +162,23 @@ export function getCollegeImage(
   else if (streamKey.includes("law")) streamCategory = "law";
 
   const banners = STREAM_CAMPUS_BANNERS[streamCategory] || STREAM_CAMPUS_BANNERS.default;
-  const colId = collegeObj?.id || index || 0;
-  const bannerUrl = banners[colId % banners.length];
+  const colId = college?.id || 0;
+  return banners[colId % banners.length];
+}
 
-  return {
-    banner: bannerUrl,
-    logo: bannerUrl
-  };
+export function getCollegeImage(
+  collegeOrName?: string | College | any,
+  index: number = 0
+): { banner: string; logo: string } {
+  if (typeof collegeOrName === "object" && collegeOrName !== null) {
+    const url = getCollegeImageUrl(collegeOrName);
+    return { banner: url, logo: url };
+  } else if (typeof collegeOrName === "string") {
+    const url = REAL_CAMPUS_MAP[collegeOrName] || STREAM_CAMPUS_BANNERS.default[index % STREAM_CAMPUS_BANNERS.default.length];
+    return { banner: url, logo: url };
+  }
+  const defaultUrl = STREAM_CAMPUS_BANNERS.default[index % STREAM_CAMPUS_BANNERS.default.length];
+  return { banner: defaultUrl, logo: defaultUrl };
 }
 
 export function handleImageError(e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl?: string) {
