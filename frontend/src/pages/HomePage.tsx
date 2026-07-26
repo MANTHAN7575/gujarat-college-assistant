@@ -18,10 +18,12 @@ export const HomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
   const [selectedStream, setSelectedStream] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [totalColleges, setTotalColleges] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const perPage = 20;
+  const totalPages = Math.max(1, Math.ceil(totalColleges / perPage));
 
   // Top Page Jump State & Toast Warning
   const [topJumpInput, setTopJumpInput] = useState("");
@@ -61,16 +63,15 @@ export const HomePage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      let res = await fetchPaginatedColleges(page, 20, stream, search);
+      let res = await fetchPaginatedColleges(page, perPage, stream, search);
       if (res.items.length === 0 && search && search.trim() && stream !== "All") {
-        res = await fetchPaginatedColleges(1, 20, "All", search);
+        res = await fetchPaginatedColleges(1, perPage, "All", search);
         setSelectedStream("All");
       }
-      setColleges(res.items);
-      setTotalPages(res.pages);
-      setTotalColleges(res.total);
+      setColleges(res.items || (res as any).colleges || []);
+      setTotalColleges(res.total || (res as any).total_count || 2530);
     } catch (err) {
-      console.error(err);
+      console.error("Failed to load colleges", err);
       setError("Unable to connect to FastAPI backend server on http://127.0.0.1:8000.");
     } finally {
       setLoading(false);
@@ -306,19 +307,34 @@ export const HomePage: React.FC = () => {
         {!loading && colleges.length > 0 && (
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs">
             <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-              Showing Page <span className="font-bold text-slate-900 dark:text-white">{currentPage}</span> of <span className="font-bold text-slate-900 dark:text-white">{totalPages}</span> ({totalColleges.toLocaleString()} Institutions)
+              Showing Page <span className="font-bold text-slate-900 dark:text-white">{currentPage}</span> of <span className="font-bold text-slate-900 dark:text-white">{totalPages}</span> <span className="text-slate-400 font-normal">({totalColleges.toLocaleString()} Institutions)</span>
             </div>
+
             <div className="flex items-center gap-3">
               <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
+                onClick={() => {
+                  setCurrentPage((p) => Math.max(1, p - 1));
+                  if (directoryRef.current) {
+                    directoryRef.current.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 400, behavior: "smooth" });
+                  }
+                }}
+                disabled={currentPage <= 1}
                 className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed"
               >
                 ← Previous
               </button>
               <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                onClick={() => {
+                  setCurrentPage((p) => Math.min(totalPages, p + 1));
+                  if (directoryRef.current) {
+                    directoryRef.current.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 400, behavior: "smooth" });
+                  }
+                }}
+                disabled={currentPage >= totalPages}
                 className="px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white transition-all shadow-xs cursor-pointer disabled:cursor-not-allowed"
               >
                 Next →

@@ -4,21 +4,39 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
 function parsePaginatedData(data: any, fallbackPage: number = 1, fallbackPerPage: number = 20): PaginatedResponse<College> {
   if (data && Array.isArray(data.items)) {
+    const total = data.total ?? data.total_count ?? data.items.length;
+    const perPage = data.per_page ?? data.limit ?? fallbackPerPage;
+    const pages = data.pages ?? Math.max(1, Math.ceil(total / perPage));
     return {
       items: data.items,
-      total: data.total ?? data.items.length,
+      total: total,
       page: data.page ?? fallbackPage,
-      per_page: data.per_page ?? fallbackPerPage,
-      pages: data.pages ?? 1
+      per_page: perPage,
+      pages: pages
+    };
+  }
+  if (data && (Array.isArray(data.colleges) || Array.isArray(data.data))) {
+    const items = data.colleges || data.data;
+    const total = data.total ?? data.total_count ?? items.length;
+    const perPage = data.per_page ?? data.limit ?? fallbackPerPage;
+    const pages = data.pages ?? Math.max(1, Math.ceil(total / perPage));
+    return {
+      items: items,
+      total: total,
+      page: data.page ?? fallbackPage,
+      per_page: perPage,
+      pages: pages
     };
   }
   if (Array.isArray(data)) {
+    const total = data.length;
+    const pages = Math.max(1, Math.ceil(total / fallbackPerPage));
     return {
       items: data,
-      total: data.length,
+      total: total,
       page: fallbackPage,
       per_page: fallbackPerPage,
-      pages: 1
+      pages: pages
     };
   }
   return {
@@ -61,117 +79,85 @@ export async function fetchPaginatedColleges(
   }
 }
 
-export async function getAllColleges(page: number = 1, perPage: number = 20): Promise<College[]> {
-  const paginated = await fetchPaginatedColleges(page, perPage);
-  return paginated.items;
-}
+export const searchColleges = fetchPaginatedColleges;
 
-export async function searchColleges(keyword: string, page: number = 1, perPage: number = 20): Promise<College[]> {
-  const paginated = await fetchPaginatedColleges(page, perPage, undefined, keyword);
-  return paginated.items;
-}
-
-export async function getCollegesByStream(streamName: string, page: number = 1, perPage: number = 20): Promise<College[]> {
-  const paginated = await fetchPaginatedColleges(page, perPage, streamName, undefined);
-  return paginated.items;
+export async function getAllColleges(): Promise<College[]> {
+  try {
+    const res = await fetchPaginatedColleges(1, 100);
+    return res.items;
+  } catch (error) {
+    console.error("Error fetching all colleges:", error);
+    return [];
+  }
 }
 
 export async function getCollegeDetails(id: number | string): Promise<CollegeDetailResponse> {
-  try {
-    const response = await fetch(`${BASE_URL}/api/v1/colleges/${id}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch college details: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error in getCollegeDetails:", error);
-    throw error;
+  const response = await fetch(`${BASE_URL}/api/v1/colleges/${id}`);
+  if (!response.ok) {
+    throw new Error(`API error ${response.status}: ${response.statusText}`);
   }
+  return await response.json();
 }
 
 export async function getCollegeBranches(collegeId: number): Promise<CollegeBranch[]> {
   try {
     const response = await fetch(`${BASE_URL}/api/v1/colleges/${collegeId}/branches`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch college branches: ${response.statusText}`);
-    }
+    if (!response.ok) return [];
     return await response.json();
   } catch (error) {
-    console.error("Error in getCollegeBranches:", error);
+    console.error("Error fetching college branches:", error);
     return [];
   }
 }
 
 export async function compareColleges(collegeIds: number[]): Promise<CompareResponse> {
-  try {
-    const response = await fetch(`${BASE_URL}/api/v1/colleges/compare/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ college_ids: collegeIds }),
-    });
+  const params = new URLSearchParams();
+  collegeIds.forEach((id) => params.append("college_ids", String(id)));
 
-    if (!response.ok) {
-      throw new Error(`Compare API error: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error in compareColleges:", error);
-    throw error;
+  const response = await fetch(`${BASE_URL}/api/v1/colleges/compare?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`API error ${response.status}: ${response.statusText}`);
   }
+  return await response.json();
 }
 
-export async function sendChatMessage(
-  message: string,
-  sessionId?: string
-): Promise<ChatResponse> {
-  try {
-    const response = await fetch(`${BASE_URL}/api/v1/chat/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message,
-        session_id: sessionId,
-      }),
-    });
+export async function sendChatMessage(query: string, sessionId?: string): Promise<ChatResponse> {
+  const response = await fetch(`${BASE_URL}/api/v1/chat/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      session_id: sessionId || null,
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`Chat API error: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error in sendChatMessage:", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(`API error ${response.status}: ${response.statusText}`);
   }
+  return await response.json();
 }
 
-export async function getChatHistory(sessionId?: string): Promise<ChatHistoryLog[]> {
+export async function getChatHistory(sessionId: string): Promise<ChatHistoryLog[]> {
   try {
-    const url = sessionId
-      ? `${BASE_URL}/api/v1/chat/history/?session_id=${encodeURIComponent(sessionId)}`
-      : `${BASE_URL}/api/v1/chat/history/`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch chat history: ${response.statusText}`);
-    }
+    const response = await fetch(`${BASE_URL}/api/v1/chat/history/${sessionId}`);
+    if (!response.ok) return [];
     return await response.json();
   } catch (error) {
-    console.error("Error in getChatHistory:", error);
+    console.error("Error fetching chat history:", error);
     return [];
   }
 }
 
-export async function deleteChatHistory(logId: string): Promise<boolean> {
+export async function deleteChatHistory(sessionId: string): Promise<boolean> {
   try {
-    const response = await fetch(`${BASE_URL}/api/v1/chat/history/${logId}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/chat/history/${sessionId}`, {
       method: "DELETE",
     });
     return response.ok;
   } catch (error) {
-    console.error("Error in deleteChatHistory:", error);
+    console.error("Error deleting chat history:", error);
     return false;
   }
 }
