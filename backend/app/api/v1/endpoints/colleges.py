@@ -189,3 +189,15 @@ def read_college_details(
     detail.multi_year_cutoffs = crud_college.get_multi_year_cutoffs(college)
     detail.branches = crud_college.get_related_branches(db, college_id=college.id)
     return detail
+
+
+@router.get("/{college_id}/image-proxy")
+def proxy_college_image(
+    college_id: int,
+    db: Session = Depends(get_db)
+):
+    college = crud_college.get_college_by_id(db, college_id=college_id)
+    if not college or not college.image_url:
+        raise HTTPException(status_code=404, detail="College image not found")
+    return {"image_url": college.image_url, "name": college.name}
+

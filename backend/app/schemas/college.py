@@ -94,6 +94,7 @@ class CollegeSummary(BaseModel):
     is_polytechnic: bool = False
     annual_fees: Optional[float] = None
     highest_lpa: Optional[float] = None
+    image_url: Optional[str] = None
     campus_photo_url: Optional[str] = None
     branches: Optional[List[Dict[str, Any]]] = None
 
@@ -130,6 +131,7 @@ class CollegeDetailResponse(BaseModel):
     is_polytechnic: bool = False
     description: Optional[str] = None
     website: Optional[str] = None
+    image_url: Optional[str] = None
     campus_photo_url: Optional[str] = None
     courses: List[CourseSchema] = []
     placements: Optional[PlacementSchema] = None

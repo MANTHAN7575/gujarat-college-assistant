@@ -86,7 +86,13 @@ export function getCollegeImage(
     collegeName = collegeOrName;
   }
 
-  // 1. Direct ID / ACPC Code / Keyword Lookup
+  // Priority 1: DB Scraped Authentic Campus Photo
+  const dbPhoto = collegeObj?.image_url || (collegeObj as any)?.campus_photo_url;
+  if (dbPhoto && typeof dbPhoto === "string" && dbPhoto.trim().startsWith("http")) {
+    return { banner: dbPhoto.trim(), logo: dbPhoto.trim() };
+  }
+
+  // Priority 2: Direct ID / ACPC Code / Keyword Lookup in REAL_CAMPUS_MAP
   if (collegeObj?.id && REAL_CAMPUS_MAP[String(collegeObj.id)]) {
     return { banner: REAL_CAMPUS_MAP[String(collegeObj.id)], logo: REAL_CAMPUS_MAP[String(collegeObj.id)] };
   }
@@ -104,7 +110,7 @@ export function getCollegeImage(
     }
   }
 
-  // 2. Stream-aware dynamic banner selection based on primary_stream
+  // Priority 3: Curated Stream-aware Authentic Indian Campus Banners
   const streamKey = (collegeObj?.primary_stream || "").toLowerCase();
   let streamCategory = "default";
 
