@@ -4,7 +4,26 @@ import { College } from "../types";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
-// 100% Exterior Architectural & Aerial Drone Views (ZERO classroom/lecture hall stock photos)
+const ALLOWED_EDUCATION_DOMAINS = [
+  "wikipedia.org",
+  "wikimedia.org",
+  "unsplash.com",
+  "shiksha.com",
+  "collegedunia.com",
+  "ac.in",
+  "edu.in",
+  "careers360.com"
+];
+
+export function isWhitelistedCollegeImage(url?: string): boolean {
+  if (!url || typeof url !== "string" || !url.trim().startsWith("http")) {
+    return false;
+  }
+  const lower = url.toLowerCase();
+  return ALLOWED_EDUCATION_DOMAINS.some((domain) => lower.includes(domain));
+}
+
+// 100% Exterior Architectural & Aerial Drone Views of Universities (High-res Unsplash Verified)
 export const STREAM_CAMPUS_BANNERS: Record<string, string[]> = {
   engineering: [
     "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
@@ -89,13 +108,11 @@ export function getCollegeImage(
     collegeName = collegeOrName;
   }
 
-  // Priority 1: DB Scraped Authentic Campus Photo routed through backend CORS proxy
-  if (collegeObj?.id && (collegeObj.image_url || (collegeObj as any).campus_photo_url)) {
-    const rawUrl = collegeObj.image_url || (collegeObj as any).campus_photo_url;
-    if (rawUrl && typeof rawUrl === "string" && rawUrl.trim().startsWith("http")) {
-      const proxyUrl = `${BASE_URL}/api/v1/colleges/${collegeObj.id}/image-proxy`;
-      return { banner: proxyUrl, logo: proxyUrl };
-    }
+  // Priority 1: DB Scraped Authentic Campus Photo routed through backend CORS proxy (if Whitelisted)
+  const rawUrl = collegeObj?.image_url || (collegeObj as any)?.campus_photo_url;
+  if (collegeObj?.id && isWhitelistedCollegeImage(rawUrl)) {
+    const proxyUrl = `${BASE_URL}/api/v1/colleges/${collegeObj.id}/image-proxy`;
+    return { banner: proxyUrl, logo: proxyUrl };
   }
 
   // Priority 2: Direct ID / ACPC Code / Keyword Lookup in REAL_CAMPUS_MAP
