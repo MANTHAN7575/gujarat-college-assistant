@@ -60,7 +60,7 @@ export const CollegeDetailPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      <div className="min-h-screen bg-[#E2E8F0] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
         <Navbar />
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="flex flex-col items-center gap-3">
@@ -74,7 +74,7 @@ export const CollegeDetailPage: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      <div className="min-h-screen bg-[#E2E8F0] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans">
         <Navbar />
         <div className="max-w-4xl mx-auto p-12 text-center my-auto">
           <Info className="w-12 h-12 text-amber-500 mx-auto" />
@@ -106,7 +106,7 @@ export const CollegeDetailPage: React.FC = () => {
   const currentYearObj = multi_year_cutoffs?.find((y: any) => y.academic_year === selectedYear);
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
+    <div className="min-h-screen bg-[#E2E8F0] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 pb-16 sm:pb-0 relative overflow-hidden">
       {/* Outer Ambient Glow */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[750px] h-[350px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 

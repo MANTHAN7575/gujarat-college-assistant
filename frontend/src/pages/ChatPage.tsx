@@ -239,7 +239,7 @@ export const ChatPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 h-screen overflow-hidden relative">
+    <div className="min-h-screen bg-[#E2E8F0] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 h-screen overflow-hidden relative">
       {/* Outer Ambient Motion & Glow Layer */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-slate-900 rounded-full blur-3xl pointer-events-none -z-10" />
 
