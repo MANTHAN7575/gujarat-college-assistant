@@ -107,14 +107,14 @@ export const ComparePage: React.FC = () => {
       <Navbar />
 
       {/* Header Container */}
-      <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="py-4 sm:py-6 responsive-page-container">
         {/* Compact Back Button Positioned Outside & Above Hero Banner */}
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
+            className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
           >
-            <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
             <span>Back to College List</span>
           </Link>
         </div>
@@ -124,34 +124,34 @@ export const ComparePage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <AnimatedDotCard topBorderAccent={true} className="p-6 sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-4">
+          <AnimatedDotCard topBorderAccent={true} className="p-5 sm:p-8">
+            <div className="compare-header-row">
               <div>
-                <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-md">
+                <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-2.5 sm:px-3 py-0.5 rounded-md">
                   College Comparison
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight text-slate-900 dark:text-white leading-tight">
+                <h1 className="hero-title tracking-tight text-slate-900 dark:text-white mt-1.5 sm:mt-2">
                   Compare Gujarat Colleges Side by Side
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl font-normal">
+                <p className="hero-subtitle text-slate-600 dark:text-slate-400 mt-1 max-w-xl font-normal">
                   Side-by-side comparison of fees, placement packages, cutoffs, and facilities.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                 <button
                   onClick={() => window.print()}
-                  className="bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                  className="bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3 sm:px-3.5 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Printer className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 dark:text-indigo-400" />
                   <span>Download Report</span>
                 </button>
                 {selectedIds.length < 3 && (
                   <button
                     onClick={() => setModalOpen(true)}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3 sm:px-3.5 py-2 rounded-xl text-xs transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span>Add College ({selectedIds.length}/3)</span>
                   </button>
                 )}
@@ -162,20 +162,20 @@ export const ComparePage: React.FC = () => {
       </section>
 
       {/* Main Comparison Body */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
+      <main className="responsive-page-container py-4 flex-1">
         {loading ? (
           <div className="py-16 text-center">
             <div className="w-10 h-10 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
             <p className="mt-3 font-medium text-xs sm:text-sm text-slate-600 dark:text-slate-400">Loading comparison details...</p>
           </div>
         ) : !comparedData || comparedData.length === 0 ? (
-          <div className="py-16 text-center bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl backdrop-blur-xl">
-            <Columns3 className="w-12 h-12 text-slate-400 mx-auto" />
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200 mt-3">No Colleges Selected</h3>
+          <div className="py-16 text-center bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl backdrop-blur-xl">
+            <Columns3 className="w-10 h-10 sm:w-12 sm:h-12 text-slate-400 mx-auto" />
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-200 mt-3">No Colleges Selected</h3>
             <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">Select up to 3 colleges from the directory to build a side-by-side comparison table.</p>
             <button
               onClick={() => setModalOpen(true)}
-              className="mt-5 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-indigo-700 cursor-pointer"
+              className="mt-4 sm:mt-5 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl text-xs shadow-xs hover:bg-indigo-700 cursor-pointer"
             >
               Select Colleges
             </button>
@@ -185,9 +185,9 @@ export const ComparePage: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="overflow-x-auto bg-white dark:bg-[#111827] rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs dark:shadow-2xl backdrop-blur-xl p-2 sm:p-4"
+            className="compare-table-wrapper bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 shadow-xs dark:shadow-2xl backdrop-blur-xl p-2 sm:p-4"
           >
-            <table className="w-full text-left border-collapse min-w-[700px]">
+            <table className="compare-matrix-table text-left border-collapse">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                   <th className="p-4 sm:p-5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 w-1/4">

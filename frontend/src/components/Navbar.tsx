@@ -15,10 +15,10 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto app-navbar-container">
         {/* Left: Custom SVG Emblem & Gujarat College Assistant Brand */}
-        <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center shadow-xs group-hover:border-indigo-500 transition-all duration-200">
+        <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center shadow-xs group-hover:border-indigo-500 transition-all duration-200 shrink-0">
             {/* Bespoke Royal Indigo State Shield Vector Emblem */}
             <svg
               viewBox="0 0 24 24"
@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-5 h-5 text-indigo-600 dark:text-indigo-400 group-hover:scale-105 transition-transform"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400 group-hover:scale-105 transition-transform"
             >
               {/* Shield Outline */}
               <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" fill="#4F46E5" fillOpacity="0.15" />
@@ -38,19 +38,19 @@ export const Navbar: React.FC = () => {
               <circle cx="12" cy="5" r="1" fill="#4F46E5" />
             </svg>
           </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
+          <div className="flex flex-col justify-center min-w-0">
+            <span className="app-navbar-brand-title font-extrabold text-slate-900 dark:text-white tracking-tight leading-none truncate">
               Gujarat College Assistant
             </span>
-            <span className="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400 tracking-wider mt-1">
+            <span className="app-navbar-brand-subtitle uppercase font-bold text-indigo-600 dark:text-indigo-400 mt-1 truncate">
               Gujarat College & Admission Guide
             </span>
           </div>
         </Link>
 
         {/* Right Section: Lucide Navigation Links & Theme Switcher */}
-        <div className="flex items-center gap-3">
-          <nav className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <nav className="app-navbar-nav-links">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = location.pathname === link.path;
@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
           {/* Theme Switcher Button */}
           <button
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all shrink-0 shadow-xs"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all shrink-0 shadow-xs"
             aria-label="Toggle Theme"
             title={`Switch to ${theme === "light" ? "Dark" : "Light"} Mode`}
           >

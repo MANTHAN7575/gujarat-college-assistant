@@ -34,7 +34,7 @@ export const DeleteChatModal: React.FC<DeleteChatModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 15 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative z-10 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-2xl rounded-3xl p-6 max-w-md w-full text-slate-900 dark:text-white"
+            className="relative z-10 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-2xl rounded-3xl responsive-modal-card text-slate-900 dark:text-white"
           >
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-500 flex items-center justify-center shrink-0">

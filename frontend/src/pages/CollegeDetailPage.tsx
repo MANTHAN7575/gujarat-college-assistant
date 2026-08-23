@@ -113,14 +113,14 @@ export const CollegeDetailPage: React.FC = () => {
       <Navbar />
 
       {/* Hero Header Section */}
-      <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="py-4 sm:py-6 responsive-page-container">
         {/* Compact Back Button Positioned Outside & Above Hero Banner */}
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
+            className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
           >
-            <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
             <span>Back to College List</span>
           </Link>
         </div>
@@ -130,10 +130,10 @@ export const CollegeDetailPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <AnimatedDotCard topBorderAccent={true} className="p-6 sm:p-8">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+          <AnimatedDotCard topBorderAccent={true} className="p-5 sm:p-8">
+            <div className="college-detail-hero-layout">
               {/* Campus Image Banner */}
-              <div className="w-full md:w-80 h-48 sm:h-56 rounded-2xl overflow-hidden bg-slate-900 shrink-0 relative shadow-md">
+              <div className="college-detail-hero-banner rounded-2xl overflow-hidden bg-slate-900 shrink-0 relative shadow-md">
                 <img
                   src={img.banner}
                   alt={college?.name || "Institution"}
@@ -155,32 +155,32 @@ export const CollegeDetailPage: React.FC = () => {
               </div>
 
               {/* Main Information Details */}
-              <div className="flex-1 space-y-3">
-                <div className="flex items-center gap-2 flex-wrap mb-1">
+              <div className="flex-1 space-y-3 min-w-0">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap mb-1">
                   {college?.college_type && (
-                    <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 sm:py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                       {college.college_type}
                     </span>
                   )}
                   {college?.nirf_rank && (
-                    <span className="bg-amber-500/90 text-white text-xs font-bold px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
+                    <span className="bg-amber-500/90 text-white text-[11px] sm:text-xs font-bold px-2.5 py-0.5 sm:py-1 rounded-xl shadow-xs flex items-center gap-1">
                       <Award className="w-3.5 h-3.5" />
                       <span>NIRF Rank #{college.nirf_rank}</span>
                     </span>
                   )}
                   {college?.naac_grade && (
-                    <span className="bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold px-2.5 py-1 rounded-xl">
+                    <span className="bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] sm:text-xs font-bold px-2.5 py-0.5 sm:py-1 rounded-xl">
                       NAAC Grade {college.naac_grade}
                     </span>
                   )}
                   {college?.established_year && (
-                    <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-semibold px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 sm:py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                       Estd. {college.established_year}
                     </span>
                   )}
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                <h1 className="hero-title text-slate-900 dark:text-white tracking-tight leading-snug">
                   {college?.name || "Institution Name"}
                 </h1>
 
@@ -191,19 +191,19 @@ export const CollegeDetailPage: React.FC = () => {
 
                 {college?.university_affiliation && (
                   <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-1.5">
-                    <GraduationCap className="w-4 h-4" />
+                    <GraduationCap className="w-4 h-4 shrink-0" />
                     <span>Affiliated with {college.university_affiliation}</span>
                   </p>
                 )}
 
                 {/* Quick Action Contact Links */}
-                <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
+                <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
                   {(data?.website || college?.website) && (
                     <a
                       href={(data?.website || college?.website).startsWith("http") ? (data?.website || college?.website) : `https://${data?.website || college?.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-3 sm:px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span>Official Website</span>
@@ -217,7 +217,7 @@ export const CollegeDetailPage: React.FC = () => {
                   )}
                   <Link
                     to={`/compare?id1=${college?.id || 1}`}
-                    className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
+                    className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold px-3 sm:px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
                   >
                     <Columns3 className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Compare Colleges</span>
@@ -230,68 +230,68 @@ export const CollegeDetailPage: React.FC = () => {
       </section>
 
       {/* Navigation Tabs */}
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl p-1.5 backdrop-blur-xl flex items-center justify-between gap-1 overflow-x-auto scrollbar-none shadow-xs">
+      <nav className="responsive-page-container">
+        <div className="detail-tabs-bar bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl backdrop-blur-xl shadow-xs">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${
+            className={`flex-1 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-1.5 sm:gap-2 ${
               activeTab === "overview"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            <Building2 className="w-4 h-4" />
+            <Building2 className="w-4 h-4 shrink-0" />
             <span>Overview</span>
           </button>
           <button
             onClick={() => setActiveTab("courses")}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${
+            className={`flex-1 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-1.5 sm:gap-2 ${
               activeTab === "courses"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            <BookOpen className="w-4 h-4" />
-            <span>Courses & Fees ({courses.length})</span>
+            <BookOpen className="w-4 h-4 shrink-0" />
+            <span>Courses ({courses.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("cutoffs")}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${
+            className={`flex-1 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-1.5 sm:gap-2 ${
               activeTab === "cutoffs"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            <BarChart3 className="w-4 h-4" />
-            <span>ACPC Cutoffs</span>
+            <BarChart3 className="w-4 h-4 shrink-0" />
+            <span>Cutoffs</span>
           </button>
           <button
             onClick={() => setActiveTab("placements")}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${
+            className={`flex-1 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-1.5 sm:gap-2 ${
               activeTab === "placements"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            <Briefcase className="w-4 h-4" />
-            <span>Placements & LPA</span>
+            <Briefcase className="w-4 h-4 shrink-0" />
+            <span>Placements</span>
           </button>
           <button
             onClick={() => setActiveTab("amenities")}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-2 ${
+            className={`flex-1 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-center flex items-center justify-center gap-1.5 sm:gap-2 ${
               activeTab === "amenities"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
-            <Home className="w-4 h-4" />
-            <span>Campus Hostels</span>
+            <Home className="w-4 h-4 shrink-0" />
+            <span>Campus</span>
           </button>
         </div>
       </nav>
 
       {/* Tab Panels */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+      <main className="responsive-page-container py-4 sm:py-6 flex-1">
         <AnimatePresence mode="wait">
           {/* TAB 1: OVERVIEW */}
           {activeTab === "overview" && (
@@ -313,7 +313,7 @@ export const CollegeDetailPage: React.FC = () => {
                   </AnimatedDotCard>
 
                   {/* Highlights Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div className="detail-stats-grid">
                     <div className="bg-white dark:bg-[#111827] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-center shadow-xs">
                       <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Starting Fee</p>
                       <p className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white mt-1">
@@ -424,7 +424,7 @@ export const CollegeDetailPage: React.FC = () => {
               transition={{ duration: 0.25 }}
               className="space-y-6"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#111827] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+              <div className="cutoff-filter-row bg-white dark:bg-[#111827] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
                 <div>
                   <h2 className="text-lg font-bold text-slate-900 dark:text-white">ACPC Merit Rank Cutoffs</h2>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Filter category-wise Opening & Closing merit ranks by Academic Year.</p>

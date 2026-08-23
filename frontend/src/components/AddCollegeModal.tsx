@@ -73,7 +73,7 @@ export const AddCollegeModal: React.FC<AddCollegeModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.93, y: 15 }}
           transition={{ type: "spring", stiffness: 350, damping: 25 }}
-          className="relative z-10 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-2xl rounded-3xl p-6 max-w-lg w-full max-h-[85vh] flex flex-col overflow-hidden text-slate-900 dark:text-white"
+          className="relative z-10 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-2xl rounded-3xl responsive-modal-card flex flex-col overflow-hidden text-slate-900 dark:text-white"
         >
           {/* Modal Header */}
           <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3.5 mb-3">
