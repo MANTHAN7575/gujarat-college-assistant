@@ -8,9 +8,9 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
 
   const navLinks = [
-    { label: "Home Directory", path: "/", icon: Home },
+    { label: "Home", path: "/", icon: Home },
     { label: "AI Advisor", path: "/chat", icon: Bot },
-    { label: "Compare Matrix", path: "/compare", icon: Columns3 },
+    { label: "Compare Colleges", path: "/compare", icon: Columns3 },
   ];
 
   return (
@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
               Gujarat College Assistant
             </span>
             <span className="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400 tracking-wider mt-1">
-              ACPC & Institutional Intelligence
+              Gujarat College & Admission Guide
             </span>
           </div>
         </Link>

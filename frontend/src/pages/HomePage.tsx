@@ -72,7 +72,7 @@ export const HomePage: React.FC = () => {
       setTotalColleges(res.total || (res as any).total_count || 2530);
     } catch (err) {
       console.error("Failed to load colleges", err);
-      setError("Unable to connect to FastAPI backend server on http://127.0.0.1:8000.");
+      setError("Unable to connect to the server. Please check your internet connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -166,7 +166,7 @@ export const HomePage: React.FC = () => {
             <div className="max-w-4xl mx-auto">
               <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] sm:text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
                 <GraduationCap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>GUJARAT HIGHER EDUCATION ADMISSIONS INDEX</span>
+                <span>GUJARAT COLLEGE ADMISSION GUIDE</span>
               </span>
 
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight mt-4">
@@ -223,7 +223,7 @@ export const HomePage: React.FC = () => {
           <div className="flex items-center gap-3">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
               <Building2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-              <span>Institutions Directory</span>
+              <span>All Colleges</span>
             </h2>
             <span className="bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 font-bold px-2.5 py-0.5 rounded-md text-xs border border-slate-300 dark:border-slate-700">
               {totalColleges.toLocaleString()} Total

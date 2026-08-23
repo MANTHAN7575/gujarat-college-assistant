@@ -81,27 +81,28 @@ def generate_ai_response(user_query: str, college_data: dict, intent: str = None
             "**Official 2026 Merit Rank Cutoffs Pending Release**\n\n"
             "- **Current Status**: Official Round 1 and Round 2 merit rank cutoffs for the **2026 Academic Year** have not been declared yet by ACPC (Admission Committee for Professional Courses Gujarat) or NTA NEET.\n"
             "- **Next Steps**: ACPC admissions and merit rank publications will begin following the official announcement of national & state entrance results.\n"
-            "- **Historical Trends**: You can explore verified **2025, 2024, and 2023 cutoff ranks** on any college profile page or compare up to 3 institutions in the decision matrix!"
+            "- **Previous Cutoffs**: You can explore verified **2025, 2024, and 2023 cutoff ranks** on any college details page or compare colleges side-by-side!"
         )
 
     formatted_context = format_context_for_prompt(college_data)
 
     prompt = f"""
-You are the official ACPC & Gujarat Admission Guidance Assistant covering all accredited higher education institutions across Gujarat.
+You are the Gujarat College Assistant, a friendly and knowledgeable admission counselor helping students choose the right college across Gujarat.
 
 INSTRUCTIONS:
-1. Answer the student's question directly using the provided context below.
-2. Cite real database facts (ACPC Code, Annual Fees, University Affiliation, Placement Packages in LPA, Hostels, Cutoffs).
-3. Express placement salary metrics clearly in LPA (e.g. ₹18.0 LPA highest, ₹5.5 LPA average).
-4. Maintain a professional, articulate, human academic advisor tone. Format your response with clean Markdown bullet points and clear section headings without stock emojis.
+1. Answer the student's question directly, clearly, and helpfully using the provided facts below.
+2. Provide key details (ACPC Code, Annual Fees, University Affiliation, Highest & Average Placement Packages in LPA, Hostels, Cutoffs).
+3. Always express salary figures clearly in LPA (e.g., ₹18.0 LPA highest, ₹5.5 LPA average).
+4. Use simple, student-friendly language. Avoid technical jargon like RAG, embeddings, vector retrieval, or database terminology.
+5. Format your response nicely with clean Markdown bullet points and bold highlights for important details.
 
-USER QUESTION:
+STUDENT QUESTION:
 {user_query}
 
-DETECTED INTENT:
+TOPIC:
 {intent or "general"}
 
-GROUNDED DATABASE CONTEXT:
+COLLEGE INFORMATION:
 {formatted_context}
 """
 
@@ -116,7 +117,7 @@ GROUNDED DATABASE CONTEXT:
             except Exception:
                 continue
 
-    # Fallback deterministic response safely built from grounded database context
+    # Fallback response built from college information
     if isinstance(college_data, dict) and "retrieved_colleges" in college_data and college_data["retrieved_colleges"]:
         col_list = college_data["retrieved_colleges"]
         top = col_list[0]
@@ -126,7 +127,7 @@ GROUNDED DATABASE CONTEXT:
         placements = top.get("placements") or {}
         high_pkg = placements.get("highest_package", 1800000) / 100000 if placements else 18.0
 
-        return f"Based on verified database records across Gujarat institutions, relevant colleges for your query include **{col_names}**. For example, **{top.get('name')}** (ACPC Code: `{top.get('acpc_code', 'N/A')}`, {top.get('city')}) offers accredited degree programs under {top.get('university_affiliation', 'GTU')}. Annual tuition fees average ₹{int(fee):,} with ACPC merit cutoffs and campus placement packages reaching **₹{high_pkg:.1f} LPA**."
+        return f"Here are relevant colleges matching your question: **{col_names}**. For example, **{top.get('name')}** (ACPC Code: `{top.get('acpc_code', 'N/A')}`, {top.get('city')}) offers degree programs affiliated with {top.get('university_affiliation', 'GTU')}. Annual tuition fees average ₹{int(fee):,} with campus placement packages reaching up to **₹{high_pkg:.1f} LPA**."
 
     if isinstance(college_data, dict) and college_data.get("name"):
         c_name = college_data.get("name")
@@ -141,6 +142,6 @@ GROUNDED DATABASE CONTEXT:
         facilities = college_data.get("facilities") or {}
         hostel = "Available" if facilities.get("hostel") else "Not Available"
 
-        return f"### {c_name}\n\n- **ACPC Code**: `{c_acpc}`\n- **Location**: {c_city}, Gujarat\n- **Affiliation**: {c_aff}\n- **Annual Tuition Fee**: ₹{int(fee):,}\n- **Hostel Facility**: {hostel}\n- **Placement Statistics**: Highest package of **₹{high_pkg:.1f} LPA** and average of **₹{avg_pkg:.1f} LPA**.\n- **Admissions**: Centralized ACPC Counseling & GUJCET Merit Rank Cutoffs."
+        return f"### {c_name}\n\n- **ACPC Code**: `{c_acpc}`\n- **City**: {c_city}, Gujarat\n- **Affiliation**: {c_aff}\n- **Annual Tuition Fee**: ₹{int(fee):,}\n- **Hostel Facility**: {hostel}\n- **Placement Packages**: Highest package of **₹{high_pkg:.1f} LPA** and average of **₹{avg_pkg:.1f} LPA**.\n- **Admissions**: Centralized ACPC Counseling & GUJCET Merit Rank Cutoffs."
 
-    return "The Gujarat higher education directory contains accredited engineering, medical, commerce, and polytechnic colleges. Please specify an institution (e.g., LDRP, BVM, BJMC, SAL, AIT) or city (Ahmedabad, Gandhinagar, Rajkot, Anand) for detailed fee, cutoff, and placement statistics."
+    return "Explore colleges across Gujarat for Engineering, Medical, Commerce, Law, and Diploma programs. You can ask about fees, merit cutoffs, hostel facilities, or top placement packages for colleges in Ahmedabad, Gandhinagar, Rajkot, Surat, Anand, and more."

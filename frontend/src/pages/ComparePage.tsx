@@ -115,7 +115,7 @@ export const ComparePage: React.FC = () => {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
           >
             <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
-            <span>Back to Directory Index</span>
+            <span>Back to College List</span>
           </Link>
         </div>
 
@@ -128,13 +128,13 @@ export const ComparePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <span className="bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-md">
-                  Academic Decision Matrix
+                  College Comparison
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight text-slate-900 dark:text-white leading-tight">
-                  Compare Gujarat Institutions
+                  Compare Gujarat Colleges Side by Side
                 </h1>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl font-normal">
-                  Side-by-side analysis of tuition fees, highest LPA placement packages, and ACPC cutoffs.
+                  Side-by-side comparison of fees, placement packages, cutoffs, and facilities.
                 </p>
               </div>
 
@@ -161,12 +161,12 @@ export const ComparePage: React.FC = () => {
         </motion.div>
       </section>
 
-      {/* Main Comparison Matrix Body */}
+      {/* Main Comparison Body */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
         {loading ? (
           <div className="py-16 text-center">
             <div className="w-10 h-10 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="mt-3 font-medium text-xs sm:text-sm text-slate-600 dark:text-slate-400">Loading side-by-side metrics...</p>
+            <p className="mt-3 font-medium text-xs sm:text-sm text-slate-600 dark:text-slate-400">Loading comparison details...</p>
           </div>
         ) : !comparedData || comparedData.length === 0 ? (
           <div className="py-16 text-center bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl backdrop-blur-xl">
@@ -191,7 +191,7 @@ export const ComparePage: React.FC = () => {
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                   <th className="p-4 sm:p-5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 w-1/4">
-                    Metric / Parameter
+                    College Details
                   </th>
                   {comparedData.map((item, idx) => {
                     const col = (item as any)?.college || item;

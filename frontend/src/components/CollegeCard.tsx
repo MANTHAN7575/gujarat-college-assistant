@@ -81,12 +81,12 @@ export const CollegeCard: React.FC<CollegeCardProps> = ({ college, index = 0 }) 
             className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-3 rounded-xl text-center text-xs transition-all shadow-xs flex items-center justify-center gap-1.5"
           >
             <Eye className="w-3.5 h-3.5" />
-            <span>View Profile</span>
+            <span>View Details</span>
           </Link>
           <Link
             to={`/compare?id1=${college.id}`}
             className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold p-2 rounded-xl text-xs transition-all flex items-center justify-center border border-slate-200 dark:border-slate-700"
-            title="Compare College Matrix"
+            title="Compare College"
           >
             <GitCompare className="w-4 h-4" />
           </Link>

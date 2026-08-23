@@ -39,7 +39,7 @@ export const ChatPage: React.FC = () => {
   const welcomeMessage: ChatMessage = {
     id: "welcome-1",
     sender: "bot",
-    text: "Welcome to the ACPC & Gujarat Admission Guidance Assistant. Ask about merit cutoffs, annual fees, hostelled campuses, or program placements across engineering, medical, commerce, and polytechnic universities.",
+    text: "Welcome to Gujarat College Assistant! Ask me anything about college admissions, cutoff ranks, fees, hostel facilities, or campus placements across Gujarat.",
     timestamp: new Date(),
   };
 
@@ -174,14 +174,14 @@ export const ChatPage: React.FC = () => {
       if (error instanceof ChatApiError) {
         console.error(`HTTP ${error.status} from /api/v1/chat/:`, error.detail);
         if (error.status === 422) {
-          setErrorMessage(`Request validation failed (HTTP 422). The chat payload was rejected by the server. Detail: ${error.detail}`);
+          setErrorMessage("We could not process your question. Please try asking in a different way.");
         } else {
-          setErrorMessage(`Server returned HTTP ${error.status}: ${error.statusText}`);
+          setErrorMessage("The server is temporarily unavailable. Please try again shortly.");
         }
       } else if (error instanceof TypeError && (error.message.includes("fetch") || error.message.includes("Failed"))) {
-        setErrorMessage("FastAPI backend server is unresponsive on http://127.0.0.1:8000.");
+        setErrorMessage("Unable to connect to the server. Please check your internet connection and try again.");
       } else {
-        setErrorMessage("An unexpected error occurred while sending your message.");
+        setErrorMessage("Something went wrong while sending your message. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -328,11 +328,11 @@ export const ChatPage: React.FC = () => {
                   className="text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 px-3 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Directory Index</span>
+                  <span>All Colleges</span>
                 </Link>
                 <div>
                   <h2 className="font-extrabold text-base text-slate-900 dark:text-white leading-tight">Gujarat College Assistant AI</h2>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Grounded RAG Pipeline • Hybrid Vector Retrieval</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Smart Admission Guidance • Verified Gujarat College Data</p>
                 </div>
               </div>
               <span className="bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
@@ -388,7 +388,7 @@ export const ChatPage: React.FC = () => {
                   {msg.sender === "bot" && (
                     <div className="flex flex-wrap items-center gap-1.5 mt-1.5 px-1 text-xs">
                       <span className="bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-200 dark:border-slate-800 flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> Verified ACPC Records
+                        <CheckCircle2 className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> Verified ACPC Data
                       </span>
                       {msg.college && (
                         <span className="bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 font-medium px-2 py-0.5 rounded-md text-[10px] border border-slate-200 dark:border-slate-800 flex items-center gap-1">
@@ -403,7 +403,7 @@ export const ChatPage: React.FC = () => {
               {loading && (
                 <div className="flex items-center gap-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3.5 py-2.5 rounded-xl w-max text-xs text-slate-700 dark:text-slate-300 shadow-sm animate-pulse">
                   <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 animate-spin" />
-                  <span>Generating grounded RAG response...</span>
+                  <span>Finding the best college information for you...</span>
                 </div>
               )}
 
@@ -413,7 +413,7 @@ export const ChatPage: React.FC = () => {
                   <div className="flex items-center gap-2.5">
                     <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
                     <div>
-                      <p className="font-bold">Chat Request Failed</p>
+                      <p className="font-bold">Unable to Send Message</p>
                       <p className="text-xs text-amber-800 dark:text-amber-300 font-medium">
                         {errorMessage || "An unexpected error occurred."}
                       </p>
@@ -424,7 +424,7 @@ export const ChatPage: React.FC = () => {
                     className="bg-amber-700 hover:bg-amber-800 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5 shrink-0"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
-                    <span>Retry Query</span>
+                    <span>Try Again</span>
                   </button>
                 </div>
               )}
@@ -435,7 +435,7 @@ export const ChatPage: React.FC = () => {
             {/* Quick Suggestion Chips */}
             <div className="relative z-10 px-4 py-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2 flex-wrap">
               <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
-                <HelpCircle className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Prompts:
+                <HelpCircle className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Suggested Questions:
               </span>
               {quickPrompts.map((prompt, idx) => (
                 <motion.button

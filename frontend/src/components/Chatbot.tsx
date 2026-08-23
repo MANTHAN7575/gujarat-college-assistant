@@ -73,7 +73,7 @@ export const Chatbot: React.FC = () => {
         {
           id: `err-${Date.now()}`,
           sender: "bot",
-          text: "⚠️ Sorry, I ran into an issue retrieving college data. Please check your backend connection.",
+          text: "⚠️ Sorry, I couldn't get the information right now. Please try asking again in a moment.",
           timestamp: new Date(),
         },
       ]);
@@ -111,7 +111,7 @@ export const Chatbot: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold text-base leading-tight">Gujarat AI Assistant</h3>
-                <p className="text-xs text-blue-200">Powered by Gemini & PostgreSQL</p>
+                <p className="text-xs text-blue-200">Your AI Admission Guide</p>
               </div>
             </div>
             <button
@@ -161,7 +161,7 @@ export const Chatbot: React.FC = () => {
 
             {loading && (
               <div className="flex items-center gap-2 text-gray-500 text-xs bg-white px-3 py-2 rounded-xl border border-gray-100 w-max shadow-sm">
-                <span className="animate-spin">⏳</span> AI is querying college database...
+                <span className="animate-spin">⏳</span> Finding college information...
               </div>
             )}
             <div ref={messagesEndRef} />

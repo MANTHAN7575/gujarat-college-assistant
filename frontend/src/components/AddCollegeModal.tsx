@@ -79,10 +79,10 @@ export const AddCollegeModal: React.FC<AddCollegeModalProps> = ({
           <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3.5 mb-3">
             <div>
               <span className="bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider border border-indigo-200 dark:border-indigo-800">
-                Live Search Engine
+                Search Colleges
               </span>
               <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight mt-1">
-                Select Institution to Compare
+                Choose a College to Compare
               </h3>
             </div>
             <button

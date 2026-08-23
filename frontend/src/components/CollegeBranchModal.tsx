@@ -44,13 +44,13 @@ export const CollegeBranchModal: React.FC<CollegeBranchModalProps> = ({
             <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
               <div>
                 <span className="bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
-                  Network Campus Explorer
+                  Campus Locations
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug">
-                  Sister Campuses & Affiliated Branches
+                  Other Campuses & Branches
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium line-clamp-1">
-                  Network constituent institutes for <span className="font-semibold text-indigo-600 dark:text-indigo-400">{collegeName}</span>
+                  All campus locations for <span className="font-semibold text-indigo-600 dark:text-indigo-400">{collegeName}</span>
                 </p>
               </div>
               <button
@@ -76,10 +76,10 @@ export const CollegeBranchModal: React.FC<CollegeBranchModalProps> = ({
                 <div className="text-center py-12 bg-slate-50 dark:bg-slate-950/60 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
                   <Building2 className="w-8 h-8 text-slate-400 dark:text-slate-600 mx-auto" />
                   <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-2">
-                    Single Primary Campus Location
+                    Single Campus Location
                   </p>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    This institution operates exclusively from its main accredited campus.
+                    This college operates from a single campus.
                   </p>
                 </div>
               ) : (

@@ -65,7 +65,7 @@ export const CollegeDetailPage: React.FC = () => {
         <div className="flex-1 flex items-center justify-center p-12">
           <div className="flex flex-col items-center gap-3">
             <div className="w-10 h-10 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-600 dark:text-slate-400 font-medium text-xs sm:text-sm">Fetching institutional profile records...</p>
+            <p className="text-slate-600 dark:text-slate-400 font-medium text-xs sm:text-sm">Loading college details...</p>
           </div>
         </div>
       </div>
@@ -78,14 +78,14 @@ export const CollegeDetailPage: React.FC = () => {
         <Navbar />
         <div className="max-w-4xl mx-auto p-12 text-center my-auto">
           <Info className="w-12 h-12 text-amber-500 mx-auto" />
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-3">Institutional Profile Not Found</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-3">College Not Found</h2>
           <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1">{error || "Invalid ID requested."}</p>
           <Link
             to="/"
             className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-sm"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to Directory Index</span>
+            <span>Back to College List</span>
           </Link>
         </div>
       </div>
@@ -121,7 +121,7 @@ export const CollegeDetailPage: React.FC = () => {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-xs transition-all duration-200 group"
           >
             <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform" />
-            <span>Back to Directory Index</span>
+            <span>Back to College List</span>
           </Link>
         </div>
 
@@ -220,7 +220,7 @@ export const CollegeDetailPage: React.FC = () => {
                     className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5"
                   >
                     <Columns3 className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>Compare Matrix</span>
+                    <span>Compare Colleges</span>
                   </Link>
                 </div>
               </div>
