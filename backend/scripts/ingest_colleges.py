@@ -516,21 +516,6 @@ def generate_mass_colleges(target_count: int = 2530):
         "Law College", "Pharmaceutical Education & Research Institute", "College of Nursing", "Institute of Technology"
     ]
 
-    images = [
-        "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Daiict-campus.jpg/1024px-Daiict-campus.jpg",
-        "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Charotar_University_of_Science_and_Technology.jpg/960px-Charotar_University_of_Science_and_Technology.jpg",
-        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg/1280px-D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg",
-        "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80"
-    ]
-
     current_id = max(existing_ids) + 1 if existing_ids else 200
 
     while len(colleges) < target_count:
@@ -577,7 +562,7 @@ def generate_mass_colleges(target_count: int = 2530):
             "address": f"Campus Road, Near Highway, {city}, {district} District, Gujarat",
             "description": f"Accredited higher education institution in {city}, {district} offering undergraduate and postgraduate programs under {univ}.",
             "nirf_rank": random.randint(50, 250) if random.random() < 0.15 else None,
-            "image_url": random.choice(images),
+            "image_url": None,
             "annual_fees": fees,
             "courses": [
                 {

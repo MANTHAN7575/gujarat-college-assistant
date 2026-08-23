@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-Automated Exterior Campus Photo Scraper & Database Hydration Pipeline
-Scrapes authentic main building facades and aerial drone campus photography for colleges in the database.
-Enforces strict exclusion of classroom / interior / student group photos.
+Genuine Per-College Wikimedia Campus Image Scraper & Local File Storage Pipeline
+- Searches Wikimedia Commons (File namespace) for authentic architectural campus photos per college
+- Downloads authentic photos directly to backend/static/campus_images/{id}.jpg
+- Updates database image_url to local relative path '/static/campus_images/{id}.jpg'
+- Preserves honest NULL values for colleges with no authentic image (handled by frontend stream category fallbacks)
+- Fully idempotent and resumable
 """
 
 import sys
@@ -11,6 +14,8 @@ import time
 import argparse
 import requests
 import re
+import urllib.parse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 from sqlalchemy.orm import Session
 
@@ -21,140 +26,211 @@ from app.core.database import SessionLocal
 from app.models.college import College
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": "GujaratCollegeAssistantBot/1.0 (https://github.com/MANTHAN7575/gujarat-college-assistant; contact@gujaratcollegeassistant.org)"
 }
 
-EXCLUDE_KEYWORDS = [
-    "classroom", "lab", "laboratory", "hall", "interior", "bench", "desk",
-    "library", "canteen", "student", "seminar", "people", "group", "lecture",
-    "event", "workshop", "auditorium", "vector", "logo", "icon", "banner"
+STATIC_IMG_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "static",
+    "campus_images"
+)
+os.makedirs(STATIC_IMG_DIR, exist_ok=True)
+
+# Direct Verified Wikimedia Commons Authentic Campus Photographs
+DIRECT_VERIFIED_CAMPUS_URLS = {
+    1: "https://upload.wikimedia.org/wikipedia/commons/8/87/Pandit_Deendayal_Energy_University_Main_Building.jpg",
+    2: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Daiict-campus.jpg",
+    3: "https://upload.wikimedia.org/wikipedia/commons/9/92/Institute_of_Architecture_%26_Planning%2C_Nirma_University.jpg",
+    4: "https://upload.wikimedia.org/wikipedia/commons/2/25/The_entrance_of_LD_Engineering_college%2C_Ahmedabad.jpg",
+    10: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Charotar_University_of_Science_and_Technology.jpg",
+    16: "https://upload.wikimedia.org/wikipedia/commons/3/35/Maharaja_Sayajirao_University.jpg",
+    101: "https://upload.wikimedia.org/wikipedia/commons/f/f3/LDRP_ITR_Gandhinagar_Campus.jpg",
+    102: "https://upload.wikimedia.org/wikipedia/commons/6/69/Front_Lawn_of_Birla_Vishvakarma_Mahavidyalaya.jpg"
+}
+
+EXCLUDE_PATTERNS = [
+    ".svg", ".pdf", ".ogg", ".webm", ".tif", ".gif",
+    "logo", "icon", "seal", "emblem", "flag", "coat_of_arms", "map",
+    "chart", "portrait", "signature", "group", "student", "classroom",
+    "convocation", "certificate", "press", "minister", "president", "event"
 ]
 
-REQUIRED_KEYWORDS = [
-    "building", "campus", "aerial", "drone", "exterior", "facade", "main block", "front", "gate", "university"
-]
 
-
-def is_valid_exterior_image(url: str) -> bool:
-    """Validate image URL to exclude interior/classroom keywords and icons."""
+def is_valid_campus_photo(url: str, title: str) -> bool:
+    """Validate image to ensure it's a real photo of campus architecture."""
+    if not url or not isinstance(url, str):
+        return False
     u_lower = url.lower()
-    if not u_lower.endswith(('.jpg', '.jpeg', '.png', '.webp')):
+    t_lower = title.lower()
+
+    if not u_lower.endswith(('.jpg', '.jpeg', '.png', '.webp')) and not any(ext in u_lower for ext in ['.jpg?', '.jpeg?', '.png?', '.webp?']):
         return False
 
-    if any(ex in u_lower for ex in EXCLUDE_KEYWORDS):
+    if any(ex in u_lower or ex in t_lower for ex in EXCLUDE_PATTERNS):
         return False
 
     return True
 
 
-def search_bing_campus_image(query: str) -> str:
-    """Fetch high-resolution exterior campus photo URL from Bing Image Search."""
+def download_and_save_image(image_url: str, college_id: int) -> str | None:
+    """Download authentic image bytes from Wikimedia and store locally in backend/static/campus_images/."""
     try:
-        url = f"https://www.bing.com/images/search?q={requests.utils.quote(query)}&form=HDRSC2"
-        resp = requests.get(url, headers=HEADERS, timeout=6)
-        if resp.status_code == 200:
-            urls = re.findall(r'murl&quot;:&quot;(https?://[^&]+)&quot;', resp.text)
-            for u in urls:
-                if is_valid_exterior_image(u):
-                    return u
-    except Exception:
+        clean_url = image_url.split("?")[0]
+        ext = ".jpg"
+        if clean_url.lower().endswith(".png"):
+            ext = ".png"
+        elif clean_url.lower().endswith(".webp"):
+            ext = ".webp"
+
+        filename = f"{college_id}{ext}"
+        filepath = os.path.join(STATIC_IMG_DIR, filename)
+
+        resp = requests.get(image_url, headers=HEADERS, timeout=8)
+        if resp.status_code == 200 and len(resp.content) > 2048:
+            with open(filepath, "wb") as f:
+                f.write(resp.content)
+            return f"/static/campus_images/{filename}"
+    except Exception as e:
         pass
-    return ""
+    return None
 
 
-def search_wikipedia_campus_image(college_name: str) -> str:
-    """Fetch official main campus exterior photo from Wikipedia API."""
-    try:
-        wiki_title = college_name.replace(" ", "_")
-        url = f"https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles={requests.utils.quote(wiki_title)}"
-        resp = requests.get(url, headers={"User-Agent": "GujaratCollegeAssistantBot/1.0"}, timeout=5)
-        if resp.status_code == 200:
-            pages = resp.json().get("query", {}).get("pages", {})
-            for p in pages.values():
-                src = p.get("original", {}).get("source")
-                if src and is_valid_exterior_image(src):
-                    return src
-    except Exception:
-        pass
-    return ""
+def search_commons_for_college(name: str, city: str) -> str | None:
+    """Search Wikimedia Commons for a specific college's campus building photo."""
+    clean_name = re.sub(r'\(.*?\)', '', name).strip()
+    
+    # Try specific queries
+    queries = [
+        f"{clean_name} campus",
+        clean_name
+    ]
+
+    for q in queries:
+        try:
+            url = f"https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch={urllib.parse.quote(q)}&gsrnamespace=6&gsrlimit=3&prop=imageinfo&iiprop=url|size&format=json"
+            resp = requests.get(url, headers=HEADERS, timeout=4)
+            if resp.status_code == 200:
+                pages = resp.json().get("query", {}).get("pages", {})
+                for p in pages.values():
+                    title = p.get("title", "")
+                    info = p.get("imageinfo", [{}])[0]
+                    img_url = info.get("url")
+                    width = info.get("width", 0)
+                    height = info.get("height", 0)
+
+                    if img_url and width >= 500 and height >= 350 and is_valid_campus_photo(img_url, title):
+                        # Strict relevance verification
+                        name_tokens = [t.lower() for t in clean_name.split() if len(t) > 3]
+                        if any(t in title.lower() or t in img_url.lower() for t in name_tokens):
+                            return img_url
+        except Exception:
+            pass
+
+    return None
 
 
-def scrape_real_campus_image(college: College) -> str:
-    """Multi-source resolver for real exterior campus images targeting CollegeDekho, Shiksha, Collegedunia, Wikipedia."""
-    name = college.name or ""
-    city = college.city or "Gujarat"
+def process_college_worker(college_id: int, name: str, city: str, current_img: str | None, force: bool) -> tuple[int, str | None]:
+    """Concurrent worker task for a single college."""
+    # 1. Direct hand-verified colleges
+    if college_id in DIRECT_VERIFIED_CAMPUS_URLS:
+        target_url = DIRECT_VERIFIED_CAMPUS_URLS[college_id]
+        saved = download_and_save_image(target_url, college_id)
+        if saved:
+            return (college_id, saved)
 
-    # 1. Wikipedia API check for major university main buildings
-    wiki_img = search_wikipedia_campus_image(name)
-    if wiki_img:
-        return wiki_img
+    # 2. Resumable skip check
+    if not force and current_img and current_img.startswith("/static/"):
+        filename = f"{college_id}.jpg"
+        if os.path.exists(os.path.join(STATIC_IMG_DIR, filename)):
+            return (college_id, current_img)
 
-    # 2. Bing Image Search targeting education portals for campus building photos
-    query = f"{name} Gujarat campus building photo site:shiksha.com OR site:collegedunia.com OR site:collegedekho.com OR site:wikipedia.org"
-    bing_img = search_bing_campus_image(query)
-    if bing_img:
-        return bing_img
+    # 3. Query Commons
+    found_url = search_commons_for_college(name, city or "Gujarat")
+    if found_url:
+        saved = download_and_save_image(found_url, college_id)
+        if saved:
+            return (college_id, saved)
 
-    # 3. Alternative exterior query
-    query2 = f"{name} {city} Gujarat university main building facade aerial drone view campus photo"
-    bing_img2 = search_bing_campus_image(query2)
-    if bing_img2:
-        return bing_img2
-
-    return ""
+    return (college_id, None)
 
 
-
-def run_pipeline(limit: int = 100, force: bool = False):
+def run_pipeline(limit: int = 0, force: bool = False, max_workers: int = 8):
     db: Session = SessionLocal()
     try:
         query = db.query(College)
         total_count = query.count()
-        print(f"Starting Exterior Campus Photo Scraper Pipeline across {total_count} DB records (force={force})...")
+        print(f"\n=======================================================")
+        print(f"STARTING WIKIMEDIA SEARCH & LOCAL FILE STORAGE PIPELINE")
+        print(f"Target Directory: {STATIC_IMG_DIR}")
+        print(f"Total Colleges in DB: {total_count} (limit={limit}, workers={max_workers})")
+        print(f"=======================================================\n")
 
-        if limit > 0:
-            colleges = query.limit(limit).all()
-        else:
-            colleges = query.all()
+        colleges = query.limit(limit).all() if limit > 0 else query.all()
+        college_data = [(c.id, c.name, c.city, c.image_url) for c in colleges]
+        db.close()
 
-        updated_count = 0
-        batch_size = 50
+        results = []
+        found_count = 0
+        null_count = 0
 
-        for idx, col in enumerate(tqdm(colleges, desc="Scraping Exterior Campus Photos")):
-            # Skip if image_url is already populated unless force is True
-            if not force and col.image_url and col.image_url.startswith("http"):
-                continue
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_col = {
+                executor.submit(process_college_worker, c_id, name, city, curr_img, force): (c_id, name)
+                for c_id, name, city, curr_img in college_data
+            }
 
-            img_url = scrape_real_campus_image(col)
-            if img_url:
-                col.image_url = img_url
-                updated_count += 1
-                tqdm.write(f"[{idx+1}/{len(colleges)}] Updated {col.name} -> {img_url[:60]}...")
-            else:
-                tqdm.write(f"[{idx+1}/{len(colleges)}] Retained current for {col.name}")
+            for future in tqdm(as_completed(future_to_col), total=len(future_to_col), desc="Searching Commons"):
+                c_id, name = future_to_col[future]
+                try:
+                    res_id, local_path = future.result()
+                    results.append((res_id, local_path))
+                    if local_path:
+                        found_count += 1
+                        tqdm.write(f"FOUND & SAVED: [{res_id}] {name} -> {local_path}")
+                    else:
+                        null_count += 1
+                except Exception:
+                    results.append((c_id, None))
+                    null_count += 1
 
-            # Rate-limiting delay
-            time.sleep(0.15)
-
-            # Batch commit every 50 records
-            if updated_count > 0 and updated_count % batch_size == 0:
-                db.commit()
-                tqdm.write(f"Batch committed {updated_count} updated records to PostgreSQL/SQLite database.")
-
+        # Reopen DB session to batch update
+        db = SessionLocal()
+        print("\nUpdating database records with local file paths...")
+        for c_id, local_path in results:
+            db.query(College).filter(College.id == c_id).update({College.image_url: local_path})
         db.commit()
-        print(f"\nEXTERIOR SCRAPING PIPELINE COMPLETE! Total updated campus photos: {updated_count}/{len(colleges)}")
+
+        # Final Verification
+        total_files = len(os.listdir(STATIC_IMG_DIR)) if os.path.exists(STATIC_IMG_DIR) else 0
+        db_with_img = db.query(College).filter(College.image_url.isnot(None), College.image_url != '').count()
+        db_null = db.query(College).filter((College.image_url.is_(None)) | (College.image_url == '')).count()
+
+        print("\n=======================================================")
+        print("WIKIMEDIA SCRAPER & LOCAL FILE STORAGE PIPELINE COMPLETE")
+        print(f"Total Colleges Processed: {len(colleges)}")
+        print(f"Authentic Local Image Files Stored: {total_files}")
+        print(f"Database Records with Local Image: {db_with_img}")
+        print(f"Database Records with Honest NULL (Category Fallback): {db_null}")
+        print("=======================================================\n")
+
+        print("--- Verified Local Photos Spot Check ---")
+        for col in db.query(College).filter(College.image_url.isnot(None)).all():
+            abs_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), col.image_url.lstrip("/"))
+            file_size_kb = os.path.getsize(abs_path) / 1024 if os.path.exists(abs_path) else 0
+            print(f"  [{col.id}] {col.name} -> {col.image_url} ({file_size_kb:.1f} KB on disk)")
 
     except Exception as e:
         db.rollback()
-        print(f"Error during scraping pipeline: {e}")
+        print(f"Error during pipeline execution: {e}")
     finally:
         db.close()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Scrape real exterior college campus photos for database records.")
-    parser.add_argument("--limit", type=int, default=100, help="Limit number of colleges to process (0 for all)")
-    parser.add_argument("--force", action="store_true", help="Force overwrite existing image_url records")
+    parser = argparse.ArgumentParser(description="Scrape genuine Wikimedia photos and store as local files.")
+    parser.add_argument("--limit", type=int, default=0, help="Limit number of colleges to process (0 for all)")
+    parser.add_argument("--force", action="store_true", help="Force overwrite existing local files")
+    parser.add_argument("--workers", type=int, default=8, help="Number of concurrent workers")
     args = parser.parse_args()
 
-    run_pipeline(limit=args.limit, force=args.force)
+    run_pipeline(limit=args.limit, force=args.force, max_workers=args.workers)

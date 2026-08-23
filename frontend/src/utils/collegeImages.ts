@@ -105,8 +105,13 @@ export function getCollegeImageUrl(college?: { id?: number; image_url?: string; 
     return EXTERIOR_CAMPUS_FALLBACKS[0];
   }
 
-  // Enforce 100% proxy coverage for any college record with an ID
-  if (college?.id) {
+  // 1. Direct local static file support (served from backend/static/campus_images)
+  if (college.image_url && typeof college.image_url === "string" && college.image_url.startsWith("/static/")) {
+    return `${BASE_URL}${college.image_url}`;
+  }
+
+  // 2. Proxied dynamic endpoint for active colleges with ID
+  if (college?.id && college?.image_url && college.image_url.startsWith("http")) {
     return `${BASE_URL}/api/v1/colleges/${college.id}/image-proxy`;
   }
 

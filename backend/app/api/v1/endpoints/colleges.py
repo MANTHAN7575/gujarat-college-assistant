@@ -241,6 +241,25 @@ def proxy_college_image(
 
     target_url = college.image_url
 
+    # If college has a local static file path, serve it directly from disk
+    if target_url and target_url.startswith("/static/"):
+        import os
+        # Endpoint is at backend/app/api/v1/endpoints/colleges.py -> backend is 4 levels up
+        endpoint_dir = os.path.dirname(os.path.abspath(__file__)) # .../endpoints
+        v1_dir = os.path.dirname(endpoint_dir)                   # .../v1
+        api_dir = os.path.dirname(v1_dir)                         # .../api
+        app_dir = os.path.dirname(api_dir)                       # .../app
+        backend_dir = os.path.dirname(app_dir)                   # .../backend
+        
+        local_rel = target_url.lstrip("/")
+        abs_file_path = os.path.join(backend_dir, local_rel)
+        if os.path.exists(abs_file_path):
+            with open(abs_file_path, "rb") as f:
+                img_data = f.read()
+            ext = os.path.splitext(abs_file_path)[1].lower()
+            media_type = "image/png" if ext == ".png" else "image/webp" if ext == ".webp" else "image/jpeg"
+            return Response(content=img_data, media_type=media_type)
+
     # Check verified exterior map first for known colleges
     c_name = (college.name or "").upper()
     c_code = (college.code or "").upper()

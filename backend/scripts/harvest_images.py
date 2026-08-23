@@ -37,43 +37,6 @@ SPECIFIC_CAMPUS_PHOTO_MAP = {
     "105": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"  # MBICT
 }
 
-VERIFIED_BUILDING_URLS = [
-    "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Daiict-campus.jpg/1024px-Daiict-campus.jpg",
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Charotar_University_of_Science_and_Technology.jpg/960px-Charotar_University_of_Science_and_Technology.jpg",
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg/1280px-D.N.Hall%2C_Maharaja_Sayajirao_University_Of_Baroda.jpg",
-    "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80"
-]
-
-def fetch_wikimedia_campus_image(query: str) -> str | None:
-    try:
-        url = f"https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch={urllib.parse.quote(query)}&gsrlimit=1&prop=imageinfo&iiprop=url|mime|size&format=json"
-        req = urllib.request.Request(url, headers={"User-Agent": "GujaratCollegeAssistant/1.0"})
-        with urllib.request.urlopen(req, timeout=3) as resp:
-            data = json.loads(resp.read().decode())
-            pages = data.get("query", {}).get("pages", {})
-            for page_id, pdata in pages.items():
-                imageinfo = pdata.get("imageinfo", [{}])[0]
-                img_url = imageinfo.get("url")
-                width = imageinfo.get("width", 0)
-                height = imageinfo.get("height", 0)
-                
-                # Validation checks
-                if img_url and width >= 800 and height >= 450:
-                    lower_url = img_url.lower()
-                    if not any(bad in lower_url for bad in ["group", "graduation", "crowd", "student", "classroom"]):
-                        return img_url
-    except Exception:
-        pass
-    return None
-
 def harvest_campus_images():
     print("Starting Automated Campus Image Harvester across Database Records...")
     db = SessionLocal()
@@ -84,33 +47,29 @@ def harvest_campus_images():
         print(f"Loaded {total} college records from database.")
 
         updated_count = 0
-        batch_size = 500
+        batch_size = 50
 
         for idx, college in enumerate(colleges):
             cid_str = str(college.id)
             
-            # 1. Direct explicit photo map match
+            # 1. Direct explicit verified photo map match
             if cid_str in SPECIFIC_CAMPUS_PHOTO_MAP:
                 college.image_url = SPECIFIC_CAMPUS_PHOTO_MAP[cid_str]
                 updated_count += 1
             else:
-                # 2. Check existing image url validity
-                existing_url = college.image_url or ""
-                is_valid = (
-                    existing_url.startswith("http") and
-                    not any(bad in existing_url.lower() for bad in ["group", "graduation", "crowd", "classroom", "student"])
-                )
-                
-                if not is_valid:
-                    # Deterministically pick a high-res architectural building photo
-                    url_idx = (college.id * 7 + len(college.name)) % len(VERIFIED_BUILDING_URLS)
-                    college.image_url = VERIFIED_BUILDING_URLS[url_idx]
-                    updated_count += 1
+                # 2. Call genuine Wikimedia Commons search if no image
+                if not college.image_url:
+                    wiki_img = fetch_wikimedia_campus_image(college.name)
+                    if wiki_img:
+                        college.image_url = wiki_img
+                        updated_count += 1
+                        print(f"Found real Wikimedia image for [{college.id}] {college.name} -> {wiki_img[:60]}...")
 
             if (idx + 1) % batch_size == 0 or (idx + 1) == total:
                 db.commit()
-                print(f"Harvested and committed batch {(idx + 1) // batch_size + 1} ({idx + 1} / {total} records updated)...")
+                print(f"Processed ({idx + 1} / {total} records)...")
 
+        db.commit()
         print(f"\nSUCCESS! Campus Image Harvesting Complete.")
         print(f"Updated {updated_count} institution image URLs in database.")
 
