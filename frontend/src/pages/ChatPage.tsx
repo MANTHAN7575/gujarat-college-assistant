@@ -17,7 +17,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { ChatMessage, ChatSession } from "../types";
-import { sendChatMessage, deleteChatHistory } from "../services/api";
+import { sendChatMessage, deleteChatHistory, ChatApiError } from "../services/api";
 import { Navbar } from "../components/Navbar";
 import { MobileNav } from "../components/MobileNav";
 import { DeleteChatModal } from "../components/DeleteChatModal";
@@ -31,6 +31,7 @@ export const ChatPage: React.FC = () => {
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [lastQuery, setLastQuery] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Deletion Modal State
   const [deletingSession, setDeletingSession] = useState<ChatSession | null>(null);
@@ -88,6 +89,7 @@ export const ChatPage: React.FC = () => {
     if (!messageText) setInputMessage("");
     setLastQuery(query);
     setHasError(false);
+    setErrorMessage("");
 
     let currentSid = activeSessionId;
 
@@ -167,8 +169,20 @@ export const ChatPage: React.FC = () => {
         return updated;
       });
     } catch (error) {
-      console.error(error);
+      console.error("Chat error:", error);
       setHasError(true);
+      if (error instanceof ChatApiError) {
+        console.error(`HTTP ${error.status} from /api/v1/chat/:`, error.detail);
+        if (error.status === 422) {
+          setErrorMessage(`Request validation failed (HTTP 422). The chat payload was rejected by the server. Detail: ${error.detail}`);
+        } else {
+          setErrorMessage(`Server returned HTTP ${error.status}: ${error.statusText}`);
+        }
+      } else if (error instanceof TypeError && (error.message.includes("fetch") || error.message.includes("Failed"))) {
+        setErrorMessage("FastAPI backend server is unresponsive on http://127.0.0.1:8000.");
+      } else {
+        setErrorMessage("An unexpected error occurred while sending your message.");
+      }
     } finally {
       setLoading(false);
     }
@@ -184,6 +198,7 @@ export const ChatPage: React.FC = () => {
     setActiveSessionId(session.sessionId);
     setMessages([welcomeMessage, ...session.messages]);
     setHasError(false);
+    setErrorMessage("");
   };
 
   const handleStartNewChat = () => {
@@ -191,6 +206,7 @@ export const ChatPage: React.FC = () => {
     setMessages([welcomeMessage]);
     setInputMessage("");
     setHasError(false);
+    setErrorMessage("");
   };
 
   const handleDeleteSession = (session: ChatSession, e: React.MouseEvent) => {
@@ -391,15 +407,15 @@ export const ChatPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Enhanced Interactive Connection Error & Retry Banner */}
+              {/* Enhanced Interactive Error & Retry Banner */}
               {hasError && (
                 <div className="bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 text-xs sm:text-sm text-amber-900 dark:text-amber-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
                     <div>
-                      <p className="font-bold">System Connection Issue</p>
+                      <p className="font-bold">Chat Request Failed</p>
                       <p className="text-xs text-amber-800 dark:text-amber-300 font-medium">
-                        FastAPI backend server is unresponsive on http://127.0.0.1:8000.
+                        {errorMessage || "An unexpected error occurred."}
                       </p>
                     </div>
                   </div>

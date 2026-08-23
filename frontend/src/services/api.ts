@@ -2,6 +2,21 @@ import { College, CollegeDetailResponse, ChatResponse, CompareResponse, ChatHist
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
+/** Typed error for HTTP responses (422, 500, etc.) — distinct from network failures */
+export class ChatApiError extends Error {
+  status: number;
+  statusText: string;
+  detail: string;
+
+  constructor(status: number, statusText: string, detail: string) {
+    super(`API error ${status}: ${statusText}`);
+    this.name = "ChatApiError";
+    this.status = status;
+    this.statusText = statusText;
+    this.detail = detail;
+  }
+}
+
 function parsePaginatedData(data: any, fallbackPage: number = 1, fallbackPerPage: number = 20): PaginatedResponse<College> {
   if (data && Array.isArray(data.items)) {
     const total = data.total ?? data.total_count ?? data.items.length;
@@ -133,13 +148,14 @@ export async function sendChatMessage(query: string, sessionId?: string): Promis
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query,
+      message: query,
       session_id: sessionId || null,
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`API error ${response.status}: ${response.statusText}`);
+    const errorDetail = await response.text().catch(() => response.statusText);
+    throw new ChatApiError(response.status, response.statusText, errorDetail);
   }
   return await response.json();
 }
