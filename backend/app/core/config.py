@@ -1,5 +1,5 @@
 import json
-from typing import List, Union
+from typing import List, Union, Optional
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     DB_NAME: str = "gujarat_college_assistant"
 
     GEMINI_API_KEY: str = ""
+    PINECONE_API_KEY: Optional[str] = None
+    PINECONE_INDEX_NAME: str = "gujarat-colleges-index"
+    VECTOR_INDEX_PATH: str = "data/college_vectors.npz"
     CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
     @field_validator("CORS_ORIGINS", mode="before")
@@ -30,7 +33,7 @@ class Settings(BaseSettings):
         return f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(".env", "backend/.env"),
         env_file_encoding="utf-8",
         extra="ignore"
     )
